@@ -1,0 +1,28 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+terraform.tfvars
+
+# Sensitive files
+secrets.yml
+*.pem
+k8s/02-secret.yaml
+helm/*/values.local.yaml
+ansible/secrets.yml
+
+# Editor temporary files
+*.swp
+
+# Local Git history backups
+*.bundle
+
+# Local environment files
+.env
+.env.*
+!.env.example

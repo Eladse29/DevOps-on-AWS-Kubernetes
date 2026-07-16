@@ -1,0 +1,7 @@
+NAME                        READY   STATUS    RESTARTS   AGE
+backend-6d89df756b-jvqsj    1/1     Running   0          53m
+backend-6d89df756b-klbdb    1/1     Running   0          3m4s
+frontend-5f5fc9c787-cfv6l   1/1     Running   0          174m
+frontend-5f5fc9c787-st9t7   1/1     Running   0          174m
+postgres-76bc784767-sblfv   1/1     Running   0          94m
+worker-6c85d9cc7d-vc7jh     1/1     Running   0          53m

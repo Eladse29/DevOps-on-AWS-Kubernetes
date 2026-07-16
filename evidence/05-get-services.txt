@@ -1,0 +1,5 @@
+NAME               TYPE           CLUSTER-IP       EXTERNAL-IP                                                               PORT(S)        AGE
+backend-service    ClusterIP      10.100.87.146    <none>                                                                    5000/TCP       174m
+frontend-service   LoadBalancer   10.100.240.234   a025dd13005a94ea2a5250eb4da35052-1904741219.us-east-1.elb.amazonaws.com   80:30287/TCP   174m
+postgres-service   ClusterIP      10.100.182.99    <none>                                                                    5432/TCP       94m
+worker-service     ClusterIP      10.100.16.166    <none>                                                                    5001/TCP       174m

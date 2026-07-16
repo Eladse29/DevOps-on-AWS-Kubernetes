@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devops-config
+  labels:
+    {{- include "backend.labels" . | nindent 4 }}
+data:
+  AWS_REGION: {{ .Values.config.awsRegion | quote }}
+  DB_PORT: {{ .Values.config.dbPort | quote }}
+  S3_BUCKET_NAME: {{ .Values.config.s3BucketName | quote }}
+  SNS_TOPIC_ARN: {{ .Values.config.snsTopicArn | quote }}
+  WORKER_URL: {{ .Values.config.workerUrl | quote }}

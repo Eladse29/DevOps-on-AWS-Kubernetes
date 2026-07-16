@@ -1,0 +1,64 @@
+Name:             backend-6d89df756b-jvqsj
+Namespace:        devops-app
+Priority:         0
+Service Account:  backend-sa
+Node:             ip-192-168-46-2.ec2.internal/192.168.46.2
+Start Time:       Tue, 07 Jul 2026 14:28:33 +0300
+Labels:           app=backend
+                  pod-template-hash=6d89df756b
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-07-07T14:06:11+03:00
+Status:           Running
+IP:               192.168.61.144
+IPs:
+  IP:           192.168.61.144
+Controlled By:  ReplicaSet/backend-6d89df756b
+Containers:
+  backend:
+    Container ID:   containerd://5b442183890e28502e18526daa53e138bc6f2067c234a2d082551889fbda7808
+    Image:          904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:v3
+    Image ID:       904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend@sha256:fe8ebb8529af607b47d0066904290a65b4fc5eda894b7dae2c6da0e9976edd2e
+    Port:           5000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Tue, 07 Jul 2026 14:28:34 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  512Mi
+    Requests:
+      cpu:      100m
+      memory:   128Mi
+    Liveness:   http-get http://:5000/health delay=20s timeout=1s period=20s #success=1 #failure=3
+    Readiness:  http-get http://:5000/health delay=10s timeout=1s period=10s #success=1 #failure=3
+    Environment Variables from:
+      devops-config  ConfigMap  Optional: false
+      devops-secret  Secret     Optional: false
+    Environment:     <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-kr2fh (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  kube-api-access-kr2fh:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  55m   default-scheduler  Successfully assigned devops-app/backend-6d89df756b-jvqsj to ip-192-168-46-2.ec2.internal
+  Normal  Pulled     55m   kubelet            spec.containers{backend}: Container image "904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:v3" already present on machine
+  Normal  Created    55m   kubelet            spec.containers{backend}: Created container: backend
+  Normal  Started    55m   kubelet            spec.containers{backend}: Started container backend

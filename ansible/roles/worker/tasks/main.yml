@@ -1,0 +1,46 @@
+# Deploys internal worker Flask service
+# used for backend processing and health checks.
+
+---
+- name: Install worker dependencies
+  apt:
+    name:
+      - python3-flask
+    state: present
+    update_cache: yes
+
+- name: Create worker app directory
+  file:
+    path: /opt/worker
+    state: directory
+
+- name: Copy worker Flask app
+  copy:
+    src: worker.py
+    dest: /opt/worker/worker.py
+
+- name: Create worker systemd service
+  copy:
+    dest: /etc/systemd/system/worker.service
+    content: |
+      [Unit]
+      Description=Worker Flask Service
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/bin/python3 /opt/worker/worker.py
+      Restart=always
+      User=root
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Start worker service
+  service:
+    name: worker
+    state: started
+    enabled: yes

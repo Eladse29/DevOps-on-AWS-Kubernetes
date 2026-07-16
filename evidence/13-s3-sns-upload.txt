@@ -1,0 +1,1 @@
+{"bucket":"devops-k8s-bucket-1783422013","file":"vm-report-1.txt","sns":"notification sent","status":"uploaded"}

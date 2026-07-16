@@ -1,0 +1,33 @@
+# Main Ansible playbook.
+# Configures all EC2 instances after Terraform provisioning.
+
+---
+- name: Configure all servers
+  hosts: all
+  become: yes
+
+  roles:
+    - common
+
+- name: Configure frontend server
+  hosts: frontend
+  become: yes
+
+  roles:
+    - frontend
+
+- name: Configure backend server
+  hosts: backend
+  become: yes
+  vars_files:
+    - secrets.yml
+
+  roles:
+    - backend
+
+- name: Configure worker server
+  hosts: worker
+  become: yes
+
+  roles:
+    - worker

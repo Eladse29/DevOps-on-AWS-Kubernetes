@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: devops-postgres
+    environment:
+      POSTGRES_DB: devopsdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+
+  worker:
+    image: devops-worker:v1
+    container_name: devops-worker
+    ports:
+      - "5001:5001"
+
+  backend:
+    image: devops-backend:v1
+    container_name: devops-backend
+    depends_on:
+      - postgres
+      - worker
+    environment:
+      DB_HOST: postgres
+      DB_NAME: devopsdb
+      DB_USER: postgres
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_PORT: "5432"
+      WORKER_URL: http://worker:5001
+      AWS_REGION: us-east-1
+      S3_BUCKET_NAME: dummy-bucket
+      SNS_TOPIC_ARN: dummy-topic
+    ports:
+      - "5000:5000"
+
+  frontend:
+    image: devops-frontend:v1
+    container_name: devops-frontend
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"

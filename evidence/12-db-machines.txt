@@ -1,0 +1,1 @@
+{"items":[{"cpu":2,"id":1,"name":"k8s-test-vm","os":"ubuntu-22.04-lts","ram_gb":4}]}

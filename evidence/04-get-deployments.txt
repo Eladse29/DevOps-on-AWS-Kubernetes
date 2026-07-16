@@ -1,0 +1,5 @@
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+backend    2/2     2            2           174m
+frontend   2/2     2            2           174m
+postgres   1/1     1            1           94m
+worker     1/1     1            1           174m

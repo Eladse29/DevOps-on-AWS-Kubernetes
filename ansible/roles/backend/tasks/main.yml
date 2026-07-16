@@ -1,0 +1,56 @@
+# Deploys Flask backend API, environment variables
+# and systemd service configuration.
+
+---
+- name: Install backend dependencies
+  apt:
+    name:
+      - python3-flask
+      - python3-requests
+      - python3-psycopg2
+      - python3-boto3
+    state: present
+    update_cache: yes
+
+- name: Create backend app directory
+  file:
+    path: /opt/backend
+    state: directory
+
+- name: Deploy backend Flask app from template
+  template:
+    src: app.py.j2
+    dest: /opt/backend/app.py
+
+- name: Deploy backend environment file
+  template:
+    src: backend.env.j2
+    dest: /opt/backend/backend.env
+    mode: "0600"
+
+- name: Create backend systemd service
+  copy:
+    dest: /etc/systemd/system/backend.service
+    content: |
+      [Unit]
+      Description=Backend Flask API
+      After=network.target
+
+      [Service]
+      EnvironmentFile=/opt/backend/backend.env
+      ExecStart=/usr/bin/python3 /opt/backend/app.py
+      Restart=always
+      User=root
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Restart backend service
+  service:
+    name: backend
+    state: restarted
+    enabled: yes

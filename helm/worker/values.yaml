@@ -1,0 +1,43 @@
+replicaCount: 3
+
+image:
+  repository: 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker
+  tag: v1
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: true
+  name: worker-sa
+
+service:
+  type: ClusterIP
+  port: 5001
+  targetPort: 5001
+
+containerPort: 5001
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 300m
+    memory: 256Mi
+
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+livenessProbe:
+  path: /health
+  initialDelaySeconds: 15
+  periodSeconds: 20
+
+# Spread replicas across worker nodes to reduce the impact of a node failure.
+
+topologySpreadConstraints:
+  enabled: true
+  maxSkew: 1
+  topologyKey: kubernetes.io/hostname
+  whenUnsatisfiable: DoNotSchedule

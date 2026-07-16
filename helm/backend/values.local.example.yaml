@@ -1,0 +1,16 @@
+# Copy this file to values.local.yaml and replace the placeholders.
+# values.local.yaml is excluded from Git because it contains sensitive values.
+
+serviceAccount:
+  roleArn: "BACKEND_IRSA_ROLE_ARN"
+
+config:
+  awsRegion: us-east-1
+  s3BucketName: "S3_BUCKET_NAME"
+  snsTopicArn: "SNS_TOPIC_ARN"
+
+secret:
+  dbHost: "RDS_ENDPOINT"
+  dbName: devopsdb
+  dbUser: postgres
+  dbPassword: "RDS_PASSWORD"

@@ -1,0 +1,6 @@
+No Kubernetes Ingress resource was implemented.
+
+The application is exposed externally through the frontend-service
+of type LoadBalancer, as allowed by the assignment requirements.
+
+Backend and worker services remain internal ClusterIP services.

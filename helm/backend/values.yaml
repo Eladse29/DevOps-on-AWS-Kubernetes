@@ -1,0 +1,57 @@
+replicaCount: 3
+
+image:
+  repository: 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend
+  tag: v3
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: true
+  name: backend-sa
+  roleArn: ""
+
+service:
+  type: ClusterIP
+  port: 5000
+  targetPort: 5000
+
+containerPort: 5000
+
+config:
+  awsRegion: us-east-1
+  dbPort: "5432"
+  s3BucketName: devops-k8s-bucket-1783422013
+  snsTopicArn: arn:aws:sns:us-east-1:904053120094:devops-k8s-topic
+  workerUrl: http://worker-service:5001
+
+secret:
+  dbHost: ""
+  dbName: devopsdb
+  dbUser: postgres
+  dbPassword: ""
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+livenessProbe:
+  path: /health
+  initialDelaySeconds: 20
+  periodSeconds: 20
+
+# Spread replicas across worker nodes to reduce the impact of a node failure.
+
+topologySpreadConstraints:
+  enabled: true
+  maxSkew: 1
+  topologyKey: kubernetes.io/hostname
+  whenUnsatisfiable: DoNotSchedule
