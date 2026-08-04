@@ -52,6 +52,9 @@ pipeline {
                 CI build number: ${params.CI_BUILD_NUMBER}
                 Application commit: ${params.GIT_COMMIT_SHA}
                 Image tag: ${params.IMAGE_TAG}
+                Frontend digest: ${params.FRONTEND_DIGEST}
+                Backend digest: ${params.BACKEND_DIGEST}
+                Worker digest: ${params.WORKER_DIGEST}
                 Target cluster: ${env.TARGET_CLUSTER}
                 Target namespace: ${params.TARGET_NAMESPACE}
                 Release description: ${params.RELEASE_DESCRIPTION}
@@ -74,6 +77,21 @@ pipeline {
                             echo "ERROR: latest is not an allowed image tag." >&2
                             exit 1
                         fi
+
+                        for digest_name in \
+                            FRONTEND_DIGEST \
+                            BACKEND_DIGEST \
+                            WORKER_DIGEST
+                        do
+                            eval "digest_value=\${${digest_name}}"
+
+                            if ! printf '%s' "${digest_value}" |
+                                grep -Eq '^sha256:[0-9a-f]{64}$'
+                            then
+                                echo "ERROR: ${digest_name} is missing or invalid." >&2
+                                exit 1
+                            fi
+                        done
 
                         if [ "${TARGET_NAMESPACE}" != "${ALLOWED_NAMESPACE}" ]; then
                             echo "ERROR: Deployment is allowed only to ${ALLOWED_NAMESPACE}." >&2
@@ -339,10 +357,44 @@ pipeline {
                         test "${backend_image}" = "${expected_backend}"
                         test "${worker_image}" = "${expected_worker}"
 
+                        frontend_running_digest="$(
+                            kubectl get pods \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                -l app.kubernetes.io/name=frontend \
+                                --output jsonpath='{.items[0].status.containerStatuses[0].imageID}' |
+                            sed 's|.*@||'
+                        )"
+
+                        backend_running_digest="$(
+                            kubectl get pods \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                -l app.kubernetes.io/name=backend \
+                                --output jsonpath='{.items[0].status.containerStatuses[0].imageID}' |
+                            sed 's|.*@||'
+                        )"
+
+                        worker_running_digest="$(
+                            kubectl get pods \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                -l app.kubernetes.io/name=worker \
+                                --output jsonpath='{.items[0].status.containerStatuses[0].imageID}' |
+                            sed 's|.*@||'
+                        )"
+
+                        test "${frontend_running_digest}" = "${FRONTEND_DIGEST}"
+                        test "${backend_running_digest}" = "${BACKEND_DIGEST}"
+                        test "${worker_running_digest}" = "${WORKER_DIGEST}"
+
                         {
                             echo "CI_BUILD_NUMBER=${CI_BUILD_NUMBER}"
                             echo "GIT_COMMIT_SHA=${GIT_COMMIT_SHA}"
                             echo "IMAGE_TAG=${IMAGE_TAG}"
+                            echo "FRONTEND_DIGEST=${FRONTEND_DIGEST}"
+                            echo "BACKEND_DIGEST=${BACKEND_DIGEST}"
+                            echo "WORKER_DIGEST=${WORKER_DIGEST}"
+                            echo "FRONTEND_RUNNING_DIGEST=${frontend_running_digest}"
+                            echo "BACKEND_RUNNING_DIGEST=${backend_running_digest}"
+                            echo "WORKER_RUNNING_DIGEST=${worker_running_digest}"
                             echo "TARGET_CLUSTER=${TARGET_CLUSTER}"
                             echo "TARGET_NAMESPACE=${TARGET_NAMESPACE}"
                             echo "FRONTEND_IMAGE=${frontend_image}"
@@ -427,6 +479,9 @@ pipeline {
             CI build: ${params.CI_BUILD_NUMBER}
             Commit: ${params.GIT_COMMIT_SHA}
             Image tag: ${params.IMAGE_TAG}
+            Frontend digest: ${params.FRONTEND_DIGEST}
+            Backend digest: ${params.BACKEND_DIGEST}
+            Worker digest: ${params.WORKER_DIGEST}
             Cluster: ${env.TARGET_CLUSTER}
             Namespace: ${params.TARGET_NAMESPACE}
             """.stripIndent()

@@ -1,5 +1,5 @@
 def repositoryUrl = 'https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git'
-def repositoryBranch = '*/main'
+def repositoryBranch = '*/task4'
 
 pipelineJob('application-ci') {
     description('''
@@ -57,7 +57,9 @@ pipelineJob('application-cd') {
     description('''
         CD Pipeline for the DevOps on AWS project.
 
-        Receives an existing immutable image tag created by application-ci.
+        Receives an existing immutable image tag and image digests
+        created by application-ci.
+
         Validates the Helm charts, deploys the same version to Kubernetes,
         waits for rollout completion and performs smoke tests.
 
@@ -83,13 +85,31 @@ pipelineJob('application-cd') {
         stringParam(
             'CI_BUILD_NUMBER',
             '',
-            'Jenkins build number of the application-ci run that created this image.'
+            'Jenkins build number of the application-ci run that created this release.'
         )
 
         stringParam(
             'GIT_COMMIT_SHA',
             '',
-            'Git commit SHA associated with the image.'
+            'Git commit SHA associated with the release.'
+        )
+
+        stringParam(
+            'FRONTEND_DIGEST',
+            '',
+            'Immutable frontend image digest produced by application-ci.'
+        )
+
+        stringParam(
+            'BACKEND_DIGEST',
+            '',
+            'Immutable backend image digest produced by application-ci.'
+        )
+
+        stringParam(
+            'WORKER_DIGEST',
+            '',
+            'Immutable worker image digest produced by application-ci.'
         )
 
         choiceParam(

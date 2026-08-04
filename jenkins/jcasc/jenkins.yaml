@@ -4,11 +4,6 @@ jenkins:
     Jenkins is configured and managed as code.
     CI and CD run on dynamic Kubernetes agent Pods.
 
-  numExecutors: 0
-  mode: EXCLUSIVE
-  scmCheckoutRetryCount: 2
-  disableRememberMe: true
-
 credentials:
   system:
     domainCredentials:

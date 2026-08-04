@@ -462,6 +462,35 @@ pipeline {
                     '''
                 }
 
+                script {
+                    env.FRONTEND_DIGEST = sh(
+                        script: '''
+                            python -c "import json; print(json.load(open('/metadata/frontend-build.json'))['containerimage.digest'])"
+                        ''',
+                        returnStdout: true
+                    ).trim()
+
+                    env.BACKEND_DIGEST = sh(
+                        script: '''
+                            python -c "import json; print(json.load(open('/metadata/backend-build.json'))['containerimage.digest'])"
+                        ''',
+                        returnStdout: true
+                    ).trim()
+
+                    env.WORKER_DIGEST = sh(
+                        script: '''
+                            python -c "import json; print(json.load(open('/metadata/worker-build.json'))['containerimage.digest'])"
+                        ''',
+                        returnStdout: true
+                    ).trim()
+                }
+
+                echo """
+                Frontend digest: ${env.FRONTEND_DIGEST}
+                Backend digest: ${env.BACKEND_DIGEST}
+                Worker digest: ${env.WORKER_DIGEST}
+                """.stripIndent()
+
                 archiveArtifacts(
                     artifacts: 'release-metadata.json',
                     allowEmptyArchive: false,
@@ -495,6 +524,18 @@ pipeline {
                         string(
                             name: 'GIT_COMMIT_SHA',
                             value: env.GIT_COMMIT_SHA
+                        ),
+                        string(
+                            name: 'FRONTEND_DIGEST',
+                            value: env.FRONTEND_DIGEST
+                        ),
+                        string(
+                            name: 'BACKEND_DIGEST',
+                            value: env.BACKEND_DIGEST
+                        ),
+                        string(
+                            name: 'WORKER_DIGEST',
+                            value: env.WORKER_DIGEST
                         ),
                         string(
                             name: 'TARGET_NAMESPACE',
