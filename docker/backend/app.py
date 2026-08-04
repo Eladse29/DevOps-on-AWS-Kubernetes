@@ -1,10 +1,8 @@
 from flask import Flask, request
 import os
-
-import boto3
 import psycopg2
+import boto3
 import requests
-
 
 app = Flask(__name__)
 
@@ -22,22 +20,19 @@ WORKER_URL = os.getenv("WORKER_URL", "http://worker-service:5001")
 s3 = boto3.client("s3", region_name=AWS_REGION)
 sns = boto3.client("sns", region_name=AWS_REGION)
 
-
 def get_connection():
     return psycopg2.connect(
         host=DB_HOST,
         database=DB_NAME,
         user=DB_USER,
         password=DB_PASSWORD,
-        port=DB_PORT,
+        port=DB_PORT
     )
-
 
 def init_db():
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute(
-        """
+    cur.execute("""
         CREATE TABLE IF NOT EXISTS items (
             id SERIAL PRIMARY KEY,
             name VARCHAR(100),
@@ -45,28 +40,23 @@ def init_db():
             cpu INTEGER,
             ram_gb INTEGER
         );
-        """
-    )
+    """)
     conn.commit()
     cur.close()
     conn.close()
-
 
 @app.route("/")
 def home():
     return "Backend API is running with RDS, S3 and SNS"
 
-
 @app.route("/health")
 def health():
     return {"status": "healthy", "service": "backend"}
-
 
 @app.route("/worker")
 def worker():
     response = requests.get(f"{WORKER_URL}/health", timeout=5)
     return response.json()
-
 
 @app.route("/provision", methods=["POST"])
 def provision():
@@ -82,7 +72,7 @@ def provision():
 
     cur.execute(
         "INSERT INTO items (name, os, cpu, ram_gb) VALUES (%s, %s, %s, %s)",
-        (name, os_name, cpu, ram_gb),
+        (name, os_name, cpu, ram_gb)
     )
 
     conn.commit()
@@ -90,7 +80,6 @@ def provision():
     conn.close()
 
     return {"status": "added"}
-
 
 @app.route("/machines")
 def machines():
@@ -105,32 +94,27 @@ def machines():
 
     items = []
     for row in rows:
-        items.append(
-            {
-                "id": row[0],
-                "name": row[1],
-                "os": row[2],
-                "cpu": row[3],
-                "ram_gb": row[4],
-            }
-        )
+        items.append({
+            "id": row[0],
+            "name": row[1],
+            "os": row[2],
+            "cpu": row[3],
+            "ram_gb": row[4]
+        })
 
     return {"items": items}
-
 
 @app.route("/upload", methods=["POST"])
 def upload():
     conn = get_connection()
     cur = conn.cursor()
 
-    cur.execute(
-        """
+    cur.execute("""
         SELECT id, name, os, cpu, ram_gb
         FROM items
         ORDER BY id DESC
         LIMIT 1
-        """
-    )
+    """)
 
     row = cur.fetchone()
 
@@ -141,6 +125,7 @@ def upload():
         return {"status": "error", "message": "No machines found"}, 400
 
     vm_id, name, os_name, cpu, ram_gb = row
+
     filename = f"vm-report-{vm_id}.txt"
 
     content = f"""
@@ -156,22 +141,21 @@ RAM: {ram_gb}GB
     s3.put_object(
         Bucket=S3_BUCKET_NAME,
         Key=filename,
-        Body=content,
+        Body=content
     )
 
     sns.publish(
         TopicArn=SNS_TOPIC_ARN,
         Subject="VM Report Uploaded",
-        Message=f"VM report {filename} was uploaded to S3.",
+        Message=f"VM report {filename} was uploaded to S3."
     )
 
     return {
         "status": "uploaded",
         "bucket": S3_BUCKET_NAME,
         "file": filename,
-        "sns": "notification sent",
+        "sns": "notification sent"
     }
-
 
 if __name__ == "__main__":
     init_db()

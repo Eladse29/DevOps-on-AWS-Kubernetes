@@ -33,13 +33,3 @@ output "oidc_provider_arn" {
   description = "ARN of the EKS IAM OIDC provider"
   value       = aws_iam_openid_connect_provider.eks.arn
 }
-
-output "ebs_csi_addon_name" {
-  description = "Name of the Amazon EBS CSI EKS add-on"
-  value       = aws_eks_addon.ebs_csi.addon_name
-}
-
-output "ebs_csi_role_arn" {
-  description = "IAM role ARN used by the Amazon EBS CSI controller"
-  value       = aws_iam_role.ebs_csi.arn
-}

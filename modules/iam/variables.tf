@@ -1,11 +1,9 @@
 variable "project_name" {
-  description = "Project name used for IAM resource naming"
-  type        = string
+  type = string
 }
 
 variable "environment" {
-  description = "Environment name"
-  type        = string
+  type = string
 }
 
 variable "bucket_arn" {
@@ -38,21 +36,4 @@ variable "backend_service_account_name" {
   description = "Kubernetes ServiceAccount name used by the backend"
   type        = string
   default     = "backend-sa"
-}
-
-variable "jenkins_namespace" {
-  description = "Kubernetes namespace used by Jenkins"
-  type        = string
-  default     = "jenkins"
-}
-
-variable "jenkins_ci_service_account_name" {
-  description = "Kubernetes ServiceAccount used by the Jenkins CI agent"
-  type        = string
-  default     = "jenkins-ci-agent"
-}
-
-variable "ecr_repository_arns" {
-  description = "ECR repository ARNs that Jenkins CI may push images to"
-  type        = list(string)
 }

@@ -97,14 +97,3 @@ variable "sns_email_endpoint" {
   description = "Email address for SNS subscription"
   type        = string
 }
-
-variable "kubernetes_version" {
-  description = "Pinned Kubernetes minor version for EKS"
-  type        = string
-  default     = "1.35"
-}
-
-variable "ebs_csi_addon_version" {
-  description = "Pinned Amazon EBS CSI add-on version"
-  type        = string
-}
