@@ -1,0 +1,187 @@
+- name: ci-agent
+  label: jenkins-ci
+  serviceAccount: jenkins-ci-agent
+  idleMinutes: 0
+  instanceCap: 2
+  yamlMergeStrategy: override
+  yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        app.kubernetes.io/name: jenkins-ci-agent
+        app.kubernetes.io/component: ci-agent
+    spec:
+      serviceAccountName: jenkins-ci-agent
+      automountServiceAccountToken: true
+      restartPolicy: Never
+
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+
+      containers:
+        - name: jnlp
+          image: jenkins/inbound-agent:3384.v60d89463d9e0-1-jdk21
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: tmp
+              mountPath: /tmp
+
+        - name: python
+          image: python:3.14.6-slim
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: python-cache
+              mountPath: /home/jenkins/.cache
+            - name: tmp
+              mountPath: /tmp
+
+        - name: aws-cli
+          image: amazon/aws-cli:2.36.8
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          env:
+            - name: AWS_REGION
+              value: us-east-1
+            - name: AWS_DEFAULT_REGION
+              value: us-east-1
+            - name: DOCKER_CONFIG
+              value: /docker-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 384Mi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: docker-config
+              mountPath: /docker-config
+            - name: metadata
+              mountPath: /metadata
+            - name: tmp
+              mountPath: /tmp
+
+        - name: buildkit
+          image: moby/buildkit:v0.31.2-rootless
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          env:
+            - name: DOCKER_CONFIG
+              value: /docker-config
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: Unconfined
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: docker-config
+              mountPath: /docker-config
+            - name: buildkit-state
+              mountPath: /home/user/.local/share/buildkit
+            - name: metadata
+              mountPath: /metadata
+            - name: tmp
+              mountPath: /tmp
+
+      volumes:
+        - name: workspace
+          emptyDir: {}
+
+        - name: python-cache
+          emptyDir: {}
+
+        - name: docker-config
+          emptyDir: {}
+
+        - name: buildkit-state
+          emptyDir: {}
+
+        - name: metadata
+          emptyDir: {}
+
+        - name: tmp
+          emptyDir: {}

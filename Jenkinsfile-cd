@@ -1,0 +1,511 @@
+pipeline {
+    agent {
+        label 'jenkins-cd'
+    }
+
+    options {
+        skipDefaultCheckout(true)
+        disableConcurrentBuilds()
+
+        buildDiscarder(
+            logRotator(
+                numToKeepStr: '20',
+                artifactNumToKeepStr: '10'
+            )
+        )
+    }
+
+    environment {
+        TARGET_CLUSTER = 'infra-automation-dev-eks'
+        ALLOWED_NAMESPACE = 'devops-app'
+
+        ECR_REGISTRY = '904053120094.dkr.ecr.us-east-1.amazonaws.com'
+
+        FRONTEND_REPOSITORY = 'devops-frontend'
+        BACKEND_REPOSITORY = 'devops-backend'
+        WORKER_REPOSITORY = 'devops-worker'
+
+        FRONTEND_RELEASE = 'frontend'
+        BACKEND_RELEASE = 'backend'
+        WORKER_RELEASE = 'worker'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+
+                script {
+                    env.CD_GIT_COMMIT = sh(
+                        script: 'git rev-parse HEAD',
+                        returnStdout: true
+                    ).trim()
+
+                    env.TRIGGERED_BY = currentBuild
+                        .getBuildCauses()[0]
+                        .shortDescription
+                }
+
+                echo """
+                Deployment requested by: ${env.TRIGGERED_BY}
+                CD repository commit: ${env.CD_GIT_COMMIT}
+                CI build number: ${params.CI_BUILD_NUMBER}
+                Application commit: ${params.GIT_COMMIT_SHA}
+                Image tag: ${params.IMAGE_TAG}
+                Target cluster: ${env.TARGET_CLUSTER}
+                Target namespace: ${params.TARGET_NAMESPACE}
+                Release description: ${params.RELEASE_DESCRIPTION}
+                """.stripIndent()
+            }
+        }
+
+        stage('Input Validation') {
+            steps {
+                container('helm') {
+                    sh '''
+                        set -eu
+
+                        if [ -z "${IMAGE_TAG}" ]; then
+                            echo "ERROR: IMAGE_TAG is required." >&2
+                            exit 1
+                        fi
+
+                        if [ "${IMAGE_TAG}" = "latest" ]; then
+                            echo "ERROR: latest is not an allowed image tag." >&2
+                            exit 1
+                        fi
+
+                        if [ "${TARGET_NAMESPACE}" != "${ALLOWED_NAMESPACE}" ]; then
+                            echo "ERROR: Deployment is allowed only to ${ALLOWED_NAMESPACE}." >&2
+                            exit 1
+                        fi
+
+                        case "${IMAGE_TAG}" in
+                            *[!a-zA-Z0-9._-]*)
+                                echo "ERROR: IMAGE_TAG contains invalid characters." >&2
+                                exit 1
+                                ;;
+                        esac
+
+                        required_files="
+                        helm/frontend/Chart.yaml
+                        helm/frontend/values.yaml
+                        helm/backend/Chart.yaml
+                        helm/backend/values.yaml
+                        helm/worker/Chart.yaml
+                        helm/worker/values.yaml
+                        "
+
+                        for required_file in ${required_files}; do
+                            if [ ! -f "${required_file}" ]; then
+                                echo "ERROR: Missing required file: ${required_file}" >&2
+                                exit 1
+                            fi
+                        done
+
+                        echo "CD input validation passed."
+                    '''
+                }
+            }
+        }
+
+        stage('Manifest Validation') {
+            steps {
+                withCredentials([
+                    file(
+                        credentialsId: 'backend-values-local',
+                        variable: 'BACKEND_VALUES_FILE'
+                    )
+                ]) {
+                    container('helm') {
+                        sh '''
+                            set -eu
+
+                            helm lint helm/frontend \
+                                --set image.repository="${ECR_REGISTRY}/${FRONTEND_REPOSITORY}" \
+                                --set image.tag="${IMAGE_TAG}"
+
+                            helm lint helm/backend \
+                                --values "${BACKEND_VALUES_FILE}" \
+                                --set image.repository="${ECR_REGISTRY}/${BACKEND_REPOSITORY}" \
+                                --set image.tag="${IMAGE_TAG}"
+
+                            helm lint helm/worker \
+                                --set image.repository="${ECR_REGISTRY}/${WORKER_REPOSITORY}" \
+                                --set image.tag="${IMAGE_TAG}"
+
+                            mkdir -p rendered-manifests
+
+                            helm template "${FRONTEND_RELEASE}" helm/frontend \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                --set image.repository="${ECR_REGISTRY}/${FRONTEND_REPOSITORY}" \
+                                --set image.tag="${IMAGE_TAG}" \
+                                > rendered-manifests/frontend.yaml
+
+                            helm template "${BACKEND_RELEASE}" helm/backend \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                --values "${BACKEND_VALUES_FILE}" \
+                                --set image.repository="${ECR_REGISTRY}/${BACKEND_REPOSITORY}" \
+                                --set image.tag="${IMAGE_TAG}" \
+                                > rendered-manifests/backend.yaml
+
+                            helm template "${WORKER_RELEASE}" helm/worker \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                --set image.repository="${ECR_REGISTRY}/${WORKER_REPOSITORY}" \
+                                --set image.tag="${IMAGE_TAG}" \
+                                > rendered-manifests/worker.yaml
+
+                            grep -R "${IMAGE_TAG}" rendered-manifests >/dev/null
+
+                            echo "Helm lint and template validation passed."
+                        '''
+                    }
+                }
+
+                archiveArtifacts(
+                    artifacts: 'rendered-manifests/*.yaml',
+                    allowEmptyArchive: false,
+                    fingerprint: true
+                )
+            }
+        }
+
+        stage('Authenticate') {
+            steps {
+                container('kubectl') {
+                    sh '''
+                        set -eu
+
+                        kubectl auth can-i get deployments \
+                            --namespace "${TARGET_NAMESPACE}"
+
+                        kubectl auth can-i create deployments \
+                            --namespace "${TARGET_NAMESPACE}"
+
+                        kubectl auth can-i patch deployments \
+                            --namespace "${TARGET_NAMESPACE}"
+
+                        if kubectl auth can-i create deployments \
+                            --namespace default |
+                            grep -q '^yes$'; then
+                            echo "ERROR: CD Agent must not deploy to default namespace." >&2
+                            exit 1
+                        fi
+
+                        echo "Kubernetes ServiceAccount authentication verified."
+                    '''
+                }
+            }
+        }
+
+        stage('Record Current Revisions') {
+            steps {
+                container('helm') {
+                    sh '''
+                        set -eu
+
+                        mkdir -p deployment-state
+
+                        for release in \
+                            "${FRONTEND_RELEASE}" \
+                            "${BACKEND_RELEASE}" \
+                            "${WORKER_RELEASE}"
+                        do
+                            revision="$(
+                                helm history "${release}" \
+                                    --namespace "${TARGET_NAMESPACE}" \
+                                    --output json 2>/dev/null |
+                                grep -o '"revision":[0-9]*' |
+                                tail -n 1 |
+                                cut -d: -f2 || true
+                            )"
+
+                            if [ -z "${revision}" ]; then
+                                revision=0
+                            fi
+
+                            printf '%s' "${revision}" \
+                                > "deployment-state/${release}-previous-revision"
+                        done
+
+                        echo "Current Helm revisions recorded."
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                withCredentials([
+                    file(
+                        credentialsId: 'backend-values-local',
+                        variable: 'BACKEND_VALUES_FILE'
+                    )
+                ]) {
+                    container('helm') {
+                        sh '''
+                            set -eu
+
+                            helm upgrade --install "${WORKER_RELEASE}" helm/worker \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                --create-namespace \
+                                --set image.repository="${ECR_REGISTRY}/${WORKER_REPOSITORY}" \
+                                --set image.tag="${IMAGE_TAG}" \
+                                --wait \
+                                --timeout 5m \
+                                --history-max 10
+
+                            helm upgrade --install "${BACKEND_RELEASE}" helm/backend \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                --values "${BACKEND_VALUES_FILE}" \
+                                --set image.repository="${ECR_REGISTRY}/${BACKEND_REPOSITORY}" \
+                                --set image.tag="${IMAGE_TAG}" \
+                                --wait \
+                                --timeout 5m \
+                                --history-max 10
+
+                            helm upgrade --install "${FRONTEND_RELEASE}" helm/frontend \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                --set image.repository="${ECR_REGISTRY}/${FRONTEND_REPOSITORY}" \
+                                --set image.tag="${IMAGE_TAG}" \
+                                --wait \
+                                --timeout 5m \
+                                --history-max 10
+
+                            echo "Helm deployment completed."
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Rollout') {
+            steps {
+                container('kubectl') {
+                    sh '''
+                        set -eu
+
+                        kubectl rollout status deployment/worker \
+                            --namespace "${TARGET_NAMESPACE}" \
+                            --timeout=180s
+
+                        kubectl rollout status deployment/backend \
+                            --namespace "${TARGET_NAMESPACE}" \
+                            --timeout=180s
+
+                        kubectl rollout status deployment/frontend \
+                            --namespace "${TARGET_NAMESPACE}" \
+                            --timeout=180s
+
+                        echo "All deployments completed rollout successfully."
+                    '''
+                }
+            }
+        }
+
+        stage('Verify') {
+            steps {
+                container('kubectl') {
+                    sh '''
+                        set -eu
+
+                        kubectl get deployments,pods,services \
+                            --namespace "${TARGET_NAMESPACE}" \
+                            --output wide
+
+                        frontend_image="$(
+                            kubectl get deployment frontend \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                --output jsonpath='{.spec.template.spec.containers[0].image}'
+                        )"
+
+                        backend_image="$(
+                            kubectl get deployment backend \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                --output jsonpath='{.spec.template.spec.containers[0].image}'
+                        )"
+
+                        worker_image="$(
+                            kubectl get deployment worker \
+                                --namespace "${TARGET_NAMESPACE}" \
+                                --output jsonpath='{.spec.template.spec.containers[0].image}'
+                        )"
+
+                        expected_frontend="${ECR_REGISTRY}/${FRONTEND_REPOSITORY}:${IMAGE_TAG}"
+                        expected_backend="${ECR_REGISTRY}/${BACKEND_REPOSITORY}:${IMAGE_TAG}"
+                        expected_worker="${ECR_REGISTRY}/${WORKER_REPOSITORY}:${IMAGE_TAG}"
+
+                        test "${frontend_image}" = "${expected_frontend}"
+                        test "${backend_image}" = "${expected_backend}"
+                        test "${worker_image}" = "${expected_worker}"
+
+                        {
+                            echo "CI_BUILD_NUMBER=${CI_BUILD_NUMBER}"
+                            echo "GIT_COMMIT_SHA=${GIT_COMMIT_SHA}"
+                            echo "IMAGE_TAG=${IMAGE_TAG}"
+                            echo "TARGET_CLUSTER=${TARGET_CLUSTER}"
+                            echo "TARGET_NAMESPACE=${TARGET_NAMESPACE}"
+                            echo "FRONTEND_IMAGE=${frontend_image}"
+                            echo "BACKEND_IMAGE=${backend_image}"
+                            echo "WORKER_IMAGE=${worker_image}"
+                        } > deployment-verification.txt
+
+                        cat deployment-verification.txt
+                    '''
+                }
+
+                archiveArtifacts(
+                    artifacts: 'deployment-verification.txt',
+                    allowEmptyArchive: false,
+                    fingerprint: true
+                )
+            }
+        }
+
+        stage('Smoke Test') {
+            steps {
+                container('curl') {
+                    sh '''
+                        set -eu
+
+                        frontend_url="http://frontend-service.${TARGET_NAMESPACE}.svc.cluster.local"
+                        backend_url="http://backend-service.${TARGET_NAMESPACE}.svc.cluster.local:5000"
+                        worker_url="http://worker-service.${TARGET_NAMESPACE}.svc.cluster.local:5001"
+
+                        curl \
+                            --fail \
+                            --silent \
+                            --show-error \
+                            --retry 12 \
+                            --retry-delay 5 \
+                            "${frontend_url}/" \
+                            > smoke-frontend.txt
+
+                        curl \
+                            --fail \
+                            --silent \
+                            --show-error \
+                            --retry 12 \
+                            --retry-delay 5 \
+                            "${backend_url}/health" \
+                            > smoke-backend.json
+
+                        curl \
+                            --fail \
+                            --silent \
+                            --show-error \
+                            --retry 12 \
+                            --retry-delay 5 \
+                            "${worker_url}/health" \
+                            > smoke-worker.json
+
+                        grep -q '"status":"healthy"' smoke-backend.json
+                        grep -q '"service":"backend"' smoke-backend.json
+
+                        grep -q '"status":"healthy"' smoke-worker.json
+                        grep -q '"service":"worker"' smoke-worker.json
+
+                        echo "Smoke tests passed."
+                    '''
+                }
+
+                archiveArtifacts(
+                    artifacts: 'smoke-*',
+                    allowEmptyArchive: false,
+                    fingerprint: true
+                )
+            }
+        }
+    }
+
+    post {
+        success {
+            echo """
+            CD completed successfully.
+
+            Triggered by: ${env.TRIGGERED_BY}
+            CI build: ${params.CI_BUILD_NUMBER}
+            Commit: ${params.GIT_COMMIT_SHA}
+            Image tag: ${params.IMAGE_TAG}
+            Cluster: ${env.TARGET_CLUSTER}
+            Namespace: ${params.TARGET_NAMESPACE}
+            """.stripIndent()
+        }
+
+        failure {
+            echo 'CD failed. Collecting diagnostic information.'
+
+            container('kubectl') {
+                sh '''
+                    kubectl get deployments,pods,services \
+                        --namespace "${TARGET_NAMESPACE}" \
+                        --output wide || true
+
+                    kubectl get events \
+                        --namespace "${TARGET_NAMESPACE}" \
+                        --sort-by=.metadata.creationTimestamp || true
+
+                    kubectl logs deployment/frontend \
+                        --namespace "${TARGET_NAMESPACE}" \
+                        --tail=100 || true
+
+                    kubectl logs deployment/backend \
+                        --namespace "${TARGET_NAMESPACE}" \
+                        --tail=100 || true
+
+                    kubectl logs deployment/worker \
+                        --namespace "${TARGET_NAMESPACE}" \
+                        --tail=100 || true
+                '''
+            }
+
+            script {
+                echo 'Attempting automatic rollback to previous Helm revisions.'
+
+                container('helm') {
+                    sh '''
+                        set +e
+
+                        for release in \
+                            "${WORKER_RELEASE}" \
+                            "${BACKEND_RELEASE}" \
+                            "${FRONTEND_RELEASE}"
+                        do
+                            revision_file="deployment-state/${release}-previous-revision"
+
+                            if [ ! -f "${revision_file}" ]; then
+                                echo "No previous revision information for ${release}."
+                                continue
+                            fi
+
+                            previous_revision="$(cat "${revision_file}")"
+
+                            if [ "${previous_revision}" -gt 0 ]; then
+                                echo "Rolling back ${release} to revision ${previous_revision}."
+
+                                helm rollback "${release}" "${previous_revision}" \
+                                    --namespace "${TARGET_NAMESPACE}" \
+                                    --wait \
+                                    --timeout 5m
+                            else
+                                echo "${release} had no previous revision; rollback skipped."
+                            fi
+                        done
+                    '''
+                }
+            }
+
+            echo '''
+            Automatic rollback was attempted.
+            Review the console log, Kubernetes events and Helm history.
+            '''.stripIndent()
+        }
+
+        always {
+            cleanWs(
+                deleteDirs: true,
+                disableDeferredWipeout: true
+            )
+        }
+    }
+}

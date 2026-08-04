@@ -28,6 +28,7 @@ resource "aws_iam_role_policy_attachment" "cluster_policy" {
 resource "aws_eks_cluster" "main" {
   name     = "${var.project_name}-${var.environment}-eks"
   role_arn = aws_iam_role.cluster.arn
+  version  = var.kubernetes_version
 
   vpc_config {
     subnet_ids              = var.private_subnet_ids
@@ -163,6 +164,94 @@ resource "aws_iam_openid_connect_provider" "eks" {
   ]
 
   tags = {
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
+
+# IAM trust policy for the Amazon EBS CSI controller.
+# Only the ebs-csi-controller-sa ServiceAccount in kube-system
+# can assume this role through the cluster OIDC provider.
+
+data "aws_iam_policy_document" "ebs_csi_assume_role" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "sts:AssumeRoleWithWebIdentity"
+    ]
+
+    principals {
+      type = "Federated"
+
+      identifiers = [
+        aws_iam_openid_connect_provider.eks.arn
+      ]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "${replace(aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://", "")}:aud"
+
+      values = [
+        "sts.amazonaws.com"
+      ]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "${replace(aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://", "")}:sub"
+
+      values = [
+        "system:serviceaccount:kube-system:ebs-csi-controller-sa"
+      ]
+    }
+  }
+}
+
+# Dedicated IAM role for the Amazon EBS CSI controller.
+# Jenkins itself does not receive these AWS permissions.
+
+resource "aws_iam_role" "ebs_csi" {
+  name = "${var.project_name}-${var.environment}-ebs-csi-role"
+
+  assume_role_policy = data.aws_iam_policy_document.ebs_csi_assume_role.json
+
+  tags = {
+    Name        = "${var.project_name}-${var.environment}-ebs-csi-role"
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
+
+# AWS-managed least-privilege policy for the EBS CSI driver.
+
+resource "aws_iam_role_policy_attachment" "ebs_csi" {
+  role = aws_iam_role.ebs_csi.name
+
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicyV2"
+}
+
+# Amazon EKS managed add-on that allows Kubernetes to dynamically
+# provision Amazon EBS volumes for PersistentVolumeClaims.
+
+resource "aws_eks_addon" "ebs_csi" {
+  cluster_name  = aws_eks_cluster.main.name
+  addon_name    = "aws-ebs-csi-driver"
+  addon_version = var.ebs_csi_addon_version
+
+  service_account_role_arn = aws_iam_role.ebs_csi.arn
+
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "OVERWRITE"
+
+  depends_on = [
+    aws_eks_node_group.main,
+    aws_iam_role_policy_attachment.ebs_csi
+  ]
+
+  tags = {
+    Name        = "${var.project_name}-${var.environment}-ebs-csi-driver"
     Project     = var.project_name
     Environment = var.environment
   }
