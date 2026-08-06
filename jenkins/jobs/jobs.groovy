@@ -48,7 +48,7 @@ pipelineJob('application-ci') {
             }
 
             scriptPath('Jenkinsfile-ci')
-            lightweight(true)
+            lightweight(false)
         }
     }
 }
@@ -150,7 +150,7 @@ pipelineJob('application-cd') {
             }
 
             scriptPath('Jenkinsfile-cd')
-            lightweight(true)
+            lightweight(false)
         }
     }
 }
