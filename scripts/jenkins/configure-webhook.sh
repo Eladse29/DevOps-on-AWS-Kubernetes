@@ -3,79 +3,76 @@
 set -euo pipefail
 
 GITHUB_REPOSITORY="${GITHUB_REPOSITORY:-Eladse29/DevOps-on-AWS-Kubernetes}"
+
 JENKINS_NAMESPACE="${JENKINS_NAMESPACE:-jenkins}"
 JENKINS_SERVICE="${JENKINS_SERVICE:-jenkins}"
 LOCAL_JENKINS_PORT="${LOCAL_JENKINS_PORT:-18080}"
-SMEE_CLIENT_VERSION="${SMEE_CLIENT_VERSION:-5.0.0}"
 
-SMEE_URL="${SMEE_URL:-}"
+NGROK_API_URL="${NGROK_API_URL:-http://127.0.0.1:4040/api/tunnels}"
+NGROK_POLICY_FILE="${NGROK_POLICY_FILE:-jenkins/ngrok-webhook-policy.yaml}"
 
-if [[ -z "${SMEE_URL}" ]]; then
-  echo "ERROR: SMEE_URL is required." >&2
-  echo "Create a Smee channel and run:" >&2
-  echo "export SMEE_URL=https://smee.io/YOUR_CHANNEL_ID" >&2
-  exit 1
-fi
+EVIDENCE_DIRECTORY="${EVIDENCE_DIRECTORY:-evidence/task4/jenkins}"
 
-case "${SMEE_URL}" in
-  https://smee.io/*)
-    ;;
-  *)
-    echo "ERROR: SMEE_URL must use https://smee.io/." >&2
-    exit 1
-    ;;
-esac
+PORT_FORWARD_PID=""
+NGROK_PID=""
 
-for required_command in gh kubectl npx curl; do
+cleanup() {
+  echo
+  echo "Stopping the Jenkins webhook tunnel..."
+
+  if [[ -n "${NGROK_PID}" ]] &&
+     kill -0 "${NGROK_PID}" >/dev/null 2>&1
+  then
+    kill "${NGROK_PID}" >/dev/null 2>&1 || true
+    wait "${NGROK_PID}" 2>/dev/null || true
+  fi
+
+  if [[ -n "${PORT_FORWARD_PID}" ]] &&
+     kill -0 "${PORT_FORWARD_PID}" >/dev/null 2>&1
+  then
+    kill "${PORT_FORWARD_PID}" >/dev/null 2>&1 || true
+    wait "${PORT_FORWARD_PID}" 2>/dev/null || true
+  fi
+
+  echo "Webhook tunnel stopped."
+}
+
+trap cleanup EXIT INT TERM
+
+for required_command in \
+  gh \
+  kubectl \
+  ngrok \
+  curl \
+  python3
+do
   if ! command -v "${required_command}" >/dev/null 2>&1; then
     echo "ERROR: Required command was not found: ${required_command}" >&2
     exit 1
   fi
 done
 
-gh auth status >/dev/null
-
-kubectl get service "${JENKINS_SERVICE}" \
-  --namespace "${JENKINS_NAMESPACE}" >/dev/null
-
-echo "Checking GitHub webhook configuration..."
-
-existing_hook_id="$(
-  gh api \
-    "repos/${GITHUB_REPOSITORY}/hooks" \
-    --paginate \
-    --jq ".[] | select(.config.url == \"${SMEE_URL}\") | .id" |
-    head -n 1
-)"
-
-if [[ -n "${existing_hook_id}" ]]; then
-  echo "Updating existing GitHub webhook: ${existing_hook_id}"
-
-  gh api \
-    --method PATCH \
-    "repos/${GITHUB_REPOSITORY}/hooks/${existing_hook_id}" \
-    -F active=true \
-    -f 'events[]=push' \
-    -f "config[url]=${SMEE_URL}" \
-    -f 'config[content_type]=json' \
-    -f 'config[insecure_ssl]=0' \
-    >/dev/null
-else
-  echo "Creating GitHub push webhook..."
-
-  gh api \
-    --method POST \
-    "repos/${GITHUB_REPOSITORY}/hooks" \
-    -f name=web \
-    -F active=true \
-    -f 'events[]=push' \
-    -f "config[url]=${SMEE_URL}" \
-    -f 'config[content_type]=json' \
-    -f 'config[insecure_ssl]=0' \
-    >/dev/null
+if [[ ! -f "${NGROK_POLICY_FILE}" ]]; then
+  echo "ERROR: ngrok policy file was not found:" >&2
+  echo "${NGROK_POLICY_FILE}" >&2
+  exit 1
 fi
 
-mkdir -p evidence/task4/jenkins
+echo "Checking GitHub authentication..."
+
+gh auth status >/dev/null
+
+echo "Checking ngrok configuration..."
+
+ngrok config check >/dev/null
+
+echo "Checking the Jenkins Kubernetes Service..."
+
+kubectl get service "${JENKINS_SERVICE}" \
+  --namespace "${JENKINS_NAMESPACE}" \
+  >/dev/null
+
+mkdir -p "${EVIDENCE_DIRECTORY}"
 
 echo "Starting Jenkins port-forward on localhost:${LOCAL_JENKINS_PORT}..."
 
@@ -83,18 +80,9 @@ kubectl port-forward \
   "service/${JENKINS_SERVICE}" \
   "${LOCAL_JENKINS_PORT}:8080" \
   --namespace "${JENKINS_NAMESPACE}" \
-  > evidence/task4/jenkins/port-forward.log 2>&1 &
+  > "${EVIDENCE_DIRECTORY}/port-forward.log" 2>&1 &
 
-port_forward_pid=$!
-
-cleanup() {
-  if kill -0 "${port_forward_pid}" >/dev/null 2>&1; then
-    kill "${port_forward_pid}" >/dev/null 2>&1 || true
-    wait "${port_forward_pid}" 2>/dev/null || true
-  fi
-}
-
-trap cleanup EXIT INT TERM
+PORT_FORWARD_PID=$!
 
 for attempt in $(seq 1 30); do
   if curl \
@@ -103,23 +91,146 @@ for attempt in $(seq 1 30); do
     "http://127.0.0.1:${LOCAL_JENKINS_PORT}/login" \
     >/dev/null
   then
+    echo "Jenkins port-forward is ready."
     break
   fi
 
+  if ! kill -0 "${PORT_FORWARD_PID}" >/dev/null 2>&1; then
+    echo "ERROR: kubectl port-forward stopped unexpectedly." >&2
+    cat "${EVIDENCE_DIRECTORY}/port-forward.log" >&2
+    exit 1
+  fi
+
   if [[ "${attempt}" -eq 30 ]]; then
-    echo "ERROR: Jenkins did not become reachable through port-forward." >&2
+    echo "ERROR: Jenkins did not become reachable." >&2
     exit 1
   fi
 
   sleep 2
 done
 
-echo "GitHub webhook URL: ${SMEE_URL}"
-echo "Jenkins webhook target:"
-echo "http://127.0.0.1:${LOCAL_JENKINS_PORT}/github-webhook/"
-echo
-echo "Keep this terminal open while demonstrating push-triggered CI."
+echo "Starting the protected ngrok HTTPS tunnel..."
 
-npx --yes "smee-client@${SMEE_CLIENT_VERSION}" \
-  --url "${SMEE_URL}" \
-  --target "http://127.0.0.1:${LOCAL_JENKINS_PORT}/github-webhook/"
+ngrok http "${LOCAL_JENKINS_PORT}" \
+  --traffic-policy-file "${NGROK_POLICY_FILE}" \
+  --log "${EVIDENCE_DIRECTORY}/ngrok.log" \
+  --log-format json \
+  > /dev/null 2>&1 &
+
+NGROK_PID=$!
+
+PUBLIC_URL=""
+
+for attempt in $(seq 1 30); do
+  if ! kill -0 "${NGROK_PID}" >/dev/null 2>&1; then
+    echo "ERROR: ngrok stopped unexpectedly." >&2
+    cat "${EVIDENCE_DIRECTORY}/ngrok.log" >&2
+    exit 1
+  fi
+
+  PUBLIC_URL="$(
+    curl --silent --fail "${NGROK_API_URL}" 2>/dev/null |
+      python3 -c '
+import json
+import sys
+
+try:
+    response = json.load(sys.stdin)
+
+    https_tunnels = [
+        tunnel["public_url"]
+        for tunnel in response.get("tunnels", [])
+        if tunnel.get("proto") == "https"
+    ]
+
+    if https_tunnels:
+        print(https_tunnels[0])
+except Exception:
+    pass
+' || true
+  )"
+
+  if [[ -n "${PUBLIC_URL}" ]]; then
+    break
+  fi
+
+  if [[ "${attempt}" -eq 30 ]]; then
+    echo "ERROR: Could not obtain the ngrok HTTPS URL." >&2
+    exit 1
+  fi
+
+  sleep 2
+done
+
+WEBHOOK_URL="${PUBLIC_URL}/github-webhook/"
+
+echo "Searching for an existing repository webhook..."
+
+EXISTING_HOOK_ID="$(
+  gh api \
+    "repos/${GITHUB_REPOSITORY}/hooks" \
+    --paginate \
+    --jq '
+      .[]
+      | select(
+          (.config.url | endswith("/github-webhook/"))
+          or
+          (.config.url | startswith("https://smee.io/"))
+        )
+      | .id
+    ' |
+    head -n 1
+)"
+
+if [[ -n "${EXISTING_HOOK_ID}" ]]; then
+  echo "Updating existing GitHub webhook: ${EXISTING_HOOK_ID}"
+
+  gh api \
+    --method PATCH \
+    "repos/${GITHUB_REPOSITORY}/hooks/${EXISTING_HOOK_ID}" \
+    -F active=true \
+    -f 'events[]=push' \
+    -f "config[url]=${WEBHOOK_URL}" \
+    -f 'config[content_type]=json' \
+    -f 'config[insecure_ssl]=0' \
+    >/dev/null
+else
+  echo "Creating the GitHub push webhook..."
+
+  gh api \
+    --method POST \
+    "repos/${GITHUB_REPOSITORY}/hooks" \
+    -f name=web \
+    -F active=true \
+    -f 'events[]=push' \
+    -f "config[url]=${WEBHOOK_URL}" \
+    -f 'config[content_type]=json' \
+    -f 'config[insecure_ssl]=0' \
+    >/dev/null
+fi
+
+printf '%s\n' "${WEBHOOK_URL}" \
+  > "${EVIDENCE_DIRECTORY}/webhook-url.txt"
+
+echo
+echo "============================================================"
+echo "Jenkins webhook tunnel is ready"
+echo "============================================================"
+echo
+echo "GitHub repository:"
+echo "${GITHUB_REPOSITORY}"
+echo
+echo "Webhook URL:"
+echo "${WEBHOOK_URL}"
+echo
+echo "Security:"
+echo "Only POST /github-webhook/ is exposed through ngrok."
+echo "The Jenkins UI is not exposed through this public endpoint."
+echo
+echo "Push a commit to the task4 branch to trigger application-ci."
+echo
+echo "Keep this terminal open during the webhook demonstration."
+echo "Press Ctrl+C after the CI/CD demonstration is complete."
+echo "============================================================"
+
+wait "${NGROK_PID}"

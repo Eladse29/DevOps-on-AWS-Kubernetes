@@ -72,3 +72,6 @@ test-results/
 # =============================================================================
 
 *.bundle
+evidence/task4/jenkins/ngrok.log
+evidence/task4/jenkins/port-forward.log
+evidence/task4/jenkins/webhook-url.txt

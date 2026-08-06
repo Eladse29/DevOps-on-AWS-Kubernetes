@@ -1,0 +1,8 @@
+on_http_request:
+  - name: Block everything except the GitHub webhook
+    expressions:
+      - "req.method != 'POST' || req.url.path != '/github-webhook/'"
+    actions:
+      - type: deny
+        config:
+          status_code: 404
