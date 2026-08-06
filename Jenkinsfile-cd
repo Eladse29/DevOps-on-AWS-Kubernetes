@@ -297,7 +297,7 @@ pipeline {
             }
         }
 
-        stage('Rollout') {
+                stage('Rollout') {
             steps {
                 container('kubectl') {
                     sh '''
@@ -316,6 +316,25 @@ pipeline {
                             --timeout=180s
 
                         echo "All deployments completed rollout successfully."
+
+                        echo
+                        echo "Deployment status:"
+
+                        kubectl get deployments \
+                            --namespace "${TARGET_NAMESPACE}"
+
+                        echo
+                        echo "Running Pods:"
+
+                        kubectl get pods \
+                            --namespace "${TARGET_NAMESPACE}" \
+                            --output wide
+
+                        echo
+                        echo "Services:"
+
+                        kubectl get services \
+                            --namespace "${TARGET_NAMESPACE}"
                     '''
                 }
             }
@@ -405,6 +424,38 @@ pipeline {
                         cat deployment-verification.txt
                     '''
                 }
+
+                container('helm') {
+                    sh '''
+                        set -eu
+
+                        echo
+                        echo "Helm release history: frontend"
+
+                        helm history "${FRONTEND_RELEASE}" \
+                            --namespace "${TARGET_NAMESPACE}"
+
+                        echo
+                        echo "Helm release history: backend"
+
+                        helm history "${BACKEND_RELEASE}" \
+                            --namespace "${TARGET_NAMESPACE}"
+
+                        echo
+                        echo "Helm release history: worker"
+
+                        helm history "${WORKER_RELEASE}" \
+                            --namespace "${TARGET_NAMESPACE}"
+                    '''
+                }
+
+                archiveArtifacts(
+                    artifacts: 'deployment-verification.txt',
+                    allowEmptyArchive: false,
+                    fingerprint: true
+                )
+            }
+        }
 
                 archiveArtifacts(
                     artifacts: 'deployment-verification.txt',
