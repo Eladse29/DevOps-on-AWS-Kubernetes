@@ -59,9 +59,8 @@ kubectl get secret jenkins-backend-values \
 
 echo "Checking that the controller has zero executors..."
 
-kubectl get configmap jenkins-jcasc \
-  --namespace "${JENKINS_NAMESPACE}" \
-  --output jsonpath='{.data.jenkins\.yaml}' |
-  grep -q 'numExecutors: 0'
+helm get values "${JENKINS_RELEASE}" \
+  --namespace "${JENKINS_NAMESPACE}" |
+  grep -Eq '^[[:space:]]*numExecutors:[[:space:]]*0[[:space:]]*$'
 
 echo "Jenkins verification completed successfully."

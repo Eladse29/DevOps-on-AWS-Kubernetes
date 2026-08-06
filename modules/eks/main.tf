@@ -227,9 +227,8 @@ resource "aws_iam_role" "ebs_csi" {
 # AWS-managed least-privilege policy for the EBS CSI driver.
 
 resource "aws_iam_role_policy_attachment" "ebs_csi" {
-  role = aws_iam_role.ebs_csi.name
-
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicyV2"
+  role       = aws_iam_role.ebs_csi.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEBSCSIDriverPolicyV2"
 }
 
 # Amazon EKS managed add-on that allows Kubernetes to dynamically
