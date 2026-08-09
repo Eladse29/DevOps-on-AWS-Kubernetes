@@ -396,57 +396,7 @@ pipeline {
                             sh '''
                                 set -eu
 
-                                python - <<'PY'
-                                import json
-                                import os
-                                from pathlib import Path
-
-                                metadata_directory = Path("/metadata")
-
-                                services = {
-                                    "frontend": os.environ["FRONTEND_REPOSITORY"],
-                                    "backend": os.environ["BACKEND_REPOSITORY"],
-                                    "worker": os.environ["WORKER_REPOSITORY"],
-                                }
-
-                                release = {
-                                    "ci_build_number": os.environ["BUILD_NUMBER"],
-                                    "git_commit_sha": os.environ["GIT_COMMIT_SHA"],
-                                    "git_short_sha": os.environ["GIT_SHORT_SHA"],
-                                    "git_branch": os.environ["GIT_BRANCH_NAME"],
-                                    "image_tag": os.environ["IMAGE_TAG"],
-                                    "aws_region": os.environ["AWS_REGION"],
-                                    "ecr_registry": os.environ["ECR_REGISTRY"],
-                                    "images": {},
-                                }
-
-                                for service, repository in services.items():
-                                    digest_path = metadata_directory / f"{service}-digest.txt"
-                                    digest = digest_path.read_text(encoding="utf-8").strip()
-
-                                    if not digest.startswith("sha256:"):
-                                        raise SystemExit(
-                                            f"Invalid or missing image digest for {service}: {digest!r}"
-                                        )
-
-                                    release["images"][service] = {
-                                        "repository": repository,
-                                        "reference": (
-                                            f"{os.environ['ECR_REGISTRY']}/"
-                                            f"{repository}:{os.environ['IMAGE_TAG']}"
-                                        ),
-                                        "digest": digest,
-                                    }
-
-                                output_path = Path("release-metadata.json")
-
-                                output_path.write_text(
-                                    json.dumps(release, indent=2) + "\\n",
-                                    encoding="utf-8",
-                                )
-
-                                print(output_path.read_text(encoding="utf-8"))
-                                PY
+                                python -c 'import json, os; from pathlib import Path; m=Path("/metadata"); services={"frontend":os.environ["FRONTEND_REPOSITORY"],"backend":os.environ["BACKEND_REPOSITORY"],"worker":os.environ["WORKER_REPOSITORY"]}; digests={s:(m/f"{s}-digest.txt").read_text(encoding="utf-8").strip() for s in services}; bad=[f"{s}: {d!r}" for s,d in digests.items() if not d.startswith("sha256:")]; bad and (_ for _ in ()).throw(SystemExit("Invalid image digest(s): "+", ".join(bad))); release={"ci_build_number":os.environ["BUILD_NUMBER"],"git_commit_sha":os.environ["GIT_COMMIT_SHA"],"git_short_sha":os.environ["GIT_SHORT_SHA"],"git_branch":os.environ["GIT_BRANCH_NAME"],"image_tag":os.environ["IMAGE_TAG"],"aws_region":os.environ["AWS_REGION"],"ecr_registry":os.environ["ECR_REGISTRY"],"images":{s:{"repository":r,"reference":f"{os.environ[\"ECR_REGISTRY\"]}/{r}:{os.environ[\"IMAGE_TAG\"]}","digest":digests[s]} for s,r in services.items()}}; out=Path("release-metadata.json"); out.write_text(json.dumps(release,indent=2)+"\\n",encoding="utf-8"); print(out.read_text(encoding="utf-8"))'
                             '''
                         }
 
