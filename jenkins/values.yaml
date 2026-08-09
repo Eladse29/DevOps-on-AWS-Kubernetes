@@ -75,9 +75,9 @@ controller:
     - credentials-binding:728.v902a_273b_8947
     - plain-credentials:199.v9f8e1f741799
 
-  installLatestPlugins: false
+  installLatestPlugins: true
   installLatestSpecifiedPlugins: false
-  initializeOnce: true
+  initializeOnce: false
   overwritePlugins: false
   overwritePluginsFromImage: true
 
