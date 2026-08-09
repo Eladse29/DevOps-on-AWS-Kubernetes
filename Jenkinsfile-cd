@@ -457,13 +457,6 @@ pipeline {
             }
         }
 
-                archiveArtifacts(
-                    artifacts: 'deployment-verification.txt',
-                    allowEmptyArchive: false,
-                    fingerprint: true
-                )
-            }
-        }
 
         stage('Smoke Test') {
             steps {
@@ -520,6 +513,7 @@ pipeline {
             }
         }
 
+    }
     post {
         success {
             echo """
