@@ -152,7 +152,10 @@
             runAsNonRoot: true
             runAsUser: 1000
             runAsGroup: 1000
-            allowPrivilegeEscalation: false
+
+    # Required by RootlessKit/newuidmap for UID/GID namespace mapping.
+    # This exception is limited to the ephemeral BuildKit container.
+            allowPrivilegeEscalation: true
             seccompProfile:
               type: Unconfined
             capabilities:
