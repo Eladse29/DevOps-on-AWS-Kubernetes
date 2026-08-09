@@ -83,7 +83,21 @@ pipeline {
                             BACKEND_DIGEST \
                             WORKER_DIGEST
                         do
-                            eval "digest_value=\${${digest_name}}"
+                            case "${digest_name}" in
+                                FRONTEND_DIGEST)
+                                    digest_value="${FRONTEND_DIGEST}"
+                                    ;;
+                                BACKEND_DIGEST)
+                                    digest_value="${BACKEND_DIGEST}"
+                                    ;;
+                                WORKER_DIGEST)
+                                    digest_value="${WORKER_DIGEST}"
+                                    ;;
+                                *)
+                                    echo "ERROR: Unknown digest variable: ${digest_name}" >&2
+                                    exit 1
+                                    ;;
+                            esac
 
                             if ! printf '%s' "${digest_value}" |
                                 grep -Eq '^sha256:[0-9a-f]{64}$'
