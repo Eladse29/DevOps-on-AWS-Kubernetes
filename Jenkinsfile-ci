@@ -303,6 +303,7 @@ pipeline {
                                             --destination="${ECR_REGISTRY}/${FRONTEND_REPOSITORY}:${IMAGE_TAG}" \
                                             --digest-file="${METADATA_DIRECTORY}/frontend-digest.txt" \
                                             --push-retry=3 \
+                                            --single-snapshot \
                                             --verbosity=info
                                     '''
                                 }
@@ -321,6 +322,7 @@ pipeline {
                                             --destination="${ECR_REGISTRY}/${BACKEND_REPOSITORY}:${IMAGE_TAG}" \
                                             --digest-file="${METADATA_DIRECTORY}/backend-digest.txt" \
                                             --push-retry=3 \
+                                            --single-snapshot \
                                             --verbosity=info
                                     '''
                                 }
@@ -339,6 +341,7 @@ pipeline {
                                             --destination="${ECR_REGISTRY}/${WORKER_REPOSITORY}:${IMAGE_TAG}" \
                                             --digest-file="${METADATA_DIRECTORY}/worker-digest.txt" \
                                             --push-retry=3 \
+                                            --single-snapshot \
                                             --verbosity=info
                                     '''
                                 }
