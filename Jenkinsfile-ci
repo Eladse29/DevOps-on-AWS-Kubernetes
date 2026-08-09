@@ -220,15 +220,15 @@ pipeline {
 
                         mkdir -p "${DOCKER_CONFIG}"
 
-                        cat > "${DOCKER_CONFIG}/config.json" <<EOF
-                        {
-                          "auths": {
-                            "${ECR_REGISTRY}": {
-                              "auth": "${ECR_AUTH}"
-                            }
-                          }
-                        }
-                        EOF
+                        printf '%s\n' \
+   			    '{' \
+    			    '  "auths": {' \
+    			    "    \"${ECR_REGISTRY}\": {" \
+    			    "      \"auth\": \"${ECR_AUTH}\"" \
+       			    '    }' \
+    			    '  }' \
+    			    '}' \
+    			    > "${DOCKER_CONFIG}/config.json"
 
                         chmod 600 "${DOCKER_CONFIG}/config.json"
 
