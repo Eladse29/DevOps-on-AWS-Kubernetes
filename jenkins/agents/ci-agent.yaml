@@ -12,6 +12,7 @@
         app.kubernetes.io/name: jenkins-ci-agent
         app.kubernetes.io/component: ci-agent
     spec:
+      hostUsers: false
       serviceAccountName: jenkins-ci-agent
       automountServiceAccountToken: true
       restartPolicy: Never
