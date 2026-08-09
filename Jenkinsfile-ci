@@ -353,6 +353,10 @@ pipeline {
                             sh '''
                                 set -eu
 
+                                # Trivy uses the pod AWS identity directly for ECR.
+                                # Do not reuse Kaniko's Docker authentication file.
+                                unset DOCKER_CONFIG
+
                                 echo "Scanning frontend image with Trivy..."
                                 trivy image \
                                     --scanners vuln \
