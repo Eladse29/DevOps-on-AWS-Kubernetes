@@ -14,7 +14,7 @@ images=(
   "jenkins/inbound-agent:3384.v60d89463d9e0-1-jdk21"
   "python:3.14.6-slim"
   "amazon/aws-cli:2.36.8"
-  "moby/buildkit:v0.31.2-rootless"
+  "gcr.io/kaniko-project/executor:v1.23.2-debug"
   "alpine/helm:3.21.0"
   "bitnami/kubectl:1.35.0"
   "curlimages/curl:8.16.0"

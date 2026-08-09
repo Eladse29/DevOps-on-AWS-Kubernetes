@@ -17,9 +17,6 @@
       restartPolicy: Never
 
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
         fsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
@@ -80,6 +77,8 @@
               mountPath: /home/jenkins/agent
             - name: python-cache
               mountPath: /home/jenkins/.cache
+            - name: metadata
+              mountPath: /metadata
             - name: tmp
               mountPath: /tmp
 
@@ -127,46 +126,109 @@
             - name: tmp
               mountPath: /tmp
 
-        - name: buildkit
-          image: moby/buildkit:v0.31.2-rootless
+        - name: kaniko-frontend
+          image: gcr.io/kaniko-project/executor:v1.23.2-debug
           imagePullPolicy: IfNotPresent
           command:
-            - /bin/sh
-            - -c
-          args:
-            - cat
+            - /busybox/cat
           tty: true
           workingDir: /home/jenkins/agent
-          env:
-            - name: DOCKER_CONFIG
-              value: /docker-config
           resources:
             requests:
-              cpu: 250m
-              memory: 256Mi
+              cpu: 150m
+              memory: 192Mi
             limits:
-              cpu: "1"
-              memory: 1Gi
+              cpu: 750m
+              memory: 768Mi
           securityContext:
-            runAsNonRoot: true
-            runAsUser: 1000
-            runAsGroup: 1000
-
-    # Required by RootlessKit/newuidmap for UID/GID namespace mapping.
-    # This exception is limited to the ephemeral BuildKit container.
-            allowPrivilegeEscalation: true
-            seccompProfile:
-              type: Unconfined
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            privileged: false
             capabilities:
               drop:
                 - ALL
+              add:
+                - CHOWN
+                - FOWNER
           volumeMounts:
             - name: workspace
               mountPath: /home/jenkins/agent
             - name: docker-config
-              mountPath: /docker-config
-            - name: buildkit-state
-              mountPath: /home/user/.local/share/buildkit
+              mountPath: /kaniko/.docker
+            - name: metadata
+              mountPath: /metadata
+            - name: tmp
+              mountPath: /tmp
+
+        - name: kaniko-backend
+          image: gcr.io/kaniko-project/executor:v1.23.2-debug
+          imagePullPolicy: IfNotPresent
+          command:
+            - /busybox/cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 1
+              memory: 1Gi
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - FOWNER
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: docker-config
+              mountPath: /kaniko/.docker
+            - name: metadata
+              mountPath: /metadata
+            - name: tmp
+              mountPath: /tmp
+
+        - name: kaniko-worker
+          image: gcr.io/kaniko-project/executor:v1.23.2-debug
+          imagePullPolicy: IfNotPresent
+          command:
+            - /busybox/cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 1
+              memory: 1Gi
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - FOWNER
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: docker-config
+              mountPath: /kaniko/.docker
             - name: metadata
               mountPath: /metadata
             - name: tmp
@@ -180,9 +242,6 @@
           emptyDir: {}
 
         - name: docker-config
-          emptyDir: {}
-
-        - name: buildkit-state
           emptyDir: {}
 
         - name: metadata

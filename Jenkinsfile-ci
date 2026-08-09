@@ -261,25 +261,17 @@ pipeline {
             parallel {
                 stage('Frontend') {
                     steps {
-                        container('buildkit') {
+                        container('kaniko-frontend') {
                             sh '''
                                 set -eu
 
-                                export XDG_RUNTIME_DIR=/tmp/buildkit-frontend
-                                export BUILDKITD_FLAGS="--oci-worker-no-process-sandbox --root /tmp/buildkit-frontend-root"
-
-                                mkdir -p \
-                                    "${XDG_RUNTIME_DIR}" \
-                                    /tmp/buildkit-frontend-root \
-                                    "${METADATA_DIRECTORY}"
-
-                                buildctl-daemonless.sh build \
-                                    --frontend dockerfile.v0 \
-                                    --local context=docker/frontend \
-                                    --local dockerfile=docker/frontend \
-                                    --opt filename=Dockerfile \
-                                    --output "type=image,name=${ECR_REGISTRY}/${FRONTEND_REPOSITORY}:${IMAGE_TAG},push=true" \
-                                    --metadata-file "${METADATA_DIRECTORY}/frontend-build.json"
+                                /kaniko/executor \
+                                    --context="dir://${WORKSPACE}/docker/frontend" \
+                                    --dockerfile="${WORKSPACE}/docker/frontend/Dockerfile" \
+                                    --destination="${ECR_REGISTRY}/${FRONTEND_REPOSITORY}:${IMAGE_TAG}" \
+                                    --digest-file="${METADATA_DIRECTORY}/frontend-digest.txt" \
+                                    --push-retry=3 \
+                                    --verbosity=info
                             '''
                         }
                     }
@@ -287,25 +279,17 @@ pipeline {
 
                 stage('Backend') {
                     steps {
-                        container('buildkit') {
+                        container('kaniko-backend') {
                             sh '''
                                 set -eu
 
-                                export XDG_RUNTIME_DIR=/tmp/buildkit-backend
-                                export BUILDKITD_FLAGS="--oci-worker-no-process-sandbox --root /tmp/buildkit-backend-root"
-
-                                mkdir -p \
-                                    "${XDG_RUNTIME_DIR}" \
-                                    /tmp/buildkit-backend-root \
-                                    "${METADATA_DIRECTORY}"
-
-                                buildctl-daemonless.sh build \
-                                    --frontend dockerfile.v0 \
-                                    --local context=docker/backend \
-                                    --local dockerfile=docker/backend \
-                                    --opt filename=Dockerfile \
-                                    --output "type=image,name=${ECR_REGISTRY}/${BACKEND_REPOSITORY}:${IMAGE_TAG},push=true" \
-                                    --metadata-file "${METADATA_DIRECTORY}/backend-build.json"
+                                /kaniko/executor \
+                                    --context="dir://${WORKSPACE}/docker/backend" \
+                                    --dockerfile="${WORKSPACE}/docker/backend/Dockerfile" \
+                                    --destination="${ECR_REGISTRY}/${BACKEND_REPOSITORY}:${IMAGE_TAG}" \
+                                    --digest-file="${METADATA_DIRECTORY}/backend-digest.txt" \
+                                    --push-retry=3 \
+                                    --verbosity=info
                             '''
                         }
                     }
@@ -313,25 +297,17 @@ pipeline {
 
                 stage('Worker') {
                     steps {
-                        container('buildkit') {
+                        container('kaniko-worker') {
                             sh '''
                                 set -eu
 
-                                export XDG_RUNTIME_DIR=/tmp/buildkit-worker
-                                export BUILDKITD_FLAGS="--oci-worker-no-process-sandbox --root /tmp/buildkit-worker-root"
-
-                                mkdir -p \
-                                    "${XDG_RUNTIME_DIR}" \
-                                    /tmp/buildkit-worker-root \
-                                    "${METADATA_DIRECTORY}"
-
-                                buildctl-daemonless.sh build \
-                                    --frontend dockerfile.v0 \
-                                    --local context=docker/worker \
-                                    --local dockerfile=docker/worker \
-                                    --opt filename=Dockerfile \
-                                    --output "type=image,name=${ECR_REGISTRY}/${WORKER_REPOSITORY}:${IMAGE_TAG},push=true" \
-                                    --metadata-file "${METADATA_DIRECTORY}/worker-build.json"
+                                /kaniko/executor \
+                                    --context="dir://${WORKSPACE}/docker/worker" \
+                                    --dockerfile="${WORKSPACE}/docker/worker/Dockerfile" \
+                                    --destination="${ECR_REGISTRY}/${WORKER_REPOSITORY}:${IMAGE_TAG}" \
+                                    --digest-file="${METADATA_DIRECTORY}/worker-digest.txt" \
+                                    --push-retry=3 \
+                                    --verbosity=info
                             '''
                         }
                     }
@@ -428,19 +404,12 @@ pipeline {
                         }
 
                         for service, repository in services.items():
-                            path = metadata_directory / f"{service}-build.json"
+                            digest_path = metadata_directory / f"{service}-digest.txt"
+                            digest = digest_path.read_text(encoding="utf-8").strip()
 
-                            with path.open(encoding="utf-8") as file:
-                                build_metadata = json.load(file)
-
-                            digest = build_metadata.get(
-                                "containerimage.digest",
-                                "",
-                            )
-
-                            if not digest:
+                            if not digest.startswith("sha256:"):
                                 raise SystemExit(
-                                    f"Missing image digest for {service}"
+                                    f"Invalid or missing image digest for {service}: {digest!r}"
                                 )
 
                             release["images"][service] = {
@@ -465,26 +434,22 @@ pipeline {
                 }
 
                 script {
-                    env.FRONTEND_DIGEST = sh(
-                        script: '''
-                            python -c "import json; print(json.load(open('/metadata/frontend-build.json'))['containerimage.digest'])"
-                        ''',
-                        returnStdout: true
-                    ).trim()
+                    container('python') {
+                        env.FRONTEND_DIGEST = sh(
+                            script: 'cat /metadata/frontend-digest.txt',
+                            returnStdout: true
+                        ).trim()
 
-                    env.BACKEND_DIGEST = sh(
-                        script: '''
-                            python -c "import json; print(json.load(open('/metadata/backend-build.json'))['containerimage.digest'])"
-                        ''',
-                        returnStdout: true
-                    ).trim()
+                        env.BACKEND_DIGEST = sh(
+                            script: 'cat /metadata/backend-digest.txt',
+                            returnStdout: true
+                        ).trim()
 
-                    env.WORKER_DIGEST = sh(
-                        script: '''
-                            python -c "import json; print(json.load(open('/metadata/worker-build.json'))['containerimage.digest'])"
-                        ''',
-                        returnStdout: true
-                    ).trim()
+                        env.WORKER_DIGEST = sh(
+                            script: 'cat /metadata/worker-digest.txt',
+                            returnStdout: true
+                        ).trim()
+                    }
                 }
 
                 echo """
