@@ -17,6 +17,8 @@
       restartPolicy: Never
 
       securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
 
@@ -36,10 +38,12 @@
             runAsUser: 0
             runAsGroup: 0
             allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
             capabilities:
               drop:
                 - ALL
+              add:
+                - DAC_OVERRIDE
           volumeMounts:
             - name: workspace
               mountPath: /home/jenkins/agent
