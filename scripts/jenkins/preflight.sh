@@ -32,6 +32,7 @@ required_files=(
   jenkins/jcasc/jenkins.yaml
   jenkins/jobs/jobs.groovy
   jenkins/agents/ci-agent.yaml
+  jenkins/agents/build-agent.yaml
   jenkins/agents/cd-agent.yaml
   jenkins/rbac/ci-rbac.yaml
   jenkins/rbac/cd-rbac.yaml
@@ -150,6 +151,7 @@ helm template jenkins jenkins/jenkins \
   --namespace jenkins \
   --values jenkins/values.yaml \
   --set-file agent.podTemplates.ci=jenkins/agents/ci-agent.yaml \
+  --set-file agent.podTemplates.build=jenkins/agents/build-agent.yaml \
   --set-file agent.podTemplates.cd=jenkins/agents/cd-agent.yaml \
   > "${JENKINS_RENDERED_FILE}"
 
@@ -157,6 +159,7 @@ grep -q 'allowAnonymousRead: false' "${JENKINS_RENDERED_FILE}"
 grep -q 'allowsSignup: false' "${JENKINS_RENDERED_FILE}"
 grep -q 'numExecutors: 0' "${JENKINS_RENDERED_FILE}"
 grep -q 'label: jenkins-ci' "${JENKINS_RENDERED_FILE}"
+grep -q 'label: jenkins-build' "${JENKINS_RENDERED_FILE}"
 grep -q 'label: jenkins-cd' "${JENKINS_RENDERED_FILE}"
 grep -q 'storageClassName: "jenkins-ebs"' "${JENKINS_RENDERED_FILE}"
 
@@ -229,9 +232,20 @@ echo "AWS region: ${configured_region}"
 echo
 echo "Terraform plan summary:"
 
-terraform show -no-color tfplan |
-  grep -E 'Plan:|will be created' |
-  tail -n 20
+terraform_summary="$(
+  terraform show -no-color tfplan |
+    grep -E 'Plan:|will be created' |
+    tail -n 20 || true
+)"
+
+if [[ -n "${terraform_summary}" ]]; then
+  printf '%s\n' "${terraform_summary}"
+else
+  echo "No infrastructure changes planned."
+fi
+
+echo
+echo "Task 4 preflight completed successfully."
 
 echo
 echo "Preflight completed successfully."

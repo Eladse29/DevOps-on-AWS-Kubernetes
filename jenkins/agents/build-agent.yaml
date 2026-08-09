@@ -1,0 +1,247 @@
+- name: build-agent
+  label: jenkins-build
+  serviceAccount: jenkins-ci-agent
+  idleMinutes: 0
+  instanceCap: 1
+  yamlMergeStrategy: override
+  yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        app.kubernetes.io/name: jenkins-build-agent
+        app.kubernetes.io/component: build-agent
+    spec:
+      serviceAccountName: jenkins-ci-agent
+      automountServiceAccountToken: true
+      restartPolicy: Never
+
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+
+      containers:
+        - name: jnlp
+          image: jenkins/inbound-agent:3384.v60d89463d9e0-1-jdk21
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: tmp
+              mountPath: /tmp
+
+        - name: aws-cli
+          image: amazon/aws-cli:2.36.8
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          env:
+            - name: AWS_REGION
+              value: us-east-1
+            - name: AWS_DEFAULT_REGION
+              value: us-east-1
+            - name: AWS_EC2_METADATA_DISABLED
+              value: "true"
+            - name: DOCKER_CONFIG
+              value: /docker-config
+            - name: HOME
+              value: /tmp
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 384Mi
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: docker-config
+              mountPath: /docker-config
+            - name: metadata
+              mountPath: /metadata
+            - name: tmp
+              mountPath: /tmp
+
+        - name: python
+          image: python:3.12.13-slim
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          resources:
+            requests:
+              cpu: 50m
+              memory: 96Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: metadata
+              mountPath: /metadata
+            - name: tmp
+              mountPath: /tmp
+
+        - name: kaniko-frontend
+          image: gcr.io/kaniko-project/executor:v1.23.2-debug
+          imagePullPolicy: IfNotPresent
+          command:
+            - /busybox/cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          resources:
+            requests:
+              cpu: 150m
+              memory: 192Mi
+            limits:
+              cpu: 750m
+              memory: 768Mi
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - FOWNER
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: docker-config
+              mountPath: /kaniko/.docker
+            - name: metadata
+              mountPath: /metadata
+            - name: tmp
+              mountPath: /tmp
+
+        - name: kaniko-backend
+          image: gcr.io/kaniko-project/executor:v1.23.2-debug
+          imagePullPolicy: IfNotPresent
+          command:
+            - /busybox/cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - FOWNER
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: docker-config
+              mountPath: /kaniko/.docker
+            - name: metadata
+              mountPath: /metadata
+            - name: tmp
+              mountPath: /tmp
+
+        - name: kaniko-worker
+          image: gcr.io/kaniko-project/executor:v1.23.2-debug
+          imagePullPolicy: IfNotPresent
+          command:
+            - /busybox/cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - FOWNER
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: docker-config
+              mountPath: /kaniko/.docker
+            - name: metadata
+              mountPath: /metadata
+            - name: tmp
+              mountPath: /tmp
+
+      volumes:
+        - name: workspace
+          emptyDir: {}
+
+        - name: docker-config
+          emptyDir: {}
+
+        - name: metadata
+          emptyDir: {}
+
+        - name: tmp
+          emptyDir: {}

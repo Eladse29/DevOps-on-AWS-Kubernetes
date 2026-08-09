@@ -9,12 +9,14 @@ JENKINS_CHART_VERSION="${JENKINS_CHART_VERSION:-5.9.49}"
 STORAGE_CLASS_FILE="${STORAGE_CLASS_FILE:-jenkins/storage/storageclass.yaml}"
 JENKINS_VALUES_FILE="${JENKINS_VALUES_FILE:-jenkins/values.yaml}"
 CI_AGENT_FILE="${CI_AGENT_FILE:-jenkins/agents/ci-agent.yaml}"
+BUILD_AGENT_FILE="${BUILD_AGENT_FILE:-jenkins/agents/build-agent.yaml}"
 CD_AGENT_FILE="${CD_AGENT_FILE:-jenkins/agents/cd-agent.yaml}"
 
 for required_file in \
   "${STORAGE_CLASS_FILE}" \
   "${JENKINS_VALUES_FILE}" \
   "${CI_AGENT_FILE}" \
+  "${BUILD_AGENT_FILE}" \
   "${CD_AGENT_FILE}"
 do
   if [[ ! -f "${required_file}" ]]; then
@@ -54,6 +56,7 @@ helm upgrade --install "${JENKINS_RELEASE}" jenkins/jenkins \
   --version "${JENKINS_CHART_VERSION}" \
   --values "${JENKINS_VALUES_FILE}" \
   --set-file "agent.podTemplates.ci=${CI_AGENT_FILE}" \
+  --set-file "agent.podTemplates.build=${BUILD_AGENT_FILE}" \
   --set-file "agent.podTemplates.cd=${CD_AGENT_FILE}" \
   --wait \
   --timeout 10m

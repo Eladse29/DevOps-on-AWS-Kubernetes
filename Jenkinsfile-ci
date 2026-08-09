@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'jenkins-ci'
-    }
+    agent none
 
     options {
         skipDefaultCheckout(true)
@@ -29,491 +27,543 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
+        stage('CI Validation and Tests') {
+            agent {
+                label 'jenkins-ci'
+            }
 
-                script {
-                    env.GIT_COMMIT_SHA = sh(
-                        script: 'git rev-parse HEAD',
-                        returnStdout: true
-                    ).trim()
+            stages {
+                stage('Checkout') {
+                    steps {
+                        checkout scm
 
-                    env.GIT_SHORT_SHA = sh(
-                        script: 'git rev-parse --short=8 HEAD',
-                        returnStdout: true
-                    ).trim()
+                        script {
+                            env.GIT_COMMIT_SHA = sh(
+                                script: 'git rev-parse HEAD',
+                                returnStdout: true
+                            ).trim()
 
-                    env.GIT_BRANCH_NAME = sh(
-                        script: 'git branch --show-current || true',
-                        returnStdout: true
-                    ).trim()
+                            env.GIT_SHORT_SHA = sh(
+                                script: 'git rev-parse --short=8 HEAD',
+                                returnStdout: true
+                            ).trim()
 
-                    if (!env.GIT_BRANCH_NAME) {
-                        env.GIT_BRANCH_NAME = 'main'
+                            env.GIT_BRANCH_NAME = 'task4'
+                            env.IMAGE_TAG = env.GIT_SHORT_SHA
+                        }
+
+                        echo """
+                        Branch: ${env.GIT_BRANCH_NAME}
+                        Commit SHA: ${env.GIT_COMMIT_SHA}
+                        Jenkins build: ${env.BUILD_NUMBER}
+                        Immutable image tag: ${env.IMAGE_TAG}
+                        """.stripIndent()
+                    }
+                }
+
+                stage('Validation') {
+                    steps {
+                        container('python') {
+                            sh '''
+                                set -eu
+
+                                required_files="
+                                Jenkinsfile-ci
+                                Jenkinsfile-cd
+                                docker/frontend/Dockerfile
+                                docker/frontend/index.html
+                                docker/frontend/nginx.conf
+                                docker/backend/Dockerfile
+                                docker/backend/app.py
+                                docker/backend/requirements.txt
+                                docker/worker/Dockerfile
+                                docker/worker/worker.py
+                                docker/worker/requirements.txt
+                                helm/frontend/Chart.yaml
+                                helm/backend/Chart.yaml
+                                helm/worker/Chart.yaml
+                                tests/backend/test_app.py
+                                tests/worker/test_worker.py
+                                tests/requirements.txt
+                                "
+
+                                for required_file in ${required_files}; do
+                                    if [ ! -f "${required_file}" ]; then
+                                        echo "ERROR: Missing required file: ${required_file}" >&2
+                                        exit 1
+                                    fi
+                                done
+
+                                if grep -RInE \
+                                    'image:[[:space:]].*:latest$|tag:[[:space:]]*latest$' \
+                                    docker helm jenkins; then
+                                    echo "ERROR: The latest tag is forbidden." >&2
+                                    exit 1
+                                fi
+
+                                if grep -RInE \
+                                    '/var/run/docker.sock|privileged:[[:space:]]*true|cluster-admin|allowPrivilegeEscalation:[[:space:]]*true' \
+                                    jenkins; then
+                                    echo "ERROR: Forbidden Jenkins configuration detected." >&2
+                                    exit 1
+                                fi
+
+                                echo "Repository validation passed."
+                            '''
+                        }
+                    }
+                }
+
+                stage('Install Test Dependencies') {
+                    steps {
+                        container('python') {
+                            sh '''
+                                set -eu
+
+                                python -m venv .ci-venv
+                                . .ci-venv/bin/activate
+
+                                python -m pip install \
+                                    --no-cache-dir \
+                                    --disable-pip-version-check \
+                                    -r docker/backend/requirements.txt \
+                                    -r docker/worker/requirements.txt \
+                                    -r tests/requirements.txt
+                            '''
+                        }
+                    }
+                }
+
+                stage('Lint') {
+                    steps {
+                        container('python') {
+                            sh '''
+                                set -eu
+                                . .ci-venv/bin/activate
+
+                                python -m flake8 \
+                                    docker/backend/app.py \
+                                    docker/worker/worker.py \
+                                    tests/backend/test_app.py \
+                                    tests/worker/test_worker.py \
+                                    --max-line-length=100
+                            '''
+                        }
+                    }
+                }
+
+                stage('Tests') {
+                    steps {
+                        container('python') {
+                            sh '''
+                                set -eu
+                                . .ci-venv/bin/activate
+
+                                mkdir -p test-results
+
+                                python -m pytest \
+                                    tests/backend \
+                                    tests/worker \
+                                    --junitxml=test-results/pytest-results.xml \
+                                    --cov=docker/backend \
+                                    --cov=docker/worker \
+                                    --cov-report=term-missing \
+                                    --cov-report=xml:test-results/coverage.xml
+                            '''
+                        }
                     }
 
-                    env.IMAGE_TAG = env.GIT_SHORT_SHA
+                    post {
+                        always {
+                            junit(
+                                testResults: 'test-results/pytest-results.xml',
+                                allowEmptyResults: false
+                            )
+
+                            archiveArtifacts(
+                                artifacts: 'test-results/coverage.xml',
+                                allowEmptyArchive: false,
+                                fingerprint: true
+                            )
+                        }
+                    }
                 }
 
-                echo """
-                Branch: ${env.GIT_BRANCH_NAME}
-                Commit SHA: ${env.GIT_COMMIT_SHA}
-                Jenkins build: ${env.BUILD_NUMBER}
-                Immutable image tag: ${env.IMAGE_TAG}
-                """.stripIndent()
-            }
-        }
-
-        stage('Validation') {
-            steps {
-                container('python') {
-                    sh '''
-                        set -eu
-
-                        required_files="
-                        Jenkinsfile-ci
-                        Jenkinsfile-cd
-                        docker/frontend/Dockerfile
-                        docker/frontend/index.html
-                        docker/frontend/nginx.conf
-                        docker/backend/Dockerfile
-                        docker/backend/app.py
-                        docker/backend/requirements.txt
-                        docker/worker/Dockerfile
-                        docker/worker/worker.py
-                        docker/worker/requirements.txt
-                        helm/frontend/Chart.yaml
-                        helm/backend/Chart.yaml
-                        helm/worker/Chart.yaml
-                        tests/backend/test_app.py
-                        tests/worker/test_worker.py
-                        tests/requirements.txt
-                        "
-
-                        for required_file in ${required_files}; do
-                            if [ ! -f "${required_file}" ]; then
-                                echo "ERROR: Missing required file: ${required_file}" >&2
-                                exit 1
-                            fi
-                        done
-
-                        if grep -RInE \
-                            'image:[[:space:]].*:latest$|tag:[[:space:]]*latest$' \
-                            docker helm jenkins; then
-                            echo "ERROR: The latest tag is forbidden." >&2
-                            exit 1
-                        fi
-
-                        if grep -RInE \
-                            '/var/run/docker.sock|privileged:[[:space:]]*true|cluster-admin' \
-                            jenkins; then
-                            echo "ERROR: Forbidden Jenkins configuration detected." >&2
-                            exit 1
-                        fi
-
-                        echo "Repository validation passed."
-                    '''
-                }
-            }
-        }
-
-        stage('Install Test Dependencies') {
-            steps {
-                container('python') {
-                    sh '''
-                        set -eu
-
-                        python -m venv .ci-venv
-                        . .ci-venv/bin/activate
-
-                        python -m pip install \
-                            --no-cache-dir \
-                            --disable-pip-version-check \
-                            -r docker/backend/requirements.txt \
-                            -r docker/worker/requirements.txt \
-                            -r tests/requirements.txt
-                    '''
-                }
-            }
-        }
-
-        stage('Lint') {
-            steps {
-                container('python') {
-                    sh '''
-                        set -eu
-                        . .ci-venv/bin/activate
-
-                        python -m flake8 \
-                            docker/backend/app.py \
-                            docker/worker/worker.py \
-                            tests/backend/test_app.py \
-                            tests/worker/test_worker.py \
-                            --max-line-length=100
-                    '''
-                }
-            }
-        }
-
-        stage('Tests') {
-            steps {
-                container('python') {
-                    sh '''
-                        set -eu
-                        . .ci-venv/bin/activate
-
-                        mkdir -p test-results
-
-                        python -m pytest \
-                            tests/backend \
-                            tests/worker \
-                            --junitxml=test-results/pytest-results.xml \
-                            --cov=docker/backend \
-                            --cov=docker/worker \
-                            --cov-report=term-missing \
-                            --cov-report=xml:test-results/coverage.xml
-                    '''
+                stage('Prepare Build Workspace') {
+                    steps {
+                        stash(
+                            name: 'docker-build-context',
+                            includes: 'docker/**',
+                            useDefaultExcludes: true
+                        )
+                    }
                 }
             }
 
             post {
                 always {
-                    junit(
-                        testResults: 'test-results/pytest-results.xml',
-                        allowEmptyResults: false
-                    )
-
-                    archiveArtifacts(
-                        artifacts: 'test-results/coverage.xml',
-                        allowEmptyArchive: false,
-                        fingerprint: true
+                    cleanWs(
+                        deleteDirs: true,
+                        disableDeferredWipeout: true
                     )
                 }
             }
         }
 
-        stage('Authenticate to Amazon ECR') {
-            steps {
-                container('aws-cli') {
-                    sh '''
-                        set -eu
+        stage('Build, Scan and Publish') {
+            agent {
+                label 'jenkins-build'
+            }
 
-                        AWS_ACCOUNT_ID="$(
-                            aws sts get-caller-identity \
-                                --query Account \
-                                --output text
-                        )"
-
-                        ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-
-                        ECR_PASSWORD="$(
-                            aws ecr get-login-password \
-                                --region "${AWS_REGION}"
-                        )"
-
-                        ECR_AUTH="$(
-                            printf 'AWS:%s' "${ECR_PASSWORD}" |
-                            base64 |
-                            tr -d '\\n'
-                        )"
-
-                        mkdir -p "${DOCKER_CONFIG}"
-
-                        printf '%s\n' \
-   			    '{' \
-    			    '  "auths": {' \
-    			    "    \"${ECR_REGISTRY}\": {" \
-    			    "      \"auth\": \"${ECR_AUTH}\"" \
-       			    '    }' \
-    			    '  }' \
-    			    '}' \
-    			    > "${DOCKER_CONFIG}/config.json"
-
-                        chmod 600 "${DOCKER_CONFIG}/config.json"
-
-                        printf '%s' "${AWS_ACCOUNT_ID}" > "${METADATA_DIRECTORY}/aws-account-id"
-                        printf '%s' "${ECR_REGISTRY}" > "${METADATA_DIRECTORY}/ecr-registry"
-
-                        echo "Authenticated to Amazon ECR."
-                    '''
-                }
-
-                script {
-                    container('aws-cli') {
-                        env.AWS_ACCOUNT_ID = sh(
-                            script: 'cat /metadata/aws-account-id',
-                            returnStdout: true
-                        ).trim()
-
-                        env.ECR_REGISTRY = sh(
-                            script: 'cat /metadata/ecr-registry',
-                            returnStdout: true
-                        ).trim()
+            stages {
+                stage('Restore Build Workspace') {
+                    steps {
+                        unstash 'docker-build-context'
                     }
                 }
 
-                echo "ECR registry: ${env.ECR_REGISTRY}"
-            }
-        }
-
-        stage('Build and Push Images') {
-            parallel {
-                stage('Frontend') {
+                stage('Authenticate to Amazon ECR') {
                     steps {
-                        container('kaniko-frontend') {
+                        container('aws-cli') {
                             sh '''
                                 set -eu
 
-                                /kaniko/executor \
-                                    --context="dir://${WORKSPACE}/docker/frontend" \
-                                    --dockerfile="${WORKSPACE}/docker/frontend/Dockerfile" \
-                                    --destination="${ECR_REGISTRY}/${FRONTEND_REPOSITORY}:${IMAGE_TAG}" \
-                                    --digest-file="${METADATA_DIRECTORY}/frontend-digest.txt" \
-                                    --push-retry=3 \
-                                    --verbosity=info
+                                AWS_ACCOUNT_ID="$(
+                                    aws sts get-caller-identity \
+                                        --query Account \
+                                        --output text
+                                )"
+
+                                ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+
+                                ECR_PASSWORD="$(
+                                    aws ecr get-login-password \
+                                        --region "${AWS_REGION}"
+                                )"
+
+                                ECR_AUTH="$(
+                                    printf 'AWS:%s' "${ECR_PASSWORD}" |
+                                    base64 |
+                                    tr -d '\\n'
+                                )"
+
+                                mkdir -p "${DOCKER_CONFIG}" "${METADATA_DIRECTORY}"
+
+                                printf '%s\n' \
+                                    '{' \
+                                    '  "auths": {' \
+                                    "    \"${ECR_REGISTRY}\": {" \
+                                    "      \"auth\": \"${ECR_AUTH}\"" \
+                                    '    }' \
+                                    '  }' \
+                                    '}' \
+                                    > "${DOCKER_CONFIG}/config.json"
+
+                                chmod 600 "${DOCKER_CONFIG}/config.json"
+
+                                printf '%s' "${AWS_ACCOUNT_ID}" \
+                                    > "${METADATA_DIRECTORY}/aws-account-id"
+
+                                printf '%s' "${ECR_REGISTRY}" \
+                                    > "${METADATA_DIRECTORY}/ecr-registry"
+
+                                echo "Authenticated to Amazon ECR."
+                            '''
+                        }
+
+                        script {
+                            container('aws-cli') {
+                                env.AWS_ACCOUNT_ID = sh(
+                                    script: 'cat /metadata/aws-account-id',
+                                    returnStdout: true
+                                ).trim()
+
+                                env.ECR_REGISTRY = sh(
+                                    script: 'cat /metadata/ecr-registry',
+                                    returnStdout: true
+                                ).trim()
+                            }
+                        }
+
+                        echo "ECR registry: ${env.ECR_REGISTRY}"
+                    }
+                }
+
+                stage('Build and Push Images') {
+                    parallel {
+                        stage('Frontend') {
+                            steps {
+                                container('kaniko-frontend') {
+                                    sh '''
+                                        set -eu
+
+                                        /kaniko/executor \
+                                            --context="dir://${WORKSPACE}/docker/frontend" \
+                                            --dockerfile="${WORKSPACE}/docker/frontend/Dockerfile" \
+                                            --destination="${ECR_REGISTRY}/${FRONTEND_REPOSITORY}:${IMAGE_TAG}" \
+                                            --digest-file="${METADATA_DIRECTORY}/frontend-digest.txt" \
+                                            --push-retry=3 \
+                                            --verbosity=info
+                                    '''
+                                }
+                            }
+                        }
+
+                        stage('Backend') {
+                            steps {
+                                container('kaniko-backend') {
+                                    sh '''
+                                        set -eu
+
+                                        /kaniko/executor \
+                                            --context="dir://${WORKSPACE}/docker/backend" \
+                                            --dockerfile="${WORKSPACE}/docker/backend/Dockerfile" \
+                                            --destination="${ECR_REGISTRY}/${BACKEND_REPOSITORY}:${IMAGE_TAG}" \
+                                            --digest-file="${METADATA_DIRECTORY}/backend-digest.txt" \
+                                            --push-retry=3 \
+                                            --verbosity=info
+                                    '''
+                                }
+                            }
+                        }
+
+                        stage('Worker') {
+                            steps {
+                                container('kaniko-worker') {
+                                    sh '''
+                                        set -eu
+
+                                        /kaniko/executor \
+                                            --context="dir://${WORKSPACE}/docker/worker" \
+                                            --dockerfile="${WORKSPACE}/docker/worker/Dockerfile" \
+                                            --destination="${ECR_REGISTRY}/${WORKER_REPOSITORY}:${IMAGE_TAG}" \
+                                            --digest-file="${METADATA_DIRECTORY}/worker-digest.txt" \
+                                            --push-retry=3 \
+                                            --verbosity=info
+                                    '''
+                                }
+                            }
+                        }
+                    }
+                }
+
+                stage('Image Scan') {
+                    steps {
+                        container('aws-cli') {
+                            sh '''
+                                set -eu
+
+                                for repository in \
+                                    "${FRONTEND_REPOSITORY}" \
+                                    "${BACKEND_REPOSITORY}" \
+                                    "${WORKER_REPOSITORY}"
+                                do
+                                    echo "Waiting for ECR scan: ${repository}:${IMAGE_TAG}"
+
+                                    aws ecr wait image-scan-complete \
+                                        --region "${AWS_REGION}" \
+                                        --repository-name "${repository}" \
+                                        --image-id imageTag="${IMAGE_TAG}"
+
+                                    critical_findings="$(
+                                        aws ecr describe-image-scan-findings \
+                                            --region "${AWS_REGION}" \
+                                            --repository-name "${repository}" \
+                                            --image-id imageTag="${IMAGE_TAG}" \
+                                            --query 'imageScanFindings.findingSeverityCounts.CRITICAL' \
+                                            --output text
+                                    )"
+
+                                    high_findings="$(
+                                        aws ecr describe-image-scan-findings \
+                                            --region "${AWS_REGION}" \
+                                            --repository-name "${repository}" \
+                                            --image-id imageTag="${IMAGE_TAG}" \
+                                            --query 'imageScanFindings.findingSeverityCounts.HIGH' \
+                                            --output text
+                                    )"
+
+                                    if [ "${critical_findings}" = "None" ]; then
+                                        critical_findings=0
+                                    fi
+
+                                    if [ "${high_findings}" = "None" ]; then
+                                        high_findings=0
+                                    fi
+
+                                    echo "${repository}: CRITICAL=${critical_findings}, HIGH=${high_findings}"
+
+                                    if [ "${critical_findings}" -gt 0 ]; then
+                                        echo "ERROR: Critical vulnerabilities found in ${repository}." >&2
+                                        exit 1
+                                    fi
+                                done
+
+                                echo "All image scans completed successfully."
                             '''
                         }
                     }
                 }
 
-                stage('Backend') {
+                stage('Publish Metadata') {
                     steps {
-                        container('kaniko-backend') {
+                        container('python') {
                             sh '''
                                 set -eu
 
-                                /kaniko/executor \
-                                    --context="dir://${WORKSPACE}/docker/backend" \
-                                    --dockerfile="${WORKSPACE}/docker/backend/Dockerfile" \
-                                    --destination="${ECR_REGISTRY}/${BACKEND_REPOSITORY}:${IMAGE_TAG}" \
-                                    --digest-file="${METADATA_DIRECTORY}/backend-digest.txt" \
-                                    --push-retry=3 \
-                                    --verbosity=info
-                            '''
-                        }
-                    }
-                }
+                                python - <<'PY'
+                                import json
+                                import os
+                                from pathlib import Path
 
-                stage('Worker') {
-                    steps {
-                        container('kaniko-worker') {
-                            sh '''
-                                set -eu
+                                metadata_directory = Path("/metadata")
 
-                                /kaniko/executor \
-                                    --context="dir://${WORKSPACE}/docker/worker" \
-                                    --dockerfile="${WORKSPACE}/docker/worker/Dockerfile" \
-                                    --destination="${ECR_REGISTRY}/${WORKER_REPOSITORY}:${IMAGE_TAG}" \
-                                    --digest-file="${METADATA_DIRECTORY}/worker-digest.txt" \
-                                    --push-retry=3 \
-                                    --verbosity=info
-                            '''
-                        }
-                    }
-                }
-            }
-        }
+                                services = {
+                                    "frontend": os.environ["FRONTEND_REPOSITORY"],
+                                    "backend": os.environ["BACKEND_REPOSITORY"],
+                                    "worker": os.environ["WORKER_REPOSITORY"],
+                                }
 
-        stage('Image Scan') {
-            steps {
-                container('aws-cli') {
-                    sh '''
-                        set -eu
+                                release = {
+                                    "ci_build_number": os.environ["BUILD_NUMBER"],
+                                    "git_commit_sha": os.environ["GIT_COMMIT_SHA"],
+                                    "git_short_sha": os.environ["GIT_SHORT_SHA"],
+                                    "git_branch": os.environ["GIT_BRANCH_NAME"],
+                                    "image_tag": os.environ["IMAGE_TAG"],
+                                    "aws_region": os.environ["AWS_REGION"],
+                                    "ecr_registry": os.environ["ECR_REGISTRY"],
+                                    "images": {},
+                                }
 
-                        for repository in \
-                            "${FRONTEND_REPOSITORY}" \
-                            "${BACKEND_REPOSITORY}" \
-                            "${WORKER_REPOSITORY}"
-                        do
-                            echo "Waiting for ECR scan: ${repository}:${IMAGE_TAG}"
+                                for service, repository in services.items():
+                                    digest_path = metadata_directory / f"{service}-digest.txt"
+                                    digest = digest_path.read_text(encoding="utf-8").strip()
 
-                            aws ecr wait image-scan-complete \
-                                --region "${AWS_REGION}" \
-                                --repository-name "${repository}" \
-                                --image-id imageTag="${IMAGE_TAG}"
+                                    if not digest.startswith("sha256:"):
+                                        raise SystemExit(
+                                            f"Invalid or missing image digest for {service}: {digest!r}"
+                                        )
 
-                            critical_findings="$(
-                                aws ecr describe-image-scan-findings \
-                                    --region "${AWS_REGION}" \
-                                    --repository-name "${repository}" \
-                                    --image-id imageTag="${IMAGE_TAG}" \
-                                    --query 'imageScanFindings.findingSeverityCounts.CRITICAL' \
-                                    --output text
-                            )"
+                                    release["images"][service] = {
+                                        "repository": repository,
+                                        "reference": (
+                                            f"{os.environ['ECR_REGISTRY']}/"
+                                            f"{repository}:{os.environ['IMAGE_TAG']}"
+                                        ),
+                                        "digest": digest,
+                                    }
 
-                            high_findings="$(
-                                aws ecr describe-image-scan-findings \
-                                    --region "${AWS_REGION}" \
-                                    --repository-name "${repository}" \
-                                    --image-id imageTag="${IMAGE_TAG}" \
-                                    --query 'imageScanFindings.findingSeverityCounts.HIGH' \
-                                    --output text
-                            )"
+                                output_path = Path("release-metadata.json")
 
-                            if [ "${critical_findings}" = "None" ]; then
-                                critical_findings=0
-                            fi
-
-                            if [ "${high_findings}" = "None" ]; then
-                                high_findings=0
-                            fi
-
-                            echo "${repository}: CRITICAL=${critical_findings}, HIGH=${high_findings}"
-
-                            if [ "${critical_findings}" -gt 0 ]; then
-                                echo "ERROR: Critical vulnerabilities found in ${repository}." >&2
-                                exit 1
-                            fi
-                        done
-
-                        echo "All image scans completed successfully."
-                    '''
-                }
-            }
-        }
-
-        stage('Publish Metadata') {
-            steps {
-                container('python') {
-                    sh '''
-                        set -eu
-
-                        python - <<'PY'
-                        import json
-                        import os
-                        from pathlib import Path
-
-                        metadata_directory = Path("/metadata")
-
-                        services = {
-                            "frontend": os.environ["FRONTEND_REPOSITORY"],
-                            "backend": os.environ["BACKEND_REPOSITORY"],
-                            "worker": os.environ["WORKER_REPOSITORY"],
-                        }
-
-                        release = {
-                            "ci_build_number": os.environ["BUILD_NUMBER"],
-                            "git_commit_sha": os.environ["GIT_COMMIT_SHA"],
-                            "git_short_sha": os.environ["GIT_SHORT_SHA"],
-                            "git_branch": os.environ["GIT_BRANCH_NAME"],
-                            "image_tag": os.environ["IMAGE_TAG"],
-                            "aws_region": os.environ["AWS_REGION"],
-                            "ecr_registry": os.environ["ECR_REGISTRY"],
-                            "images": {},
-                        }
-
-                        for service, repository in services.items():
-                            digest_path = metadata_directory / f"{service}-digest.txt"
-                            digest = digest_path.read_text(encoding="utf-8").strip()
-
-                            if not digest.startswith("sha256:"):
-                                raise SystemExit(
-                                    f"Invalid or missing image digest for {service}: {digest!r}"
+                                output_path.write_text(
+                                    json.dumps(release, indent=2) + "\\n",
+                                    encoding="utf-8",
                                 )
 
-                            release["images"][service] = {
-                                "repository": repository,
-                                "reference": (
-                                    f"{os.environ['ECR_REGISTRY']}/"
-                                    f"{repository}:{os.environ['IMAGE_TAG']}"
-                                ),
-                                "digest": digest,
+                                print(output_path.read_text(encoding="utf-8"))
+                                PY
+                            '''
+                        }
+
+                        script {
+                            container('python') {
+                                env.FRONTEND_DIGEST = sh(
+                                    script: 'cat /metadata/frontend-digest.txt',
+                                    returnStdout: true
+                                ).trim()
+
+                                env.BACKEND_DIGEST = sh(
+                                    script: 'cat /metadata/backend-digest.txt',
+                                    returnStdout: true
+                                ).trim()
+
+                                env.WORKER_DIGEST = sh(
+                                    script: 'cat /metadata/worker-digest.txt',
+                                    returnStdout: true
+                                ).trim()
                             }
+                        }
 
-                        output_path = Path("release-metadata.json")
+                        echo """
+                        Frontend digest: ${env.FRONTEND_DIGEST}
+                        Backend digest: ${env.BACKEND_DIGEST}
+                        Worker digest: ${env.WORKER_DIGEST}
+                        """.stripIndent()
 
-                        output_path.write_text(
-                            json.dumps(release, indent=2) + "\\n",
-                            encoding="utf-8",
+                        archiveArtifacts(
+                            artifacts: 'release-metadata.json',
+                            allowEmptyArchive: false,
+                            fingerprint: true
                         )
-
-                        print(output_path.read_text(encoding="utf-8"))
-                        PY
-                    '''
-                }
-
-                script {
-                    container('python') {
-                        env.FRONTEND_DIGEST = sh(
-                            script: 'cat /metadata/frontend-digest.txt',
-                            returnStdout: true
-                        ).trim()
-
-                        env.BACKEND_DIGEST = sh(
-                            script: 'cat /metadata/backend-digest.txt',
-                            returnStdout: true
-                        ).trim()
-
-                        env.WORKER_DIGEST = sh(
-                            script: 'cat /metadata/worker-digest.txt',
-                            returnStdout: true
-                        ).trim()
                     }
                 }
 
-                echo """
-                Frontend digest: ${env.FRONTEND_DIGEST}
-                Backend digest: ${env.BACKEND_DIGEST}
-                Worker digest: ${env.WORKER_DIGEST}
-                """.stripIndent()
+                stage('Trigger CD') {
+                    steps {
+                        echo """
+                        Triggering application-cd with:
+                        CI build: ${env.BUILD_NUMBER}
+                        Commit: ${env.GIT_COMMIT_SHA}
+                        Image tag: ${env.IMAGE_TAG}
+                        """.stripIndent()
 
-                archiveArtifacts(
-                    artifacts: 'release-metadata.json',
-                    allowEmptyArchive: false,
-                    fingerprint: true
-                )
-            }
-        }
-
-        stage('Trigger CD') {
-            steps {
-                echo """
-                Triggering application-cd with:
-                CI build: ${env.BUILD_NUMBER}
-                Commit: ${env.GIT_COMMIT_SHA}
-                Image tag: ${env.IMAGE_TAG}
-                """.stripIndent()
-
-                build(
-                    job: 'application-cd',
-                    wait: false,
-                    propagate: false,
-                    parameters: [
-                        string(
-                            name: 'IMAGE_TAG',
-                            value: env.IMAGE_TAG
-                        ),
-                        string(
-                            name: 'CI_BUILD_NUMBER',
-                            value: env.BUILD_NUMBER
-                        ),
-                        string(
-                            name: 'GIT_COMMIT_SHA',
-                            value: env.GIT_COMMIT_SHA
-                        ),
-                        string(
-                            name: 'FRONTEND_DIGEST',
-                            value: env.FRONTEND_DIGEST
-                        ),
-                        string(
-                            name: 'BACKEND_DIGEST',
-                            value: env.BACKEND_DIGEST
-                        ),
-                        string(
-                            name: 'WORKER_DIGEST',
-                            value: env.WORKER_DIGEST
-                        ),
-                        string(
-                            name: 'TARGET_NAMESPACE',
-                            value: 'devops-app'
-                        ),
-                        string(
-                            name: 'RELEASE_DESCRIPTION',
-                            value: "Automatic deployment from CI build ${env.BUILD_NUMBER}"
+                        build(
+                            job: 'application-cd',
+                            wait: false,
+                            propagate: false,
+                            parameters: [
+                                string(
+                                    name: 'IMAGE_TAG',
+                                    value: env.IMAGE_TAG
+                                ),
+                                string(
+                                    name: 'CI_BUILD_NUMBER',
+                                    value: env.BUILD_NUMBER
+                                ),
+                                string(
+                                    name: 'GIT_COMMIT_SHA',
+                                    value: env.GIT_COMMIT_SHA
+                                ),
+                                string(
+                                    name: 'FRONTEND_DIGEST',
+                                    value: env.FRONTEND_DIGEST
+                                ),
+                                string(
+                                    name: 'BACKEND_DIGEST',
+                                    value: env.BACKEND_DIGEST
+                                ),
+                                string(
+                                    name: 'WORKER_DIGEST',
+                                    value: env.WORKER_DIGEST
+                                ),
+                                string(
+                                    name: 'TARGET_NAMESPACE',
+                                    value: 'devops-app'
+                                ),
+                                string(
+                                    name: 'RELEASE_DESCRIPTION',
+                                    value: "Automatic deployment from CI build ${env.BUILD_NUMBER}"
+                                )
+                            ]
                         )
-                    ]
-                )
+                    }
+                }
+            }
+
+            post {
+                always {
+                    container('aws-cli') {
+                        sh '''
+                            rm -f /docker-config/config.json || true
+                            rm -rf /metadata/* || true
+                        '''
+                    }
+
+                    cleanWs(
+                        deleteDirs: true,
+                        disableDeferredWipeout: true
+                    )
+                }
             }
         }
     }
@@ -535,29 +585,6 @@ pipeline {
             No deployment was triggered.
             Review the failed stage and its console output.
             '''.stripIndent()
-        }
-
-        always {
-            container('python') {
-                sh '''
-                    rm -rf \
-                        .ci-venv \
-                        test-results \
-                        release-metadata.json || true
-                '''
-            }
-
-            container('aws-cli') {
-                sh '''
-                    rm -f /docker-config/config.json || true
-                    rm -rf /metadata/* || true
-                '''
-            }
-
-            cleanWs(
-                deleteDirs: true,
-                disableDeferredWipeout: true
-            )
         }
     }
 }
