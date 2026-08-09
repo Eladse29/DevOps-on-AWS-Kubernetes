@@ -240,15 +240,17 @@ pipeline {
                 }
 
                 script {
-                    env.AWS_ACCOUNT_ID = sh(
-                        script: 'cat /metadata/aws-account-id',
-                        returnStdout: true
-                    ).trim()
+                    container('aws-cli') {
+                        env.AWS_ACCOUNT_ID = sh(
+                            script: 'cat /metadata/aws-account-id',
+                            returnStdout: true
+                        ).trim()
 
-                    env.ECR_REGISTRY = sh(
-                        script: 'cat /metadata/ecr-registry',
-                        returnStdout: true
-                    ).trim()
+                        env.ECR_REGISTRY = sh(
+                            script: 'cat /metadata/ecr-registry',
+                            returnStdout: true
+                        ).trim()
+                    }
                 }
 
                 echo "ECR registry: ${env.ECR_REGISTRY}"
