@@ -51,7 +51,7 @@
               mountPath: /tmp
 
         - name: python
-          image: python:3.14.6-slim
+          image: python:3.12.13-slim
           imagePullPolicy: IfNotPresent
           command:
             - /bin/sh
