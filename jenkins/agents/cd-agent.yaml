@@ -15,7 +15,7 @@
       serviceAccountName: jenkins-cd-agent
       automountServiceAccountToken: true
       restartPolicy: Never
-    
+
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -23,7 +23,7 @@
         fsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
-    
+
       containers:
         - name: jnlp
           image: jenkins/inbound-agent:3384.v60d89463d9e0-1-jdk21
@@ -49,7 +49,7 @@
               mountPath: /home/jenkins/agent
             - name: tmp
               mountPath: /tmp
-    
+
         - name: helm
           image: alpine/helm:3.21.0
           imagePullPolicy: IfNotPresent
@@ -84,9 +84,9 @@
               mountPath: /home/jenkins/.config
             - name: tmp
               mountPath: /tmp
-    
+
         - name: kubectl
-          image: bitnami/kubectl:1.35.0
+          image: bitnami/kubectl@sha256:bb91d6086d968982b7589dbed517aac72409337c76556e4ddcc15d810b6cc06d
           imagePullPolicy: IfNotPresent
           command:
             - /bin/sh
@@ -115,7 +115,7 @@
               mountPath: /home/jenkins/agent
             - name: tmp
               mountPath: /tmp
-    
+
         - name: curl
           image: curlimages/curl:8.16.0
           imagePullPolicy: IfNotPresent
@@ -144,16 +144,16 @@
               mountPath: /home/jenkins/agent
             - name: tmp
               mountPath: /tmp
-    
+
       volumes:
         - name: workspace
           emptyDir: {}
-    
+
         - name: helm-cache
           emptyDir: {}
-    
+
         - name: helm-config
           emptyDir: {}
-    
+
         - name: tmp
           emptyDir: {}
