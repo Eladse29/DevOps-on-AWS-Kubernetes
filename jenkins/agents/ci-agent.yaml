@@ -100,6 +100,8 @@
               value: us-east-1
             - name: DOCKER_CONFIG
               value: /docker-config
+            - name: HOME
+              value: /tmp
           resources:
             requests:
               cpu: 50m
