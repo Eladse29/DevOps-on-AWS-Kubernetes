@@ -280,7 +280,6 @@ pipeline {
 
                             helm upgrade --install "${WORKER_RELEASE}" helm/worker \
                                 --namespace "${TARGET_NAMESPACE}" \
-                                --create-namespace \
                                 --set image.repository="${ECR_REGISTRY}/${WORKER_REPOSITORY}" \
                                 --set image.tag="${IMAGE_TAG}" \
                                 --wait \
