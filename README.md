@@ -837,3 +837,6 @@ Finally verify that no billable project resources remain, especially:
 This project demonstrates the evolution of a three-service AWS application from an EC2 and Ansible deployment into a modern Amazon EKS architecture.
 
 Terraform provisions the infrastructure, Docker packages the services, ECR stores the images, Helm manages the Kubernetes deployment, and IRSA provides secure access to AWS services. The final system is highly available, reproducible, private by default, and documented with end-to-end operational evidence.
+
+
+CI validation trigger
