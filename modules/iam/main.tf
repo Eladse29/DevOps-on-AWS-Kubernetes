@@ -122,6 +122,7 @@ resource "aws_iam_policy" "jenkins_ci_ecr_policy" {
         Effect = "Allow"
         Action = [
           "ecr:BatchCheckLayerAvailability",
+          "ecr:BatchGetImage",
           "ecr:CompleteLayerUpload",
           "ecr:DescribeImages",
           "ecr:DescribeImageScanFindings",
