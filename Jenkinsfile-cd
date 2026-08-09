@@ -519,7 +519,6 @@ pipeline {
                 )
             }
         }
-    }
 
     post {
         success {
