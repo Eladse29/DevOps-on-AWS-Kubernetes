@@ -149,12 +149,6 @@
             runAsGroup: 0
             allowPrivilegeEscalation: false
             privileged: false
-            capabilities:
-              drop:
-                - ALL
-              add:
-                - CHOWN
-                - FOWNER
           volumeMounts:
             - name: workspace
               mountPath: /home/jenkins/agent
@@ -185,12 +179,6 @@
             runAsGroup: 0
             allowPrivilegeEscalation: false
             privileged: false
-            capabilities:
-              drop:
-                - ALL
-              add:
-                - CHOWN
-                - FOWNER
           volumeMounts:
             - name: workspace
               mountPath: /home/jenkins/agent
@@ -221,12 +209,6 @@
             runAsGroup: 0
             allowPrivilegeEscalation: false
             privileged: false
-            capabilities:
-              drop:
-                - ALL
-              add:
-                - CHOWN
-                - FOWNER
           volumeMounts:
             - name: workspace
               mountPath: /home/jenkins/agent
