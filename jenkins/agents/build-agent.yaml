@@ -237,6 +237,46 @@
             - name: tmp
               mountPath: /tmp
 
+        - name: trivy
+          image: aquasec/trivy:0.67.2
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          env:
+            - name: DOCKER_CONFIG
+              value: /docker-config
+            - name: TRIVY_CACHE_DIR
+              value: /tmp/trivy-cache
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 768Mi
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: docker-config
+              mountPath: /docker-config
+              readOnly: true
+            - name: tmp
+              mountPath: /tmp
+
       volumes:
         - name: workspace
           emptyDir: {}

@@ -349,57 +349,38 @@ pipeline {
 
                 stage('Image Scan') {
                     steps {
-                        container('aws-cli') {
+                        container('trivy') {
                             sh '''
                                 set -eu
 
-                                for repository in \
-                                    "${FRONTEND_REPOSITORY}" \
-                                    "${BACKEND_REPOSITORY}" \
-                                    "${WORKER_REPOSITORY}"
-                                do
-                                    echo "Waiting for ECR scan: ${repository}:${IMAGE_TAG}"
+                                echo "Scanning frontend image with Trivy..."
+                                trivy image \
+                                    --scanners vuln \
+                                    --severity HIGH,CRITICAL \
+                                    --exit-code 1 \
+                                    --ignore-unfixed \
+                                    --no-progress \
+                                    "${ECR_REGISTRY}/${FRONTEND_REPOSITORY}:${IMAGE_TAG}"
 
-                                    aws ecr wait image-scan-complete \
-                                        --region "${AWS_REGION}" \
-                                        --repository-name "${repository}" \
-                                        --image-id imageTag="${IMAGE_TAG}"
+                                echo "Scanning backend image with Trivy..."
+                                trivy image \
+                                    --scanners vuln \
+                                    --severity HIGH,CRITICAL \
+                                    --exit-code 1 \
+                                    --ignore-unfixed \
+                                    --no-progress \
+                                    "${ECR_REGISTRY}/${BACKEND_REPOSITORY}:${IMAGE_TAG}"
 
-                                    critical_findings="$(
-                                        aws ecr describe-image-scan-findings \
-                                            --region "${AWS_REGION}" \
-                                            --repository-name "${repository}" \
-                                            --image-id imageTag="${IMAGE_TAG}" \
-                                            --query 'imageScanFindings.findingSeverityCounts.CRITICAL' \
-                                            --output text
-                                    )"
+                                echo "Scanning worker image with Trivy..."
+                                trivy image \
+                                    --scanners vuln \
+                                    --severity HIGH,CRITICAL \
+                                    --exit-code 1 \
+                                    --ignore-unfixed \
+                                    --no-progress \
+                                    "${ECR_REGISTRY}/${WORKER_REPOSITORY}:${IMAGE_TAG}"
 
-                                    high_findings="$(
-                                        aws ecr describe-image-scan-findings \
-                                            --region "${AWS_REGION}" \
-                                            --repository-name "${repository}" \
-                                            --image-id imageTag="${IMAGE_TAG}" \
-                                            --query 'imageScanFindings.findingSeverityCounts.HIGH' \
-                                            --output text
-                                    )"
-
-                                    if [ "${critical_findings}" = "None" ]; then
-                                        critical_findings=0
-                                    fi
-
-                                    if [ "${high_findings}" = "None" ]; then
-                                        high_findings=0
-                                    fi
-
-                                    echo "${repository}: CRITICAL=${critical_findings}, HIGH=${high_findings}"
-
-                                    if [ "${critical_findings}" -gt 0 ]; then
-                                        echo "ERROR: Critical vulnerabilities found in ${repository}." >&2
-                                        exit 1
-                                    fi
-                                done
-
-                                echo "All image scans completed successfully."
+                                echo "All Trivy image scans passed."
                             '''
                         }
                     }
