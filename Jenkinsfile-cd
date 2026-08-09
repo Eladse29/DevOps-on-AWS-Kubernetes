@@ -392,7 +392,7 @@ pipeline {
                         frontend_running_digest="$(
                             kubectl get pods \
                                 --namespace "${TARGET_NAMESPACE}" \
-                                -l app.kubernetes.io/name=frontend \
+                                -l app=frontend \
                                 --output jsonpath='{.items[0].status.containerStatuses[0].imageID}' |
                             sed 's|.*@||'
                         )"
@@ -400,7 +400,7 @@ pipeline {
                         backend_running_digest="$(
                             kubectl get pods \
                                 --namespace "${TARGET_NAMESPACE}" \
-                                -l app.kubernetes.io/name=backend \
+                                -l app=backend \
                                 --output jsonpath='{.items[0].status.containerStatuses[0].imageID}' |
                             sed 's|.*@||'
                         )"
@@ -408,7 +408,7 @@ pipeline {
                         worker_running_digest="$(
                             kubectl get pods \
                                 --namespace "${TARGET_NAMESPACE}" \
-                                -l app.kubernetes.io/name=worker \
+                                -l app=worker \
                                 --output jsonpath='{.items[0].status.containerStatuses[0].imageID}' |
                             sed 's|.*@||'
                         )"
