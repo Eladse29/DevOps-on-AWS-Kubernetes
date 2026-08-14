@@ -67,7 +67,7 @@ The immutable image created and scanned by CI is the exact image deployed by CD.
 ---
 
 ## Final architecture
-
+![Task 4 architecture](architecture-part4.png)
 The infrastructure runs in `us-east-1` inside a dedicated VPC.
 
 Jenkins and the application run in the same EKS cluster for this course environment. Namespace, ServiceAccount, IAM, and RBAC boundaries separate the CI, CD, and application responsibilities.
