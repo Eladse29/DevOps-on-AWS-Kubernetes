@@ -10,13 +10,17 @@ services:
       - "5432:5432"
 
   worker:
-    image: devops-worker:v1
+    build:
+      context: ./docker/worker
+    image: devops-worker:local
     container_name: devops-worker
     ports:
       - "5001:5001"
 
   backend:
-    image: devops-backend:v1
+    build:
+      context: ./docker/backend
+    image: devops-backend:local
     container_name: devops-backend
     depends_on:
       - postgres
@@ -35,7 +39,9 @@ services:
       - "5000:5000"
 
   frontend:
-    image: devops-frontend:v1
+    build:
+      context: ./docker/frontend
+    image: devops-frontend:local
     container_name: devops-frontend
     depends_on:
       - backend

@@ -1,0 +1,35 @@
+# AWS / project
+aws_region   = "us-east-1"
+project_name = "infra-automation"
+environment  = "dev"
+
+# Legacy EC2 variables retained from earlier project stages
+# Replace with values from your AWS account if those resources are used.
+instance_type = "t3.micro"
+ami_id        = "ami-REPLACE_ME"
+key_name      = "REPLACE_ME"
+my_ip         = "203.0.113.10/32"
+
+# Networking
+vpc_cidr              = "10.0.0.0/16"
+public_subnet_cidr     = "10.0.1.0/24"
+public_subnet_2_cidr   = "10.0.2.0/24"
+private_subnet_cidr    = "10.0.11.0/24"
+private_subnet_2_cidr  = "10.0.12.0/24"
+
+# PostgreSQL
+db_name     = "devopsdb"
+db_username = "postgres"
+db_password = "REPLACE_WITH_STRONG_PASSWORD"
+
+# S3
+# Bucket names must be globally unique.
+bucket_name = "REPLACE_WITH_UNIQUE_BUCKET_NAME"
+
+# SNS
+sns_topic_name      = "devops-project-topic"
+sns_email_endpoint  = "REPLACE_WITH_EMAIL"
+
+# EKS
+kubernetes_version     = "1.35"
+ebs_csi_addon_version  = "REPLACE_WITH_SUPPORTED_ADDON_VERSION"

@@ -22,16 +22,6 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
-variable "ami_id" {
-  description = "AMI ID for EC2 instances"
-  type        = string
-}
-
-variable "key_name" {
-  description = "Existing AWS key pair name"
-  type        = string
-}
-
 variable "vpc_cidr" {
   description = "CIDR block for project VPC"
   type        = string
@@ -42,11 +32,6 @@ variable "public_subnet_cidr" {
   description = "CIDR block for public subnet"
   type        = string
   default     = "10.0.1.0/24"
-}
-
-variable "my_ip" {
-  description = "Your public IP address with CIDR"
-  type        = string
 }
 
 variable "public_subnet_2_cidr" {
