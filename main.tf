@@ -55,6 +55,18 @@ module "iam" {
   sns_topic_arn     = module.sns_topic.topic_arn
   oidc_provider_arn = module.eks.oidc_provider_arn
   oidc_issuer_url   = module.eks.cluster_oidc_issuer_url
+
+  backend_namespace            = "devops-app"
+  backend_service_account_name = "backend-sa"
+
+  jenkins_namespace               = "jenkins"
+  jenkins_ci_service_account_name = "jenkins-ci-agent"
+
+  ecr_repository_arns = [
+    module.ecr.frontend_repository_arn,
+    module.ecr.backend_repository_arn,
+    module.ecr.worker_repository_arn
+  ]
 }
 
 module "ecr" {
@@ -67,9 +79,11 @@ module "ecr" {
 module "eks" {
   source = "./modules/eks"
 
-  project_name       = var.project_name
-  environment        = var.environment
-  private_subnet_ids = module.networking.private_subnet_ids
+  project_name          = var.project_name
+  environment           = var.environment
+  private_subnet_ids    = module.networking.private_subnet_ids
+  kubernetes_version    = var.kubernetes_version
+  ebs_csi_addon_version = var.ebs_csi_addon_version
 }
 
 resource "aws_security_group_rule" "rds_from_eks" {

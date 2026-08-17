@@ -37,3 +37,15 @@ output "eks_node_group_name" {
 output "backend_irsa_role_arn" {
   value = module.iam.backend_role_arn
 }
+
+output "ebs_csi_addon_name" {
+  value = module.eks.ebs_csi_addon_name
+}
+
+output "ebs_csi_role_arn" {
+  value = module.eks.ebs_csi_role_arn
+}
+
+output "jenkins_ci_role_arn" {
+  value = module.iam.jenkins_ci_role_arn
+}
