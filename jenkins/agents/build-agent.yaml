@@ -29,7 +29,7 @@
           resources:
             requests:
               cpu: 50m
-              memory: 128Mi
+              memory: 96Mi
             limits:
               cpu: 200m
               memory: 256Mi
@@ -74,7 +74,7 @@
           resources:
             requests:
               cpu: 50m
-              memory: 128Mi
+              memory: 64Mi
             limits:
               cpu: 300m
               memory: 384Mi
@@ -109,7 +109,7 @@
           resources:
             requests:
               cpu: 50m
-              memory: 96Mi
+              memory: 64Mi
             limits:
               cpu: 250m
               memory: 256Mi
@@ -139,7 +139,7 @@
           resources:
             requests:
               cpu: 150m
-              memory: 192Mi
+              memory: 128Mi
             limits:
               cpu: 750m
               memory: 768Mi
@@ -169,7 +169,7 @@
           resources:
             requests:
               cpu: 200m
-              memory: 256Mi
+              memory: 192Mi
             limits:
               cpu: "1"
               memory: 1Gi
@@ -199,7 +199,7 @@
           resources:
             requests:
               cpu: 200m
-              memory: 256Mi
+              memory: 192Mi
             limits:
               cpu: "1"
               memory: 1Gi
@@ -237,7 +237,7 @@
           resources:
             requests:
               cpu: 100m
-              memory: 256Mi
+              memory: 192Mi
             limits:
               cpu: 500m
               memory: 768Mi
