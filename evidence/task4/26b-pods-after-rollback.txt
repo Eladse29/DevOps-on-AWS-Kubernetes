@@ -1,0 +1,10 @@
+NAME                        READY   STATUS    RESTARTS   AGE     IP            NODE                          NOMINATED NODE   READINESS GATES
+backend-c7854ccd8-krxx8     1/1     Running   0          2m39s   10.0.11.117   ip-10-0-11-34.ec2.internal    <none>           <none>
+backend-c7854ccd8-q8p47     1/1     Running   0          2m26s   10.0.12.18    ip-10-0-12-100.ec2.internal   <none>           <none>
+backend-c7854ccd8-vq4rd     1/1     Running   0          2m14s   10.0.11.41    ip-10-0-11-192.ec2.internal   <none>           <none>
+frontend-58b47cd67f-6p66q   1/1     Running   0          3m25s   10.0.11.186   ip-10-0-11-34.ec2.internal    <none>           <none>
+frontend-58b47cd67f-pfx7s   1/1     Running   0          2m59s   10.0.12.154   ip-10-0-12-100.ec2.internal   <none>           <none>
+frontend-58b47cd67f-x6bvd   1/1     Running   0          3m13s   10.0.11.203   ip-10-0-11-192.ec2.internal   <none>           <none>
+worker-66b7df996b-m7rm7     1/1     Running   0          85s     10.0.11.210   ip-10-0-11-192.ec2.internal   <none>           <none>
+worker-66b7df996b-sqzvh     1/1     Running   0          110s    10.0.12.148   ip-10-0-12-151.ec2.internal   <none>           <none>
+worker-66b7df996b-ts245     1/1     Running   0          98s     10.0.11.56    ip-10-0-11-34.ec2.internal    <none>           <none>

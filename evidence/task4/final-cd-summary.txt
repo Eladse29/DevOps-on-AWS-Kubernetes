@@ -1,0 +1,22 @@
+296:+ helm lint helm/frontend --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend' --set 'image.tag=199763a0'
+301:+ helm lint helm/backend --values **** --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend' --set 'image.tag=199763a0'
+306:+ helm lint helm/worker --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker' --set 'image.tag=199763a0'
+312:+ helm template frontend helm/frontend --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend' --set 'image.tag=199763a0'
+313:+ helm template backend helm/backend --namespace devops-app --values **** --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend' --set 'image.tag=199763a0'
+314:+ helm template worker helm/worker --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker' --set 'image.tag=199763a0'
+390:+ helm upgrade --install worker helm/worker --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker' --set 'image.tag=199763a0' --wait --timeout 5m --history-max 10
+398:+ helm upgrade --install backend helm/backend --namespace devops-app --values **** --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend' --set 'image.tag=199763a0' --wait --timeout 5m --history-max 10
+406:+ helm upgrade --install frontend helm/frontend --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend' --set 'image.tag=199763a0' --wait --timeout 5m --history-max 10
+428:+ kubectl rollout status deployment/worker --namespace devops-app --timeout=180s
+430:+ kubectl rollout status deployment/backend --namespace devops-app --timeout=180s
+432:+ kubectl rollout status deployment/frontend --namespace devops-app --timeout=180s
+530:+ echo FRONTEND_RUNNING_DIGEST=sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+531:+ echo BACKEND_RUNNING_DIGEST=sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+532:+ echo WORKER_RUNNING_DIGEST=sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
+545:FRONTEND_RUNNING_DIGEST=sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+546:BACKEND_RUNNING_DIGEST=sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+547:WORKER_RUNNING_DIGEST=sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
+612:+ echo 'Smoke tests passed.'
+613:Smoke tests passed.
+629:CD completed successfully.
+648:Finished: SUCCESS

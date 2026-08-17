@@ -1,6 +1,8 @@
 # Task 4 Evidence Checklist
 
-All evidence in this directory must come from one current Task 4 deployment and one repository revision.
+Final successful CI/CD evidence is anchored to repository revision `199763a`, CI build #5, and CD build #3.
+
+Intentional CI failure and rollback evidence are explicitly identified test scenarios performed in the same Task 4 environment to demonstrate failure handling and recovery behavior.
 
 ## Jenkins
 - 01-jenkins-namespaces.png

@@ -1,0 +1,54 @@
+Masking supported pattern matches of $BACKEND_VALUES_FILE
+[8mha:////4AtV6C08q+KPuTXQdqGqHg5/IlAU/UFuqNiKz8oxmiJrAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUMLAgpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LD27blSrCAAAA[0m[Pipeline] {
+[8mha:////4L/wvJrzCYOI2BgH62fahJfJgfg4u3pv1tfLvNCptVYqAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUAokFMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLkh91s+/lZfADKbit4wgAAAA==[0m[Pipeline] container
+[8mha:////4Agog6N0xRjQBe4EdnItsYeLsPgCzI1SS74rk31eAbahAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0ALEgpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LD7KBoKTCAAAA[0m[Pipeline] {
+[8mha:////4H5Z6xd0ok4Shlg1PzmjP+mP5yMjLOo8KJTOUJHKwoYXAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSAA2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwZyv32U7vwBlmkmCe+AAAA[0m[Pipeline] sh
++ set -eu
++ helm upgrade --install worker helm/worker --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker' --set 'image.tag=bf8f3085' --wait --timeout 5m --history-max 10
+Release "worker" does not exist. Installing it now.
+NAME: worker
+LAST DEPLOYED: Mon Aug 17 07:35:58 2026
+NAMESPACE: devops-app
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
++ helm upgrade --install backend helm/backend --namespace devops-app --values **** --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend' --set 'image.tag=bf8f3085' --wait --timeout 5m --history-max 10
+Release "backend" does not exist. Installing it now.
+NAME: backend
+LAST DEPLOYED: Mon Aug 17 07:36:19 2026
+NAMESPACE: devops-app
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
++ helm upgrade --install frontend helm/frontend --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend' --set 'image.tag=bf8f3085' --wait --timeout 5m --history-max 10
+Release "frontend" does not exist. Installing it now.
+NAME: frontend
+LAST DEPLOYED: Mon Aug 17 07:36:37 2026
+NAMESPACE: devops-app
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
++ echo 'Helm deployment completed.'
+Helm deployment completed.
+[8mha:////4HBw77bfDOMeaxrl3PdgFKeUHkxmjpcsRuCnoThsw6nnAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSoDSIitZKwwtMYowd686xHZyKF/E1/kAgEhVbrHa2mecL1jHAkYNGq6g3FFuD3o16Xpg59FfHGS1fsGWK7BQ2KjfcqdOCDScFS4oSVgI2ilrH0ZBOsBVW3mXlJOnqnML8HQSUphvgAYWYzUmG9IUpwO42dpHp5/krgMn7BGVdf2r/BvQoOE2+AAAA[0m[Pipeline] }
+[8mha:////4DM4yf7ekFRG4p2dgGmlEsJaxwqEzWvvDZ2fnfPPFVfXAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSIEGBqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgHybgAYvgAAAA==[0m[Pipeline] // container
+[8mha:////4J8HLGBCkNoJuhx1NEhcFZl72cPBmCvAGx6y+zuQjHpUAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiUSAkRJXWcsMLTGyME+vO2A5JxYv4Gn8gEImKLVY728zzBcsU4cjRYmuoc5Qah8H3dlo4cOwungds+YwNU2JvUJpBsjb1jJKzgTlFCQsBK0ON5+TIZliLVt1V5RXZ6pTj9B0ElE7f4AGFmMxZxfyFMcLm2uvE9PP8FcAYQoZyt//U9g2x7FGevgAAAA==[0m[Pipeline] }
+[8mha:////4OLeXk1NwLLjoYPJH7Z5WnKBJ/Z83OWVIJXvulWF9mWlAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiGiSEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgGubgTMvgAAAA==[0m[Pipeline] // withCredentials
+[8mha:////4O9EVvsgske4b31B0zR+cRuazp6WvyQ2HYYGHyePWGGOAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKSCgpEldZKwwtMbIwT687YDknFi/gaf8AiEhVbrHa2mdcb1jHAiYPBXtNgKXYWvRtNXjhxGK6OJ+z5gh1TZKex1VPLSjcLtpw0LClKWAnYaOocR0smwVb08iErJ8lU5xTydxRQWnWHJxQim5MM6QtzgN1tVJHp5/krgNn7BOWhzrWvP0QEezq+AAAA[0m[Pipeline] }
+[8mha:////4HXltjASdb9S+ZOCpJuNJ7odTQtb9IzBM7w54X48l5BmAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiCoQQSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryv821O3wAhjzWo74AAAA=[0m[Pipeline] // stage
+[8mha:////4OUckPLlhXfjEcB6CBe6fIn1Zb/P52xyRcWAC0LpaHNhAAAApx+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQjUUCBqGgtN7zAxMY4se6CfSGpeBFf4w8EIlGx1c5Kq3m+oMwJDpS8bBy2AXMdZBd7PzU5UGovkQbZ0FnWhJmik9oNmqw7zqiJHcwRBSwULB3WkXJAz7BSjbmbKhr01YnTtO0VFMHe4AFCTWY2ib8wJlhfe5sJf56/Ahg7BrFlKHabz7F8A0bJXifBAAAA[0m[Pipeline] stage
+[8mha:////4Dy/OBSrV9nsX1invrhmWpvgGmpNB7c/5V3ZuqWHhfJbAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUgoEBMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLkh91s+/lZfAARKflFwgAAAA==[0m[Pipeline] { (Rollout)
+[8mha:////4B8fdrmjPME9mkESxoT4ncf4uho/ADjRkwypNnvAM4kxAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0AIkBMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLkh91s+/lZfABpxnKZwgAAAA==[0m[Pipeline] container
+[8mha:////4Pp9X7AMWo4jv8cBwe6G4cge1rQ2rYOvtiT0ftIlJ/I1AAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0ATEgpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LD08AFXvCAAAA[0m[Pipeline] {
+[8mha:////4BzciaYkOGf8mYgMffQ4GTjWFJNYO6hEv89EbRKCYzpKAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSAQWiSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwZyv32U7vwBoeWqme+AAAA[0m[Pipeline] sh
++ set -eu
++ kubectl rollout status deployment/worker --namespace devops-app --timeout=180s
+deployment "worker" successfully rolled out
++ kubectl rollout status deployment/backend --namespace devops-app --timeout=180s
+deployment "backend" successfully rolled out
++ kubectl rollout status deployment/frontend --namespace devops-app --timeout=180s
+deployment "frontend" successfully rolled out
++ echo 'All deployments completed rollout successfully.'
+All deployments completed rollout successfully.
++ echo
+

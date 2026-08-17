@@ -1,0 +1,55 @@
+flowchart TB
+    GH[GitHub Repository]
+
+    subgraph AWS["AWS Account - us-east-1"]
+        ECR[(Amazon ECR)]
+        RDS[(Amazon RDS PostgreSQL)]
+        S3[(Amazon S3)]
+        SNS[(Amazon SNS)]
+
+        subgraph VPC["Dedicated VPC"]
+            subgraph EKS["Amazon EKS"]
+                subgraph JNS["Namespace: jenkins"]
+                    JC["Jenkins Controller Pod\nnumExecutors = 0"]
+                    PVC[(Jenkins Home PVC\n8 GiB / jenkins-ebs)]
+                    SVCJ["Jenkins Service\nClusterIP"]
+                    CI["Ephemeral CI Agent Pod"]
+                    BUILD["Ephemeral Build Agent Pod\nKaniko + Trivy"]
+                    CD["Ephemeral CD Agent Pod\nkubectl + Helm + curl"]
+                end
+
+                subgraph APP["Namespace: devops-app"]
+                    FE["Frontend Deployment\n3 replicas"]
+                    BESVC["backend-service\nClusterIP"]
+                    BE["Backend Deployment\n3 replicas"]
+                    WKSVC["worker-service\nClusterIP"]
+                    WK["Worker Deployment\n3 replicas"]
+                    FESVC["frontend-service\nLoadBalancer"]
+                    CM["ConfigMap"]
+                    SEC["Kubernetes Secret"]
+                end
+            end
+        end
+    end
+
+    USER[User] --> FESVC
+    FESVC --> FE
+    FE --> BESVC --> BE
+    BE --> WKSVC --> WK
+
+    BE --> RDS
+    BE --> S3
+    BE --> SNS
+    CM --> BE
+    SEC --> BE
+
+    GH -->|POST /github-webhook/| JC
+    JC --> CI
+    JC --> BUILD
+    JC --> CD
+
+    BUILD -->|push + pull for scan| ECR
+    CD -->|Helm / Kubernetes API| APP
+
+    JC --- PVC
+    SVCJ --- JC

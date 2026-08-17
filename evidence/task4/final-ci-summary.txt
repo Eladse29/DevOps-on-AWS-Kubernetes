@@ -1,0 +1,23 @@
+1:Started by GitHub push by Eladse29
+176:Commit SHA: 199763a0a50c470cd1553c173e9459e8585a65cb
+178:Immutable image tag: 199763a0
+226:+ echo Repository validation passed.
+227:Repository validation passed.
+440:============================== 8 passed in 3.71s ===============================
+826:+ /kaniko/executor '--context=dir:///home/jenkins/agent/workspace/application-ci/docker/frontend' '--dockerfile=/home/jenkins/agent/workspace/application-ci/docker/frontend/Dockerfile' '--destination=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0' '--digest-file=/metadata/frontend-digest.txt' '--push-retry=3' '--verbosity=info'
+832:+ /kaniko/executor '--context=dir:///home/jenkins/agent/workspace/application-ci/docker/backend' '--dockerfile=/home/jenkins/agent/workspace/application-ci/docker/backend/Dockerfile' '--destination=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0' '--digest-file=/metadata/backend-digest.txt' '--push-retry=3' '--verbosity=info'
+849:+ /kaniko/executor '--context=dir:///home/jenkins/agent/workspace/application-ci/docker/worker' '--dockerfile=/home/jenkins/agent/workspace/application-ci/docker/worker/Dockerfile' '--destination=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0' '--digest-file=/metadata/worker-digest.txt' '--push-retry=3' '--verbosity=info'
+1043:+ echo 'Scanning frontend image with Trivy...'
+1044:Scanning frontend image with Trivy...
+1074:+ echo 'Scanning backend image with Trivy...'
+1075:Scanning backend image with Trivy...
+1145:+ echo 'Scanning worker image with Trivy...'
+1146:Scanning worker image with Trivy...
+1189:+ echo 'All Trivy image scans passed.'
+1190:All Trivy image scans passed.
+1247:Frontend digest: sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+1248:Backend digest: sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+1249:Worker digest: sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
+1260:Triggering application-cd with:
+1289:CI completed successfully.
+1300:Finished: SUCCESS

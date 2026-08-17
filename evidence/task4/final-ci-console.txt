@@ -1,0 +1,1300 @@
+Started by GitHub push by Eladse29
+Checking out git https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git into /var/jenkins_home/workspace/application-ci@script/8c2e6da44fe3cf328954b48563ecc9e6db95137bbba0ef21ff7d29ddbd439f29 to read Jenkinsfile-ci
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/application-ci@script/8c2e6da44fe3cf328954b48563ecc9e6db95137bbba0ef21ff7d29ddbd439f29/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git # timeout=10
+Cleaning workspace
+ > git rev-parse --verify HEAD # timeout=10
+Resetting working tree
+ > git reset --hard # timeout=10
+ > git clean -fdx # timeout=10
+Fetching upstream changes from https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/task4^{commit} # timeout=10
+Checking out Revision 199763a0a50c470cd1553c173e9459e8585a65cb (refs/remotes/origin/task4)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 199763a0a50c470cd1553c173e9459e8585a65cb # timeout=10
+Commit message: "Increase EKS capacity for Jenkins workloads"
+ > git rev-list --no-walk 1cb8a0f36e4f75a6b4eb9a008c2c875d283b6980 # timeout=10
+[8mha:////4JS0jQyGkSY5j3imHaK8OkzSoRbA0xIzor3WkVDepbyuAAAAoh+LCAAAAAAAAP9tjTEOwjAQBM8BClpKHuFItIiK1krDC0x8GCfWnbEdkooX8TX+gCESFVvtrLSa5wtWKcKBo5UdUu8otU4GP9jS5Mixv3geZcdn2TIl9igbHBs2eJyx4YwwR1SwULBGaj0nRzbDRnX6rmuvydanHMu2V1A5c4MHCFXMWcf8hSnC9jqYxPTz/BXAFEIGsfuclm8zQVqFvQAAAA==[0m[Pipeline] Start of Pipeline
+[8mha:////4I/1jC318UNmI/9nYRYv8OvJz4Xq8U8VKxTNMCXNEiKuAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycohUghExsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jduZBmjwAAAAA==[0m[Pipeline] withEnv
+[8mha:////4E/8YW9O7RjFhnlGbP5J6rNb0tJBb/20Yj3ywr+7SGWNAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gA0xsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jfoP95RwAAAAA==[0m[Pipeline] {
+[8mha:////4JzQW4UGka1jtqqlY1tDVqH3qIJKBE2OEW1U/fNbIm77AAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gQkxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jc09154wAAAAA==[0m[Pipeline] stage
+[8mha:////4LEU7hovGP9sr6GdUYj/taQodXA5dek8QXJinVUceFUwAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0ggUxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jek7ggRwAAAAA==[0m[Pipeline] { (CI Validation and Tests)
+[8mha:////4Fcy3YJI7s+LtjuUAvMFLcILPGrumjlLP0ayMKqRpKoyAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gwExsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jcChmMxwAAAAA==[0m[Pipeline] node
+Still waiting to schedule task
+‘[8mha:////4DDZ+xhXvbvgC9UnwehzhSecmpEEoOcHpDdxxqcYxKYOAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgZZ/eT83ILSktQi/eRMVSOXxPTUvBIgbZlnaJimDwAOZqtg0gAAAA==[0mci-agent-9n11f’ is offline
+Agent [8mha:////4FX/SDUxm3ed6fiCEtUuRjTiBCCwhgYae1WlAt61svZkAAAApB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgYJ/eT83ILSktQi/eRM3cT01LwSXcs8Q8M0AJ3N65vNAAAA[0mci-agent-9n11f is provisioned from template ci-agent
+---
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  annotations:
+    kubernetes.jenkins.io/last-refresh: "1786955958713"
+  labels:
+    app.kubernetes.io/name: "jenkins-ci-agent"
+    app.kubernetes.io/component: "ci-agent"
+    jenkins/jenkins-jenkins-agent: "true"
+    jenkins/label-digest: "41c328582151d1e551b58f26161da724ab0e2696"
+    jenkins/label: "jenkins-ci"
+    kubernetes.jenkins.io/controller: "http___jenkins_jenkins_svc_cluster_local_8080x"
+  name: "ci-agent-9n11f"
+  namespace: "jenkins"
+spec:
+  automountServiceAccountToken: true
+  containers:
+  - env:
+    - name: "JENKINS_SECRET"
+      value: "********"
+    - name: "JENKINS_TUNNEL"
+      value: "jenkins-agent.jenkins.svc.cluster.local:50000"
+    - name: "JENKINS_AGENT_NAME"
+      value: "ci-agent-9n11f"
+    - name: "REMOTING_OPTS"
+      value: "-noReconnectAfter 1d"
+    - name: "JENKINS_NAME"
+      value: "ci-agent-9n11f"
+    - name: "JENKINS_AGENT_WORKDIR"
+      value: "/home/jenkins/agent"
+    - name: "JENKINS_URL"
+      value: "http://jenkins.jenkins.svc.cluster.local:8080/"
+    image: "jenkins/inbound-agent:3384.v60d89463d9e0-1-jdk21"
+    imagePullPolicy: "IfNotPresent"
+    name: "jnlp"
+    resources:
+      limits:
+        cpu: "200m"
+        memory: "256Mi"
+      requests:
+        cpu: "50m"
+        memory: "128Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - "ALL"
+      readOnlyRootFilesystem: true
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/tmp"
+      name: "tmp"
+  - args:
+    - "cat"
+    command:
+    - "/bin/sh"
+    - "-c"
+    image: "python:3.12.13-slim"
+    imagePullPolicy: "IfNotPresent"
+    name: "python"
+    resources:
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - "ALL"
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/home/jenkins/.cache"
+      name: "python-cache"
+    - mountPath: "/tmp"
+      name: "tmp"
+    workingDir: "/home/jenkins/agent"
+  nodeSelector:
+    kubernetes.io/os: "linux"
+  restartPolicy: "Never"
+  securityContext:
+    fsGroup: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
+    runAsUser: 1000
+    seccompProfile:
+      type: "RuntimeDefault"
+  serviceAccountName: "jenkins-ci-agent"
+  volumes:
+  - emptyDir: {}
+    name: "workspace"
+  - emptyDir: {}
+    name: "tmp"
+  - emptyDir:
+      medium: ""
+    name: "workspace-volume"
+  - emptyDir: {}
+    name: "python-cache"
+
+Running on [8mha:////4DDZ+xhXvbvgC9UnwehzhSecmpEEoOcHpDdxxqcYxKYOAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgZZ/eT83ILSktQi/eRMVSOXxPTUvBIgbZlnaJimDwAOZqtg0gAAAA==[0mci-agent-9n11f in /home/jenkins/agent/workspace/application-ci
+[8mha:////4FGZWjc8YC40H9Kw9W4YvJ1l44751OTKAc7k1oRHwn6MAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0BAkxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jfpX/cvwAAAAA==[0m[Pipeline] {
+[8mha:////4J02DTEd8QN56VFSC/w6XJqTxUzDUwc1ga0dvfQvK1ZvAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0BSEm1igLJwhJCGmj/9skpZ04EVfjDgQqMWHJkm3Jes8X1CnCkaLjrcXOY9Ke92F0JfGJYncNNPGWLlwTJgqWSztJMva0VEnZwiJWwUrA2qIOlDy6DBvRqrtqgkLXnHMs20FA5c0AD2CikLOK+VvmCNvbaBLhj/MXAHOfge2K959f/QbB16AVwAAAAA==[0m[Pipeline] stage
+[8mha:////4OrSniL9TjCO8z/qZqYaat9JFw3AHmwFQ07yRnaOXyIPAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQDJUJUtJYbXmBiY5xYd8G+kFS8iK/xBwKRqNhqZ6XVPF9Q5gQHSl42DtuAuQ6yi72fmhwotZdIg2zoLGvCTNFJ7QZN1h1n1MQO5ogCFgqWDutIOaBnWKnG3E0VDfrqxGna9gqKYG/wAKEmM5vEXxgTrK+9zYQ/z18BjB2D2DEU283nWL4Bsam+msEAAAA=[0m[Pipeline] { (Checkout)
+[8mha:////4NiFLHMlBDEMZElgyKnEVH4czGPDLh/r/vArC06/Y1kMAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJCakRFa6XhBSYxxo5159gOTsWL+Bp/IBCJii1WO9vM8wXrGODIQaNV1BuKrUHvRj0vzBz6q+OMli/YMkV2ChuVG+7UacGGk4IlRQkrARtFreNoSCfYCivvsnKSdHVOYf4OAkrTDfCAQszmJEP6whRgdxu7yPTz/BXA5BOU9f5TtX8D0loxuL4AAAA=[0m[Pipeline] checkout
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git
+ > git init /home/jenkins/agent/workspace/application-ci # timeout=10
+Fetching upstream changes from https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+Checking out Revision 199763a0a50c470cd1553c173e9459e8585a65cb (refs/remotes/origin/task4)
+ > git rev-parse refs/remotes/origin/task4^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 199763a0a50c470cd1553c173e9459e8585a65cb # timeout=10
+Commit message: "Increase EKS capacity for Jenkins workloads"
+[8mha:////4KTmhMN7EZEGpmqR7wrmbdjNF9VmLcSVrUsecBDHS1BEAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUWBFT1ygLJwhNCGmj/8tPSjtxIq7GHWipxIQHy7ZkvdcbishwInaisdh6jLUXXejdlMRA3F4DDaKhi6gJIwUrlB0UGVstVVGysCjLYSVhbbEOFD26BBvZ6Icug0ZXnhNP21FC7s0dnpDJiZw0p28ZGba33kTCH+cvAMYuQb7fzXaYn8UHr9MkWsIAAAA=[0m[Pipeline] script
+[8mha:////4OwXWwJWZ5GorBakfnA4RXbpsyt9q+hcGvsN+bJcFXVzAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUwIiYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLdfrbD/Cw+y7kUycIAAAA=[0m[Pipeline] {
+[8mha:////4PqOqWJekoM/waSkJjhznIKzQVG9BsV/o9PC0nr5biBdAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiBB2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwZyu3uU/vwBgq0rvS+AAAA[0m[Pipeline] sh
++ git rev-parse HEAD
+[8mha:////4PtCspcuWKIsCIj9Zf533R6lqwj35dZqIYkvXTaVtXC+AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIihKgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHN0uFte2+AAAA[0m[Pipeline] sh
++ git rev-parse --short=8 HEAD
+[8mha:////4LjxYqXRoYCb1DSuO5QdEMPhVSSkIa59pBMgDEk+q0bkAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIihESDqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFBu95/avQEeFbpZvgAAAA==[0m[Pipeline] }
+[8mha:////4HNTAhw0t9hgQ1ewik41yAxEUxnhcNYymRLIGzYKrz3PAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiaCgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGMIGcrt/lO7Ny324eW+AAAA[0m[Pipeline] // script
+[8mha:////4JwGz4OoXUr2Q6p2+S9ykC6yXR66hSQYKGq8fXPSW0eIAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICHRKiSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwZyt32U/vwBpvh82m+AAAA[0m[Pipeline] echo
+
+Branch: task4
+Commit SHA: 199763a0a50c470cd1553c173e9459e8585a65cb
+Jenkins build: 5
+Immutable image tag: 199763a0
+
+[8mha:////4BOhBFauARsvz6gM4HHYEB0jaJx7qY4wxIKXjNcQNsdyAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICJUJUaS03vMDExjix7oztkFS8iK/xBwKRqNhitbPNPF+wTBGOHC22hjpHqXEYfG+nhQPH7uJ5wJbP2DAl9galGSRrU88oORuYU5SwELAy1HhOjmyGtWjVXVVeka1OOU7fQUDp9A0eUIjJnFXMXxgjbK69Tkw/z18BjCFkKHf7T23fcfblMb4AAAA=[0m[Pipeline] }
+[8mha:////4AolBq+K0u7xMpQ0rTdxrOXhlQrDqILxNz+zXXTZmdc5AAAAox+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMJBdAhR0VppeIFJjHFi3QX7QlLxIr7GH4iIRMVWO9PM641lijhydKqx1HpKlVdd6N301MCxvQYeVMMXVTElDlaVdii5tqcZSxaLeVmOhcbKUhU4eXKCtW7MwxTBkCvOEid30Mh9fccTmZ7KYqJ8YYzY3Po6Mf06fwMYu06Q77aCbP8BliVgKr0AAAA=[0m[Pipeline] // stage
+[8mha:////4H8H4QbKKzHnhhmCKUoELUdAcbVxUDk2u5V+D3fTvEK9AAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQjqJAQFa3lhheY2Bgn1l2wLyQVL+Jr/IFAJCq22llpNc8XlDnBgZKXjcM2YK6D7GLvpyYHSu0l0iAbOsuaMFN0UrtBk3XHGTWxgzmigIWCpcM6Ug7oGVaqMXdTRYO+OnGatr2CItgbPECoycwm8RfGBOtrbzPhz/NXAGPHIHYMxXbzOZZvSb+EocEAAAA=[0m[Pipeline] stage
+[8mha:////4LRn17lj9Jf5EhQGH1n2rAsD2XHvABSZuYMHSv1JIC6lAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycohUdEVMrFEXThCaEJJG/7dJSjpxIq7GHWipxIQHy7ZkvdcbyhjgRMFwp7GzGFvLez+aOfFMobt5ytzRlbeEkbzmjc4NKX1ea0NJw6qCwUbAVmPrKVo0CXbCyYesvERTXVKYt6MAZtUATyjETE4ypG+ZAuzvo4qEP85fAEx9AlYfFquXZ/kBAsTc3cIAAAA=[0m[Pipeline] { (Validation)
+[8mha:////4I1aZ6P4Za5Z3GCwKn94Dri622ORQgpAXFvZ1VkoW0fmAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUKiNiYo2ycILQhJA0+r9NUtKJE3E17kBLJSY8WLYl673eUMUAJwqGOY2dxdha1vvRzIllCt3NU2aOrqwljOQ1EzoLUvq8VkFJw6qihA2HrcbWU7RoEuy4kw9Ze4mmvqQwb0cOpVUDPKHgMznJkL5lCrC/jyoS/jh/ATD1CcqmWeywPKsPpnFij8IAAAA=[0m[Pipeline] container
+[8mha:////4Ao7ny0GjbVd5Vc5g4JSDdkXNsCZUF9YMkLbwaiSi23GAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUAjbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5Dv9rMd5mfxAd6e6VPCAAAA[0m[Pipeline] {
+[8mha:////4IvTOvaVJVFS3W4rOZWQyFc/KJ4xKVj47lMEZcE3ly8mAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiIagQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHN38C26S+AAAA[0m[Pipeline] sh
++ set -eu
++ required_files=
+                                Jenkinsfile-ci
+                                Jenkinsfile-cd
+                                docker/frontend/Dockerfile
+                                docker/frontend/index.html
+                                docker/frontend/nginx.conf
+                                docker/backend/Dockerfile
+                                docker/backend/app.py
+                                docker/backend/requirements.txt
+                                docker/worker/Dockerfile
+                                docker/worker/worker.py
+                                docker/worker/requirements.txt
+                                helm/frontend/Chart.yaml
+                                helm/backend/Chart.yaml
+                                helm/worker/Chart.yaml
+                                tests/backend/test_app.py
+                                tests/worker/test_worker.py
+                                tests/requirements.txt
+                                
++ [ ! -f Jenkinsfile-ci ]
++ [ ! -f Jenkinsfile-cd ]
++ [ ! -f docker/frontend/Dockerfile ]
++ [ ! -f docker/frontend/index.html ]
++ [ ! -f docker/frontend/nginx.conf ]
++ [ ! -f docker/backend/Dockerfile ]
++ [ ! -f docker/backend/app.py ]
++ [ ! -f docker/backend/requirements.txt ]
++ [ ! -f docker/worker/Dockerfile ]
++ [ ! -f docker/worker/worker.py ]
++ [ ! -f docker/worker/requirements.txt ]
++ [ ! -f helm/frontend/Chart.yaml ]
++ [ ! -f helm/backend/Chart.yaml ]
++ [ ! -f helm/worker/Chart.yaml ]
++ [ ! -f tests/backend/test_app.py ]
++ [ ! -f tests/worker/test_worker.py ]
++ [ ! -f tests/requirements.txt ]
++ grep -RInE image:[[:space:]].*:latest$|tag:[[:space:]]*latest$ docker helm jenkins
++ grep -RInE /var/run/docker.sock|privileged:[[:space:]]*true|cluster-admin|allowPrivilegeEscalation:[[:space:]]*true jenkins
++ echo Repository validation passed.
+Repository validation passed.
+[8mha:////4FNGlMBungdl0RWv6SsZpSGErwF9+ER32RATMA9Zo9guAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiIUSDqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFBu95/avQHjyRvdvgAAAA==[0m[Pipeline] }
+[8mha:////4LEEhYUMOdRgkNatSA4v+qRk7cmLWP3xRdvYPqQbgjsEAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiQUGBqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFBu95/avQHljyOIvgAAAA==[0m[Pipeline] // container
+[8mha:////4FieXDBY04BzXP/zOkp35oBIzxR2QOEIZzZ3nw5WnNmkAAAApB+LCAAAAAAAAP9tjbEOwiAURV9rHFwd/QiadDIxTq6ExS/AFhFK3qNApZNf5K/5D6JNnLzDzT13Oc8XrGOAIwXNrMLBYOwM827SZbFMYbg6yszShXWEkZxiQmVBvTotKCgpWFLVsOKwUdg5igZ1gi238i4bJ1E35xTKd+BQm36EB1S8mJMM6QtzgN1t6iPhz/NXALP3Cep2/6n2DaYNcg6+AAAA[0m[Pipeline] }
+[8mha:////4Ma0II7jv+DDvTTNTsEgWC7om8gnqMgD4SrWx+JGoLTZAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIi6BCiSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwhQ7nbf2r7BrmPJ1y+AAAA[0m[Pipeline] // stage
+[8mha:////4AYxfxsnFICEBaTEfciaIA4be8rmQHnBRGX/nt+JkJNmAAAApx+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYSDRIOEqGgtN7zAxMY4se6CfSGpeBFf4w8EIlGx1c5Kq3m+oMwJDpS8bBy2AXMdZBd7PzU5UGovkQbZ0FnWhJmik9oNmqw7zqiJHcwRBSwULB3WkXJAz7BSjbmbKhr01YnTtO0VFMHe4AFCTWY2ib8wJlhfe5sJf56/Ahg7BrFjKLabz7F8A1hnr8zBAAAA[0m[Pipeline] stage
+[8mha:////4HCm7fvedMvZP7/n5S9wbotPXw7l710TtIrW1mXC0FkAAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUxIiYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLDbrb9/Cw+ty4Up8IAAAA=[0m[Pipeline] { (Install Test Dependencies)
+[8mha:////4KXNu0f5rr8oPhsD3v0BuiGg7HGmOBpYtb9sh65TGztoAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUwIiYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLDbrb9/Cw+2YMO4MIAAAA=[0m[Pipeline] container
+[8mha:////4La+XWmoSQZAmDBq4y5XMsPM/NE3e9092OIwlUPUJTEPAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycohUoiNiYo26cILQhJA0+r9NUtKJE3E17kBLJSY8WLYl673eUMYAJwqGO42dxdha3vvRzIlnCt3NU+aOrrwljOQ1b3RuSOnzWhtKGlYVDDYCthpbT9GiSbATTj5k5SWa6pLCvB0FMKsGeEIhZnKSIX3LFGB/H1Uk/HH+AmDqE7D6sFi9PMsPfTawssIAAAA=[0m[Pipeline] {
+[8mha:////4DUwgLzP+nwPPa5hUbTwgqF8LJ1i1PxueGoHLHIwk/ZvAAAAox+LCAAAAAAAAP9tjTESwiAURH/iWNhaeghSxM6xsmVoPAEmiBDmfwJEUnkir+YdRDNj5RY7+7Z5zxesY4AjBc2swsFg7AzzbtJlsUxhuDrKzNKFdYSRnGJCZUG9Oi0oKClYUtWw4rBR2DmKBnWCLbfyLhsnUTfnFMp34FCbfoQHVLyYkwzpC3OA3W3qI+HP81cAs09Qt+2n9v4NGWcPtb4AAAA=[0m[Pipeline] sh
++ set -eu
++ python -m venv .ci-venv
++ . .ci-venv/bin/activate
++ deactivate nondestructive
++ [ -n  ]
++ [ -n  ]
++ hash -r
++ [ -n  ]
++ unset VIRTUAL_ENV
++ unset VIRTUAL_ENV_PROMPT
++ [ ! nondestructive = nondestructive ]
++ uname
++ export VIRTUAL_ENV=/home/jenkins/agent/workspace/application-ci/.ci-venv
++ _OLD_VIRTUAL_PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ PATH=/home/jenkins/agent/workspace/application-ci/.ci-venv/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ export PATH
++ VIRTUAL_ENV_PROMPT=(.ci-venv) 
++ export VIRTUAL_ENV_PROMPT
++ [ -n  ]
++ [ -z  ]
++ _OLD_VIRTUAL_PS1=$ 
++ PS1=((.ci-venv) ) $ 
++ export PS1
++ hash -r
++ python -m pip install --no-cache-dir --disable-pip-version-check -r docker/backend/requirements.txt -r docker/worker/requirements.txt -r tests/requirements.txt
+Collecting flask==3.0.3 (from -r docker/backend/requirements.txt (line 1))
+  Downloading flask-3.0.3-py3-none-any.whl.metadata (3.2 kB)
+Collecting psycopg2-binary==2.9.9 (from -r docker/backend/requirements.txt (line 2))
+  Downloading psycopg2_binary-2.9.9-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.4 kB)
+Collecting boto3==1.34.162 (from -r docker/backend/requirements.txt (line 3))
+  Downloading boto3-1.34.162-py3-none-any.whl.metadata (6.6 kB)
+Collecting requests==2.32.3 (from -r docker/backend/requirements.txt (line 4))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting pytest==8.3.5 (from -r tests/requirements.txt (line 1))
+  Downloading pytest-8.3.5-py3-none-any.whl.metadata (7.6 kB)
+Collecting pytest-cov==6.0.0 (from -r tests/requirements.txt (line 2))
+  Downloading pytest_cov-6.0.0-py3-none-any.whl.metadata (27 kB)
+Collecting flake8==7.1.2 (from -r tests/requirements.txt (line 3))
+  Downloading flake8-7.1.2-py2.py3-none-any.whl.metadata (3.8 kB)
+Collecting Werkzeug>=3.0.0 (from flask==3.0.3->-r docker/backend/requirements.txt (line 1))
+  Downloading werkzeug-3.1.8-py3-none-any.whl.metadata (4.0 kB)
+Collecting Jinja2>=3.1.2 (from flask==3.0.3->-r docker/backend/requirements.txt (line 1))
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting itsdangerous>=2.1.2 (from flask==3.0.3->-r docker/backend/requirements.txt (line 1))
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting click>=8.1.3 (from flask==3.0.3->-r docker/backend/requirements.txt (line 1))
+  Downloading click-8.4.2-py3-none-any.whl.metadata (2.6 kB)
+Collecting blinker>=1.6.2 (from flask==3.0.3->-r docker/backend/requirements.txt (line 1))
+  Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting botocore<1.35.0,>=1.34.162 (from boto3==1.34.162->-r docker/backend/requirements.txt (line 3))
+  Downloading botocore-1.34.162-py3-none-any.whl.metadata (5.7 kB)
+Collecting jmespath<2.0.0,>=0.7.1 (from boto3==1.34.162->-r docker/backend/requirements.txt (line 3))
+  Downloading jmespath-1.1.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting s3transfer<0.11.0,>=0.10.0 (from boto3==1.34.162->-r docker/backend/requirements.txt (line 3))
+  Downloading s3transfer-0.10.4-py3-none-any.whl.metadata (1.7 kB)
+Collecting charset-normalizer<4,>=2 (from requests==2.32.3->-r docker/backend/requirements.txt (line 4))
+  Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (45 kB)
+Collecting idna<4,>=2.5 (from requests==2.32.3->-r docker/backend/requirements.txt (line 4))
+  Downloading idna-3.18-py3-none-any.whl.metadata (6.1 kB)
+Collecting urllib3<3,>=1.21.1 (from requests==2.32.3->-r docker/backend/requirements.txt (line 4))
+  Downloading urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting certifi>=2017.4.17 (from requests==2.32.3->-r docker/backend/requirements.txt (line 4))
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting iniconfig (from pytest==8.3.5->-r tests/requirements.txt (line 1))
+  Downloading iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting packaging (from pytest==8.3.5->-r tests/requirements.txt (line 1))
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pluggy<2,>=1.5 (from pytest==8.3.5->-r tests/requirements.txt (line 1))
+  Downloading pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting coverage>=7.5 (from coverage[toml]>=7.5->pytest-cov==6.0.0->-r tests/requirements.txt (line 2))
+  Downloading coverage-7.15.4-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.6 kB)
+Collecting mccabe<0.8.0,>=0.7.0 (from flake8==7.1.2->-r tests/requirements.txt (line 3))
+  Downloading mccabe-0.7.0-py2.py3-none-any.whl.metadata (5.0 kB)
+Collecting pycodestyle<2.13.0,>=2.12.0 (from flake8==7.1.2->-r tests/requirements.txt (line 3))
+  Downloading pycodestyle-2.12.1-py2.py3-none-any.whl.metadata (4.5 kB)
+Collecting pyflakes<3.3.0,>=3.2.0 (from flake8==7.1.2->-r tests/requirements.txt (line 3))
+  Downloading pyflakes-3.2.0-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting python-dateutil<3.0.0,>=2.1 (from botocore<1.35.0,>=1.34.162->boto3==1.34.162->-r docker/backend/requirements.txt (line 3))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting MarkupSafe>=2.0 (from Jinja2>=3.1.2->flask==3.0.3->-r docker/backend/requirements.txt (line 1))
+  Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Collecting six>=1.5 (from python-dateutil<3.0.0,>=2.1->botocore<1.35.0,>=1.34.162->boto3==1.34.162->-r docker/backend/requirements.txt (line 3))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Downloading flask-3.0.3-py3-none-any.whl (101 kB)
+Downloading psycopg2_binary-2.9.9-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 297.0 MB/s eta 0:00:00
+Downloading boto3-1.34.162-py3-none-any.whl (139 kB)
+Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+Downloading pytest-8.3.5-py3-none-any.whl (343 kB)
+Downloading pytest_cov-6.0.0-py3-none-any.whl (22 kB)
+Downloading flake8-7.1.2-py2.py3-none-any.whl (57 kB)
+Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Downloading botocore-1.34.162-py3-none-any.whl (12.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.5/12.5 MB 503.4 MB/s eta 0:00:00
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (248 kB)
+Downloading click-8.4.2-py3-none-any.whl (119 kB)
+Downloading coverage-7.15.4-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (257 kB)
+Downloading idna-3.18-py3-none-any.whl (65 kB)
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading jmespath-1.1.0-py3-none-any.whl (20 kB)
+Downloading mccabe-0.7.0-py2.py3-none-any.whl (7.3 kB)
+Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+Downloading pycodestyle-2.12.1-py2.py3-none-any.whl (31 kB)
+Downloading pyflakes-3.2.0-py2.py3-none-any.whl (62 kB)
+Downloading s3transfer-0.10.4-py3-none-any.whl (83 kB)
+Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+Downloading werkzeug-3.1.8-py3-none-any.whl (226 kB)
+Downloading iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Installing collected packages: urllib3, six, pyflakes, pycodestyle, psycopg2-binary, pluggy, packaging, mccabe, MarkupSafe, jmespath, itsdangerous, iniconfig, idna, coverage, click, charset-normalizer, certifi, blinker, Werkzeug, requests, python-dateutil, pytest, Jinja2, flake8, pytest-cov, flask, botocore, s3transfer, boto3
+Successfully installed Jinja2-3.1.6 MarkupSafe-3.0.3 Werkzeug-3.1.8 blinker-1.9.0 boto3-1.34.162 botocore-1.34.162 certifi-2026.7.22 charset-normalizer-3.5.1 click-8.4.2 coverage-7.15.4 flake8-7.1.2 flask-3.0.3 idna-3.18 iniconfig-2.3.0 itsdangerous-2.2.0 jmespath-1.1.0 mccabe-0.7.0 packaging-26.3 pluggy-1.6.0 psycopg2-binary-2.9.9 pycodestyle-2.12.1 pyflakes-3.2.0 pytest-8.3.5 pytest-cov-6.0.0 python-dateutil-2.9.0.post0 requests-2.32.3 s3transfer-0.10.4 six-1.17.0 urllib3-2.7.0
+[8mha:////4BzzRGMU5jm531H2Z8+GglUEyxl8BKkSUI/VP325yvqqAAAAox+LCAAAAAAAAP9tjTESwiAURH/iWNhaeghSZKwcK1uGxhNggghh/idAJJUn8mreQTQzVm6xs2+b93zBOgY4UtDMKhwMxs4w7yZdFssUhqujzCxdWEcYySkmVBbUq9OCgpKCJVUNKw4bhZ2jaFAn2HIr77JxEnVzTqF8Bw616Ud4QMWLOcmQvjAH2N2mPhL+PH8FMHufoG73n2rfGxSHer4AAAA=[0m[Pipeline] }
+[8mha:////4KBiy34Gy5lEMst4SO2zCC2Tlcrvq23NF5QolT6NlH4LAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIigUSDqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgEjVhSLvgAAAA==[0m[Pipeline] // container
+[8mha:////4H2TjhsdDmxUK//r708lHNTkrxAoKdXg5DXLnuVaxLLMAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiREGBqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgE81EHZvgAAAA==[0m[Pipeline] }
+[8mha:////4GF+WD0xirrTiEFcJ1lV3ZRxwEJ/nEDu19KCMV83nbssAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKCRIOEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgF/VhBfvgAAAA==[0m[Pipeline] // stage
+[8mha:////4C5WEVI40w1k8REsvWuLNItYfwGW4J7jL05yx8Axxt9cAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYRT0IAQFa3lhheY2Bgn1l2wLyQVL+Jr/IFAJCq22llpNc8XlDnBgZKXjcM2YK6D7GLvpyYHSu0l0iAbOsuaMFN0UrtBk3XHGTWxgzmigIWCpcM6Ug7oGVaqMXdTRYO+OnGatr2CItgbPECoycwm8RfGBOtrbzPhz/NXAGPHILYMxWb3OZZvkDag68EAAAA=[0m[Pipeline] stage
+[8mha:////4EQf1IWB90FSaNgsoH7YVX9FgCkg4Lyd2/k7HSXTwtobAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUCRaEOrFGXThBaEJIGv1fkpR04kRcjTsQqMSEB8u2ZL3nC6rgoSGvmVXYGwydYYMbdU4ske8vjhKzdGYdYSCnWKtSS1Id59pSVDCrKGHBYamwcxQM6ggrbsVd1E6grk/R5+3AoTTyBg8oeCZH4eO3TB7W11EGwh/nLwCmIUK53WfbbT7P6g0Z/aLSwgAAAA==[0m[Pipeline] { (Lint)
+[8mha:////4JTYWp1ABjg8oC/uYmKYYRNZu88zSlCTTR6lVgFMdlmLAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUJDbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAbb5KxbCAAAA[0m[Pipeline] container
+[8mha:////4IF9wb3H22iTp9USg8nGG0EqC40tO9dn4pvQcXDTSdXrAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUIDbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAdhUMVHCAAAA[0m[Pipeline] {
+[8mha:////4KBXyqVywlWHcg+pv2TbvfA9/r/Rb8VhdRBEai6jfkMnAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiAR2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwZyv32U7vwBvbls1O+AAAA[0m[Pipeline] sh
++ set -eu
++ . .ci-venv/bin/activate
++ deactivate nondestructive
++ [ -n  ]
++ [ -n  ]
++ hash -r
++ [ -n  ]
++ unset VIRTUAL_ENV
++ unset VIRTUAL_ENV_PROMPT
++ [ ! nondestructive = nondestructive ]
++ uname
++ export VIRTUAL_ENV=/home/jenkins/agent/workspace/application-ci/.ci-venv
++ _OLD_VIRTUAL_PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ PATH=/home/jenkins/agent/workspace/application-ci/.ci-venv/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ export PATH
++ VIRTUAL_ENV_PROMPT=(.ci-venv) 
++ export VIRTUAL_ENV_PROMPT
++ [ -n  ]
++ [ -z  ]
++ _OLD_VIRTUAL_PS1=$ 
++ PS1=((.ci-venv) ) $ 
++ export PS1
++ hash -r
++ python -m flake8 docker/backend/app.py docker/worker/worker.py tests/backend/test_app.py tests/worker/test_worker.py --max-line-length=100
+[8mha:////4G9+BGVI5hluKTnXYOPgBBENPYg3m8gobdhI6rfhPXYuAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIioXSIitZKwwtMYowd686xHZyKF/E1/kAgEhVbrHa2mecL1jHAkYNGq6g3FFuD3o16Xpg59FfHGS1fsGWK7BQ2KjfcqdOCDScFS4oSVgI2ilrH0ZBOsBVW3mXlJOnqnML8HQSUphvgAYWYzUmG9IUpwO42dpHp5/krgMn7BGVdf2r/BmFfOky+AAAA[0m[Pipeline] }
+[8mha:////4B+yGciq0Fjd3BxIah5Zpt8nz8ENv8pLNnYAN1SwocN7AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiJKgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGMIGcrd/lPbN37dbx6+AAAA[0m[Pipeline] // container
+[8mha:////4JsxL38Rlus41+I8MxyOsUt+hdAnG5BJPOOYwWkHztX7AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJCgWgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGMIGcrd/lPbN0af/O++AAAA[0m[Pipeline] }
+[8mha:////4K+9q9KyhPnmaMBzFw2O8AxwfI+x+KrSXPPeo7/boztZAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSgIQQSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryt8+1PXwAgGI9Er4AAAA=[0m[Pipeline] // stage
+[8mha:////4C+ehWPpWhUTdhIX+fnzuEhaujByX+PqD1dNlbbvccpxAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYTTUERCVLSWG15gEmOcWHfBvpBUvIiv8QcMkajYamel1TxfUKYIB4pOdhZ7j6nxcgijy01OFPtLoEl2dJYNYaJgpbaTptYeF9TEFpaIAlYK1habQMmjY9ioztxNFQy66sQxb3sFhW9v8AChsplN5C/MEbbXsU2EP89fAcwDg6gZil39OZZvu9tb5cEAAAA=[0m[Pipeline] stage
+[8mha:////4FYxNAEruhsuOzPxiSE5FFAmdEvsdWcaA9fnhLPBkuvWAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0YQAhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYJ8t5/tMD+LD56au0DCAAAA[0m[Pipeline] { (Tests)
+[8mha:////4LKQiwBbadRCvOTkLxCOvVM/gi8Ql/vOLJy9P81Yzn1+AAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoiUAQaEOrFGXThBaEJIGv1fkpR04kRcjTsQqMSEB8u2ZL3nC6rgoSGvmVXYGwydYYMbdU4ske8vjhKzdGYdYSCnWKtSS1Id59pSVDCrKGHBYamwcxQM6ggrbsVd1E6grk/R5+3AoTTyBg8oeCZH4eO3TB7W11EGwh/nLwCmIUK53WfbbT7P6g0iH00AwgAAAA==[0m[Pipeline] container
+[8mha:////4H8wRpPCtX9rbCA7Y43Ft2Y6skHC+exYX+EU2iIUTm97AAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUBibE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAW2++SvCAAAA[0m[Pipeline] {
+[8mha:////4EwNXgE2zYvp9dfgNhmegYe2V8a/yMr4d+MDpNjv5wu6AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIikKgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUO63n9qFN4OkKLa+AAAA[0m[Pipeline] sh
++ set -eu
++ . .ci-venv/bin/activate
++ deactivate nondestructive
++ [ -n  ]
++ [ -n  ]
++ hash -r
++ [ -n  ]
++ unset VIRTUAL_ENV
++ unset VIRTUAL_ENV_PROMPT
++ [ ! nondestructive = nondestructive ]
++ uname
++ export VIRTUAL_ENV=/home/jenkins/agent/workspace/application-ci/.ci-venv
++ _OLD_VIRTUAL_PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ PATH=/home/jenkins/agent/workspace/application-ci/.ci-venv/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ export PATH
++ VIRTUAL_ENV_PROMPT=(.ci-venv) 
++ export VIRTUAL_ENV_PROMPT
++ [ -n  ]
++ [ -z  ]
++ _OLD_VIRTUAL_PS1=$ 
++ PS1=((.ci-venv) ) $ 
++ export PS1
++ hash -r
++ mkdir -p test-results
++ python -m pytest tests/backend tests/worker --junitxml=test-results/pytest-results.xml --cov=docker/backend --cov=docker/worker --cov-report=term-missing --cov-report=xml:test-results/coverage.xml
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-8.3.5, pluggy-1.6.0
+rootdir: /home/jenkins/agent/workspace/application-ci
+plugins: cov-6.0.0
+collected 8 items
+
+tests/backend/test_app.py .....                                          [ 62%]
+tests/worker/test_worker.py ...                                          [100%]
+
+- generated xml file: /home/jenkins/agent/workspace/application-ci/test-results/pytest-results.xml -
+
+---------- coverage: platform linux, python 3.12.13-final-0 ----------
+Name                      Stmts   Miss  Cover   Missing
+-------------------------------------------------------
+docker/backend/app.py        81     23    72%   27, 37-52, 123-168, 177-178
+docker/worker/worker.py      13      1    92%   23
+-------------------------------------------------------
+TOTAL                        94     24    74%
+Coverage XML written to file test-results/coverage.xml
+
+============================== 8 passed in 3.71s ===============================
+[8mha:////4JgPwy6SrDdGIBsrU+vVvw9mLPy12PCYzTnHqbWvTQilAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIihKgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGMIGcr97lPbN5YEWne+AAAA[0m[Pipeline] }
+[8mha:////4GOAb3NWYdk4S7LoV8d5R/BTcY7sENVuOEVj7bLCNwScAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJCARWiSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwhQ7nffWr7BrgEWB2+AAAA[0m[Pipeline] // container
+Post stage
+[8mha:////4DDV2Dz64fLmCnNd+otrPbYwupyOlJAVo5UAmm9kizHGAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMJpSIEQVVorDS8w8WGcWHfGdkgqXsTX+AMWkajYYrWzzbzesI4BThyM6JEGS7GzwrvR5CUmDsPV8SR6voiOKbJD0eLUssZmwZYTwpKihJWEDVLnOFoyCbayVw9VOUWmOqeQv6OE0uo7PKGQ2ZxUSF+YA+xuo45MP89fAcw+Qbk/5Kpr/wG9fCwGvgAAAA==[0m[Pipeline] junit
+Recording test results
+[Checks API] No suitable checks publisher found.
+[8mha:////4Bi51JilFqSQsbo/9uWJFaE/ALVgCjT3joos8YY5YxO6AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSABJCqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKYhQrk95Nrthw9+LwEtvgAAAA==[0m[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[8mha:////4CBF568wL2hlsICaTwvmpxJhtgDxsYh8GIg7llamMnpfAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSgBBCqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKZhiFDu9rm2hw/z/wv7vgAAAA==[0m[Pipeline] }
+[8mha:////4EjKkyywpzC6jPHj4FN7cfcu0G/i5B2kgTKiZ9vYEgK9AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSgBQJUaW10vACExvjxLoztkNS8SK+xh+wiETFFqudbeb1hnUMcOJgsNc0WIqdRe9GkxdOHIar4wl7vmDHFNlpbPXUstLNgi0nDUuKElYCNpo6x9GSSbAVvXzIykky1TmF/B0FlFbd4QmFyOYkQ/rCHGB3G1Vk+nn+CmD2PkF5qHPt6w+wfVp9vgAAAA==[0m[Pipeline] // stage
+[8mha:////4G2XPHQPNoal3VTON66eOdRj55jg3IVD3zNuoUl97a5rAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYRTIYEQFa3lhheY2Bgn1l2wLyQVL+Jr/IFAJCq22llpNc8XlDnBgZKXjcM2YK6D7GLvpyYHSu0l0iAbOsuaMFN0UrtBk3XHGTWxgzmigIWCpcM6Ug7oGVaqMXdTRYO+OnGatr2CItgbPECoycwm8RfGBOtrbzPhz/NXAGPHILYMxWb3OZZvqgNwiMEAAAA=[0m[Pipeline] stage
+[8mha:////4DeAS8VvJaW8eig/WiSA8c3cspwkR8ttfRUP2dujaKYAAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoiUBSSEOrFGXThBaEJIGv1fkpR04kRcjTsQqMSEB8u2ZL3nC6rgoSGvmVXYGwydYYMbdU4ske8vjhKzdGYdYSCnWKtSS1Id59pSVDCrKGHBYamwcxQM6ggrbsVd1E6grk/R5+3AoTTyBg8oeCZH4eO3TB7W11EGwh/nLwCmIUK53WfbbT7P6g3QSQCqwgAAAA==[0m[Pipeline] { (Prepare Build Workspace)
+[8mha:////4KAcOYozpY0MAaVL08i5Y42/9uHMA4Fa9F//5sJDOEY6AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICDQ2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwZyv32U7vwBk5Fu7e+AAAA[0m[Pipeline] stash
+Stashed 14 file(s)
+[8mha:////4AT7mFAFDYfhCwfKp6IOQ4v1tsJUR0bjwl5wUNXbSuurAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKCKGgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGMIGcr97lPbN/uuxNG+AAAA[0m[Pipeline] }
+[8mha:////4KRQwRpHCsm9+7a/cIB+16PofFkRwzeAkWzu+RdBP8xDAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSIJAQSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryv821O3wAOZZpSL4AAAA=[0m[Pipeline] // stage
+Post stage
+[8mha:////4GYNKcbAwVl+F30hbp1B0HBVbJM/C3jIY5mJtISJeaQtAAAApB+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMJpEEJCVLRWGl5gEmOcWHfBvpBUvIiv8QciIlGx1c4083pjmSKOHJ1qLLWeUuVVF3o3PTVwbK+BB9XwRVVMiYNVpR1Kru1pxpLFYl6WY6GxslQFTp6cYK0b8zBFMOSKs8TJHTRyX9/xRKanspgoXxgjNre+Tky/zt8Axk6Q7QX5btt9AKDh3vW9AAAA[0m[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is disabled by the job configuration...
+[WS-CLEANUP] done
+[8mha:////4D1hv0WaUXckhFZ9veJr/XOcc9I2tdCluqh4WeD1I6VtAAAAox+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMKpQEiIitZKwwtMYowT6y7YF5KKF/E1/kBEJCq22plmXm8sU8SRo1ONpdZTqrzqQu+mpwaO7TXwoBq+qIopcbCqtEPJtT3NWLJYzMtyLDRWlqrAyZMTrHVjHqYIhlxxlji5g0bu6zueyPRUFhPlC2PE5tbXienX+RvA2HWCfLcVZPsPZtgWDr0AAAA=[0m[Pipeline] }
+[8mha:////4BkCX6sxzn1VlEy7QUhV+jQCGJWtlc4P4QvdHpBMMPsyAAAAoh+LCAAAAAAAAP9tjTESgjAQRT84FraWHiJ0WDhWthkaTxAhxkBmF5NFqDyRV/MOMjJj5a/+e817vbFOEUeOTrWWOk+p9qoPg5ufGjl218CjavmiaqbEwarKjhU39rRgxWKxLMux0thYqgMnT06w1a15mCIYcsVZ4uwOGrlv7ngi03NZTJQvTBG729Akpl/nbwBT3wvyshRk+w8nvwnZvQAAAA==[0m[Pipeline] // node
+[8mha:////4OExzpfLgqZ3SEc7To80ZBNMdyosb9g4ayvrrZmjm/uEAAAAoh+LCAAAAAAAAP9tjTESgjAQRT84FraWHiJ0WDhWthkaTxAhxkBmF5NFqDyRV/MOMjJj5a/+e817vbFOEUeOTrWWOk+p9qoPg5ufGjl218CjavmiaqbEwarKjhU39rRgxWKxLMux0thYqgMnT06w1a15mCIYcsVZ4uwOGrlv7ngi03NZTJQvTBG729Akpl/nbwBT3wvyci/Iyg8Bpm6TvQAAAA==[0m[Pipeline] }
+[8mha:////4I7fChX1Ph8oZguG7sj/IE3BC1XIXxlPfj3dt8f1WZUNAAAAox+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMKpQEiIitZKwwtMYowT6y7YF5KKF/E1/kBEJCq22plmXm8sU8SRo1ONpdZTqrzqQu+mpwaO7TXwoBq+qIopcbCqtEPJtT3NWLJYzMtyLDRWlqrAyZMTrHVjHqYIhlxxlji5g0bu6zueyPRUFhPlC2PE5tbXienX+RvA2HWCfLcXZNsPamA3iL0AAAA=[0m[Pipeline] // stage
+[8mha:////4AYUTJSwCDbzeYw3ApW26MrZd42rRbOHIvIJhIS2/pdXAAAApx+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYTTICSEqGgtN7zAxMY4se6CfSGpeBFf4w8EIlGx1c5Kq3m+oMwJDpS8bBy2AXMdZBd7PzU5UGovkQbZ0FnWhJmik9oNmqw7zqiJHcwRBSwULB3WkXJAz7BSjbmbKhr01YnTtO0VFMHe4AFCTWY2ib8wJlhfe5sJf56/Ahg7BrFhKLa7z7F8A/CLgrPBAAAA[0m[Pipeline] stage
+[8mha:////4MlQ0ZbHs2s2+p1uj1ajbu4/6Msg957lFxeNT20tqkezAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoiUCYRQJ9aoCycITQhJo/9LkpJOnIircQcClZjwYNmWrPd8QRU8NOQ1swp7g6EzbHCjzokl8v3FUWKWzqwjDOQUa1VqSarjXFuKCmYVJSw4LBV2joJBHWHFrbiL2gnU9Sn6vB04lEbe4AEFz+QofPyWycP6OspA+OP8BcA0RCi3+2y7zedZvQGUkOl7wgAAAA==[0m[Pipeline] { (Build, Scan and Publish)
+[8mha:////4AeMx4V4R69757jEI3RmI2JyGg1YnPv4MtjYD7Nrq/xSAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUJgbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAdsxXVDCAAAA[0m[Pipeline] node
+Still waiting to schedule task
+‘[8mha:////4FBjlpA8bNPz7TNC8SuXHSO4jpfyy1WusQJo+OIXskZWAAAAqx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzBEgYF/eT83ILSktQi/aTSzJwUVSOXxPTUvBIgbVKSY26uDwCnryqX1QAAAA==[0mbuild-agent-4tl77’ is offline
+Agent [8mha:////4CElvuFWOSrL4XwiPiSnPAqnr/T2JtbJ+xgdLDh47ezFAAAApx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzBEgZp/eT83ILSktQi/aTSzJwU3cT01LwSXZOSHHNzAFdgoMPQAAAA[0mbuild-agent-4tl77 is provisioned from template build-agent
+---
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  annotations:
+    kubernetes.jenkins.io/last-refresh: "1786956077882"
+  labels:
+    app.kubernetes.io/name: "jenkins-build-agent"
+    app.kubernetes.io/component: "build-agent"
+    jenkins/jenkins-jenkins-agent: "true"
+    jenkins/label-digest: "1873c75a5b7e14b964b5f6f867d98fd2bce5a2ad"
+    jenkins/label: "jenkins-build"
+    kubernetes.jenkins.io/controller: "http___jenkins_jenkins_svc_cluster_local_8080x"
+  name: "build-agent-4tl77"
+  namespace: "jenkins"
+spec:
+  automountServiceAccountToken: true
+  containers:
+  - env:
+    - name: "JENKINS_SECRET"
+      value: "********"
+    - name: "JENKINS_TUNNEL"
+      value: "jenkins-agent.jenkins.svc.cluster.local:50000"
+    - name: "JENKINS_AGENT_NAME"
+      value: "build-agent-4tl77"
+    - name: "REMOTING_OPTS"
+      value: "-noReconnectAfter 1d"
+    - name: "JENKINS_NAME"
+      value: "build-agent-4tl77"
+    - name: "JENKINS_AGENT_WORKDIR"
+      value: "/home/jenkins/agent"
+    - name: "JENKINS_URL"
+      value: "http://jenkins.jenkins.svc.cluster.local:8080/"
+    image: "jenkins/inbound-agent:3384.v60d89463d9e0-1-jdk21"
+    imagePullPolicy: "IfNotPresent"
+    name: "jnlp"
+    resources:
+      limits:
+        cpu: "200m"
+        memory: "256Mi"
+      requests:
+        cpu: "50m"
+        memory: "96Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        add:
+        - "DAC_OVERRIDE"
+        drop:
+        - "ALL"
+      readOnlyRootFilesystem: false
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/tmp"
+      name: "tmp"
+  - args:
+    - "cat"
+    command:
+    - "/bin/sh"
+    - "-c"
+    env:
+    - name: "AWS_REGION"
+      value: "us-east-1"
+    - name: "AWS_DEFAULT_REGION"
+      value: "us-east-1"
+    - name: "AWS_EC2_METADATA_DISABLED"
+      value: "true"
+    - name: "DOCKER_CONFIG"
+      value: "/docker-config"
+    - name: "HOME"
+      value: "/tmp"
+    image: "amazon/aws-cli:2.36.8"
+    imagePullPolicy: "IfNotPresent"
+    name: "aws-cli"
+    resources:
+      limits:
+        cpu: "300m"
+        memory: "384Mi"
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - "ALL"
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/docker-config"
+      name: "docker-config"
+    - mountPath: "/metadata"
+      name: "metadata"
+    - mountPath: "/tmp"
+      name: "tmp"
+    workingDir: "/home/jenkins/agent"
+  - args:
+    - "cat"
+    command:
+    - "/bin/sh"
+    - "-c"
+    image: "python:3.12.13-slim"
+    imagePullPolicy: "IfNotPresent"
+    name: "python"
+    resources:
+      limits:
+        cpu: "250m"
+        memory: "256Mi"
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - "ALL"
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/metadata"
+      name: "metadata"
+    - mountPath: "/tmp"
+      name: "tmp"
+    workingDir: "/home/jenkins/agent"
+  - command:
+    - "/busybox/cat"
+    image: "gcr.io/kaniko-project/executor:v1.23.2-debug"
+    imagePullPolicy: "IfNotPresent"
+    name: "kaniko-frontend"
+    resources:
+      limits:
+        cpu: "750m"
+        memory: "768Mi"
+      requests:
+        cpu: "150m"
+        memory: "128Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/kaniko/.docker"
+      name: "docker-config"
+    - mountPath: "/metadata"
+      name: "metadata"
+    - mountPath: "/tmp"
+      name: "tmp"
+    workingDir: "/home/jenkins/agent"
+  - command:
+    - "/busybox/cat"
+    image: "gcr.io/kaniko-project/executor:v1.23.2-debug"
+    imagePullPolicy: "IfNotPresent"
+    name: "kaniko-backend"
+    resources:
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+      requests:
+        cpu: "200m"
+        memory: "192Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/kaniko/.docker"
+      name: "docker-config"
+    - mountPath: "/metadata"
+      name: "metadata"
+    - mountPath: "/tmp"
+      name: "tmp"
+    workingDir: "/home/jenkins/agent"
+  - command:
+    - "/busybox/cat"
+    image: "gcr.io/kaniko-project/executor:v1.23.2-debug"
+    imagePullPolicy: "IfNotPresent"
+    name: "kaniko-worker"
+    resources:
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+      requests:
+        cpu: "200m"
+        memory: "192Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/kaniko/.docker"
+      name: "docker-config"
+    - mountPath: "/metadata"
+      name: "metadata"
+    - mountPath: "/tmp"
+      name: "tmp"
+    workingDir: "/home/jenkins/agent"
+  - args:
+    - "cat"
+    command:
+    - "/bin/sh"
+    - "-c"
+    env:
+    - name: "DOCKER_CONFIG"
+      value: "/docker-config"
+    - name: "TRIVY_CACHE_DIR"
+      value: "/tmp/trivy-cache"
+    image: "aquasec/trivy:0.67.2"
+    imagePullPolicy: "IfNotPresent"
+    name: "trivy"
+    resources:
+      limits:
+        cpu: "500m"
+        memory: "768Mi"
+      requests:
+        cpu: "100m"
+        memory: "192Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - "ALL"
+      privileged: false
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/docker-config"
+      name: "docker-config"
+      readOnly: true
+    - mountPath: "/tmp"
+      name: "tmp"
+    workingDir: "/home/jenkins/agent"
+  nodeSelector:
+    kubernetes.io/os: "linux"
+  restartPolicy: "Never"
+  securityContext:
+    fsGroup: 1000
+    fsGroupChangePolicy: "OnRootMismatch"
+    seccompProfile:
+      type: "RuntimeDefault"
+  serviceAccountName: "jenkins-ci-agent"
+  volumes:
+  - emptyDir: {}
+    name: "workspace"
+  - emptyDir: {}
+    name: "metadata"
+  - emptyDir: {}
+    name: "tmp"
+  - emptyDir: {}
+    name: "docker-config"
+  - emptyDir:
+      medium: ""
+    name: "workspace-volume"
+
+Running on [8mha:////4FBjlpA8bNPz7TNC8SuXHSO4jpfyy1WusQJo+OIXskZWAAAAqx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzBEgYF/eT83ILSktQi/aTSzJwUVSOXxPTUvBIgbVKSY26uDwCnryqX1QAAAA==[0mbuild-agent-4tl77 in /home/jenkins/agent/workspace/application-ci
+[8mha:////4LyVuIdYZMJyVDgczpWS778nHs9paclRwJlafIRlpLWoAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUsDAgpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LD7WcRxfCAAAA[0m[Pipeline] {
+[8mha:////4Dy/OBSrV9nsX1invrhmWpvgGmpNB7c/5V3ZuqWHhfJbAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUgoEBMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLkh91s+/lZfAARKflFwgAAAA==[0m[Pipeline] stage
+[8mha:////4B8fdrmjPME9mkESxoT4ncf4uho/ADjRkwypNnvAM4kxAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0AIkBMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLkh91s+/lZfABpxnKZwgAAAA==[0m[Pipeline] { (Restore Build Workspace)
+[8mha:////4PL6P8MmF2SB5qGRINSPRiYUE82FXw752PBNIKgrgIOqAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSgCgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUO63n9qFN/DO8Oq+AAAA[0m[Pipeline] unstash
+[8mha:////4OaKd0CQtHctEEFCUdtLrvtVnYh10hvrkOQm0PJMWW0ZAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSICgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGMIGcr97lPbNwESVPK+AAAA[0m[Pipeline] }
+[8mha:////4Bf38o0D2DzCjranYJ5WLyhTV+FmLQA8OFgW/S3DJetqAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSUKRAVLRWGl5gEmPsWHeO7eBUvIiv8QcCkajYYrWzzTxfsI4Bjhw0WkW9odga9G7U88LMob86zmj5gi1TZKewUbnhTp0WbDgpWFKUsBKwUdQ6joZ0gq2w8i4rJ0lX5xTm7yCgNN0ADyjEbE4ypC9MAXa3sYtMP89fAUzeJyjr+lP7NwdUbKe+AAAA[0m[Pipeline] // stage
+[8mha:////4MYE4IiBi5TczcdICrSnh4o44Xf1qddaWcycQ5DNXwtgAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUYgEJMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLk+91sh/lZfADS2T4vwgAAAA==[0m[Pipeline] stage
+[8mha:////4FpBCXLn5YS0iV/4Vm2wiUOytMzSz3xYnfC3HRgdZrw4AAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0BISYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLdfrbD/Cw+81LNBsIAAAA=[0m[Pipeline] { (Authenticate to Amazon ECR)
+[8mha:////4CSAf74H/ZzuB4KnhxlpzVlPRXziTGBGHyTOrPY2GtOdAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoiUDRDqxBp14QShCSFp9H9JUtKJE3E17kCgEhMeLNuS9Z4vqIKHhrxmVmFvMHSGDW7UObFEvr84SszSmXWEgZxirUotSXWca0tRwayihAWHpcLOUTCoI6y4FXdRO4G6PkWftwOH0sgbPKDgmRyFj98yeVhfRxkIf5y/AJiGCOV2n223+TyrNxKsBBbCAAAA[0m[Pipeline] container
+[8mha:////4Et4I465JY8/dPPKpsnrpkmEexpWl+t1JHB2+NkWZADsAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUNiTE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAUPegdTCAAAA[0m[Pipeline] {
+[8mha:////4GnxtxVJm4drOI1jHZDSY21NP7VvIRE83KkTzvZkeTq2AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiqJAQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUO63n9qFNwEi9SW+AAAA[0m[Pipeline] sh
++ set -eu
+++ aws sts get-caller-identity --query Account --output text
++ AWS_ACCOUNT_ID=904053120094
++ ECR_REGISTRY=904053120094.dkr.ecr.us-east-1.amazonaws.com
+++ aws ecr get-login-password --region us-east-1
++ ECR_PASSWORD=eyJwYXlsb2FkIjoiRzVTcXVJWFhVcFc1aGR2blhDc1ROMDVmVXdYakJyME9Mdm9BaS9uV2UzSUp5NU1hSEluRkt4aEI4U3YzSm5rbVZFbTBqRUs4ZTYySFZ2K1lPOThVUk1KOFFWQkFKYWFEUFYzRnNaOEEyWUthK0x4dUIwbWREK2ZhWDhHWVVtYWd4MFNVOTZvY3Q4MGtEdlJ2MGV5ZWxQb0VON2NIUTRpYng2Y09DY2gwVGpxbjhIaTFOcVUzRmYxa0RyajVBU1RDeTNTaVNwRDJZbnpXbEVLMFBYSWZNd0ExTmU3TEZMVmVQNEN2TnlQTkNQYlk0Wm04RW5vclVBZkpYekI5Y0JiUlJlZnRkUXBFcCt3NG42NkFSZTBhbi84UVVFU2ZRclo0TmZTcTFrUnBMUnVOWnV2cm9qQ2MwVTgyQ3VPZ01xK3UyWGYvOFJpVFUwejZhZWRqYXZHUXp3YkFaQkM5VWhJOWRwZjF6NjVOSlZFWTdBalhTcWpkNFNVRmgxTndhZlU5VmVOeFpaU2tQWGdJdnhWNldCUktXYlF4ZG9tbDlGUWtsUDlEV0pYeXlSU1FaUGNLamJ0cERnTUxuOXZSYUl2Uk1DK1c3d0wxU0pOVEk5bGRJVXBXTUZCazJyVWRUNGRTck0wTFJ1ekljTHJDQ0o2V3BZaFJ4L0dWa0RDL3VoQm9nSk42NDdUSWRra2c4UE9WK1dmUGRDUGRiSzY3ZzJuaVB2dGxHRlIwaVY4TERHWWNNblAxcEFkeWtDRFUyV1d1OC9FUEkxQkNIZHRmTGRPb09uZnduek54M1V6TDBxNFFiYXBFM1FiaEhyTUxlUlh5NDdLemRQd0tzamlXKytWQ2VYcW1UaEpTekd2Wk82bm56eWgrWXpoYkVVK3VCSkduU2VVNWpCd3RnbXZPN3pVcHE4M28rV01IV2liTEdKS1grUkdnN0Zsak4vazQ3bXUzeklXTyt6MHNnYVY1T2ptYWlmV1R5bTlOV2V5bXFhZEZ1a1NYcndydGFTV2pBWTAzK1FWRGd0aU90V0RZMlZUZTYwOTdVZkxwekpqVjVtY3BlSWRyczBnUkdMbk9sdGhSSUdSelo3UDlGVEJ0UC9HeEk1c2t6ZnQ4Vzg4VWZkWFp6UnczNStWV095QjA2Q2xIRnIyZ3JsTHFDTmtPZExqaG9FSjhPaUw5ZWoxNjBWeUE5UVRrdWppNmljbFJnYzNCbWwraXNWejV0TkQ2cHpTOWY0ckZFTzhQNWdxdnVsR092UEsxbGkzWUkvamlub1lEWkNiNHJObUNoMmQ1UEFvTktPU3g3MmdSV3ZEZUY1L2R6VndKVXh2Nm5RVnAyeDFST0dTMEpSbHpXQlhoMCtHT3JuU0RWWXl4ZTNLeEZCaVNoUXlvOFFZV1BFekpQSGZ6c2N5cGhTT0JTalF0TzZucGt5dk4xaHZjcS9FSlMwRml1ZW91S0RJNzFwSFpOQ3htV3VjbVFNM25td3JuakJIcWR0MCtwYUhkZm15QThDVlpVR1JJS2NEbnhEMG5Jb3Z0aDBUY1pUZWt0TmQ4Wkt6dm5IYkhiNWFrZGRYaEF2OXRadklNTzB0K3BMajdXekN4WmZvSTBPNExNTjRxZGxPM0hVVmlXcTU2MWtLY0RXajBvM1o2TXhzNmxSZTNGdFlZNHI5aFdjMEhQVkd6OEpFNTVwcERqMlFRT2pwVXZucWVlQVU1YXFOTm80RVBrdW15Z1JJdVJtNTRPQmExWVo0NHVOaTRWMk8xdVhCUTlPelQ3QnVMbDVUNHdJUXQzbEhnUEFPVWZEeFhwTDlkZks0aWE0b21VSTZTeC8vZ2RpU3NqYzkxUExOQmZhMmJyN0tFRDJJL3dhQ0wwVFlLVkZHQzRnemdHQWVBdWcyVEsyUlcrSmlSRXp2TG0zS21VclBvY2hBNUdvUHlWRUo5MEFpQURRNmFDSXVDUWsvOVlOeFpmTzZUR1p5NDVsOUd2dVprVTBPaEtXaVpiOXFKU2U3VnZONkZ0MElGT2g4VW5iWEwwd05Wcllnd0t0NHcyeFFRZnFTbU92RzJGYkZUdlV0VGJNZGFHK3l2Tm41YTBHYkpNMEdmUmZBRnJPczYzV1NGTzM0Mit0UGpSV21TVUM0Z280U0tIdHcrOGNTVFIrdmN3N20yU1hRRFpESDEwZS9RYWFCZFdPdjhSc2dSV1BMSTJiM0pDZEFYTUtjQ3FhZXU2N240UzZody9qV1A0dDFDOVdpZEY5WGQ1cVl0VnpqS25NM3NZY0MwTlZCckFWcitKT1l3RkxCVTZGWW5xRWNpejhtdmZjVStUaHdKcE9VVlczdG45ZE5NcUJ1ZlBnSEpyNEFWOGZIUVFWL3R3TDREUUV3MDNuZngyRS9ueGE1YmxXanBHNUUrbHMvdytoUHU2WC9laUNJcysxY3k5K0g1Ymc9PSIsImRhdGFrZXkiOiJBUUVCQUhod20wWWFJU0plUnRKbTVuMUc2dXFlZWtYdW9YWFBlNVVGY2U5UnE4LzE0d0FBQUg0d2ZBWUpLb1pJaHZjTkFRY0dvRzh3YlFJQkFEQm9CZ2txaGtpRzl3MEJCd0V3SGdZSllJWklBV1VEQkFFdU1CRUVEUGtWLzlSR21MZ1hXRFhlRFFJQkVJQTdQK0VvU1Q2NGpIYlpoVXBnVFk3K2EvVGpsWkh0b0pCZUVOK2UrWGxyd1pBVjlVbHY3WVVza295OFRRdTl0TTc4a0VHYWpKZlBwU1ZBUitrPSIsInZlcnNpb24iOiIyIiwidHlwZSI6IkRBVEFfS0VZIiwiZXhwaXJhdGlvbiI6MTc4Njk5OTM1MH0=
+++ printf AWS:%s eyJwYXlsb2FkIjoiRzVTcXVJWFhVcFc1aGR2blhDc1ROMDVmVXdYakJyME9Mdm9BaS9uV2UzSUp5NU1hSEluRkt4aEI4U3YzSm5rbVZFbTBqRUs4ZTYySFZ2K1lPOThVUk1KOFFWQkFKYWFEUFYzRnNaOEEyWUthK0x4dUIwbWREK2ZhWDhHWVVtYWd4MFNVOTZvY3Q4MGtEdlJ2MGV5ZWxQb0VON2NIUTRpYng2Y09DY2gwVGpxbjhIaTFOcVUzRmYxa0RyajVBU1RDeTNTaVNwRDJZbnpXbEVLMFBYSWZNd0ExTmU3TEZMVmVQNEN2TnlQTkNQYlk0Wm04RW5vclVBZkpYekI5Y0JiUlJlZnRkUXBFcCt3NG42NkFSZTBhbi84UVVFU2ZRclo0TmZTcTFrUnBMUnVOWnV2cm9qQ2MwVTgyQ3VPZ01xK3UyWGYvOFJpVFUwejZhZWRqYXZHUXp3YkFaQkM5VWhJOWRwZjF6NjVOSlZFWTdBalhTcWpkNFNVRmgxTndhZlU5VmVOeFpaU2tQWGdJdnhWNldCUktXYlF4ZG9tbDlGUWtsUDlEV0pYeXlSU1FaUGNLamJ0cERnTUxuOXZSYUl2Uk1DK1c3d0wxU0pOVEk5bGRJVXBXTUZCazJyVWRUNGRTck0wTFJ1ekljTHJDQ0o2V3BZaFJ4L0dWa0RDL3VoQm9nSk42NDdUSWRra2c4UE9WK1dmUGRDUGRiSzY3ZzJuaVB2dGxHRlIwaVY4TERHWWNNblAxcEFkeWtDRFUyV1d1OC9FUEkxQkNIZHRmTGRPb09uZnduek54M1V6TDBxNFFiYXBFM1FiaEhyTUxlUlh5NDdLemRQd0tzamlXKytWQ2VYcW1UaEpTekd2Wk82bm56eWgrWXpoYkVVK3VCSkduU2VVNWpCd3RnbXZPN3pVcHE4M28rV01IV2liTEdKS1grUkdnN0Zsak4vazQ3bXUzeklXTyt6MHNnYVY1T2ptYWlmV1R5bTlOV2V5bXFhZEZ1a1NYcndydGFTV2pBWTAzK1FWRGd0aU90V0RZMlZUZTYwOTdVZkxwekpqVjVtY3BlSWRyczBnUkdMbk9sdGhSSUdSelo3UDlGVEJ0UC9HeEk1c2t6ZnQ4Vzg4VWZkWFp6UnczNStWV095QjA2Q2xIRnIyZ3JsTHFDTmtPZExqaG9FSjhPaUw5ZWoxNjBWeUE5UVRrdWppNmljbFJnYzNCbWwraXNWejV0TkQ2cHpTOWY0ckZFTzhQNWdxdnVsR092UEsxbGkzWUkvamlub1lEWkNiNHJObUNoMmQ1UEFvTktPU3g3MmdSV3ZEZUY1L2R6VndKVXh2Nm5RVnAyeDFST0dTMEpSbHpXQlhoMCtHT3JuU0RWWXl4ZTNLeEZCaVNoUXlvOFFZV1BFekpQSGZ6c2N5cGhTT0JTalF0TzZucGt5dk4xaHZjcS9FSlMwRml1ZW91S0RJNzFwSFpOQ3htV3VjbVFNM25td3JuakJIcWR0MCtwYUhkZm15QThDVlpVR1JJS2NEbnhEMG5Jb3Z0aDBUY1pUZWt0TmQ4Wkt6dm5IYkhiNWFrZGRYaEF2OXRadklNTzB0K3BMajdXekN4WmZvSTBPNExNTjRxZGxPM0hVVmlXcTU2MWtLY0RXajBvM1o2TXhzNmxSZTNGdFlZNHI5aFdjMEhQVkd6OEpFNTVwcERqMlFRT2pwVXZucWVlQVU1YXFOTm80RVBrdW15Z1JJdVJtNTRPQmExWVo0NHVOaTRWMk8xdVhCUTlPelQ3QnVMbDVUNHdJUXQzbEhnUEFPVWZEeFhwTDlkZks0aWE0b21VSTZTeC8vZ2RpU3NqYzkxUExOQmZhMmJyN0tFRDJJL3dhQ0wwVFlLVkZHQzRnemdHQWVBdWcyVEsyUlcrSmlSRXp2TG0zS21VclBvY2hBNUdvUHlWRUo5MEFpQURRNmFDSXVDUWsvOVlOeFpmTzZUR1p5NDVsOUd2dVprVTBPaEtXaVpiOXFKU2U3VnZONkZ0MElGT2g4VW5iWEwwd05Wcllnd0t0NHcyeFFRZnFTbU92RzJGYkZUdlV0VGJNZGFHK3l2Tm41YTBHYkpNMEdmUmZBRnJPczYzV1NGTzM0Mit0UGpSV21TVUM0Z280U0tIdHcrOGNTVFIrdmN3N20yU1hRRFpESDEwZS9RYWFCZFdPdjhSc2dSV1BMSTJiM0pDZEFYTUtjQ3FhZXU2N240UzZody9qV1A0dDFDOVdpZEY5WGQ1cVl0VnpqS25NM3NZY0MwTlZCckFWcitKT1l3RkxCVTZGWW5xRWNpejhtdmZjVStUaHdKcE9VVlczdG45ZE5NcUJ1ZlBnSEpyNEFWOGZIUVFWL3R3TDREUUV3MDNuZngyRS9ueGE1YmxXanBHNUUrbHMvdytoUHU2WC9laUNJcysxY3k5K0g1Ymc9PSIsImRhdGFrZXkiOiJBUUVCQUhod20wWWFJU0plUnRKbTVuMUc2dXFlZWtYdW9YWFBlNVVGY2U5UnE4LzE0d0FBQUg0d2ZBWUpLb1pJaHZjTkFRY0dvRzh3YlFJQkFEQm9CZ2txaGtpRzl3MEJCd0V3SGdZSllJWklBV1VEQkFFdU1CRUVEUGtWLzlSR21MZ1hXRFhlRFFJQkVJQTdQK0VvU1Q2NGpIYlpoVXBnVFk3K2EvVGpsWkh0b0pCZUVOK2UrWGxyd1pBVjlVbHY3WVVza295OFRRdTl0TTc4a0VHYWpKZlBwU1ZBUitrPSIsInZlcnNpb24iOiIyIiwidHlwZSI6IkRBVEFfS0VZIiwiZXhwaXJhdGlvbiI6MTc4Njk5OTM1MH0=
+++ base64
+++ tr -d '\n'
++ ECR_AUTH=QVdTOmV5SndZWGxzYjJGa0lqb2lSelZUY1hWSldGaFZjRmMxYUdSMmJsaERjMVJPTURWbVZYZFlha0p5TUU5TWRtOUJhUzl1VjJVelNVcDVOVTFoU0VsdVJrdDRhRUk0VTNZelNtNXJiVlpGYlRCcVJVczRaVFl5U0ZaMksxbFBPVGhWVWsxS09GRldRa0ZLWVdGRVVGWXpSbk5hT0VFeVdVdGhLMHg0ZFVJd2JXUkVLMlpoV0RoSFdWVnRZV2Q0TUZOVk9UWnZZM1E0TUd0RWRsSjJNR1Y1Wld4UWIwVk9OMk5JVVRScFluZzJZMDlEWTJnd1ZHcHhiamhJYVRGT2NWVXpSbVl4YTBSeWFqVkJVMVJEZVROVGFWTndSREpaYm5wWGJFVkxNRkJZU1daTmQwRXhUbVUzVEVaTVZtVlFORU4yVG5sUVRrTlFZbGswV20wNFJXNXZjbFZCWmtwWWVrSTVZMEppVWxKbFpuUmtVWEJGY0N0M05HNDJOa0ZTWlRCaGJpODRVVlZGVTJaUmNsbzBUbVpUY1RGclVuQk1VblZPV25WMmNtOXFRMk13VlRneVEzVlBaMDF4SzNVeVdHWXZPRkpwVkZVd2VqWmhaV1JxWVhaSFVYcDNZa0ZhUWtNNVZXaEpPV1J3WmpGNk5qVk9TbFpGV1RkQmFsaFRjV3BrTkZOVlJtZ3hUbmRoWmxVNVZtVk9lRnBhVTJ0UVdHZEpkbmhXTmxkQ1VrdFhZbEY0Wkc5dGJEbEdVV3RzVURsRVYwcFllWGxTVTFGYVVHTkxhbUowY0VSblRVeHVPWFpTWVVsMlVrMURLMWMzZDB3eFUwcE9WRWs1YkdSSlZYQlhUVVpDYXpKeVZXUlVOR1JUY2swd1RGSjFla2xqVEhKRFEwbzJWM0JaYUZKNEwwZFdhMFJETDNWb1FtOW5TazQyTkRkVVNXUnJhMmM0VUU5V0sxZG1VR1JEVUdSaVN6WTNaekp1YVZCMmRHeEhSbEl3YVZZNFRFUkhXV05OYmxBeGNFRmtlV3REUkZVeVYxZDFPQzlGVUVreFFrTklaSFJtVEdSUGIwOXVabmR1ZWs1NE0xVjZUREJ4TkZGaVlYQkZNMUZpYUVoeVRVeGxVbGg1TkRkTGVtUlFkMHR6YW1sWEt5dFdRMlZZY1cxVWFFcFRla2QyV2s4MmJtNTZlV2dyV1hwb1lrVlZLM1ZDU2tkdVUyVlZOV3BDZDNSbmJYWlBOM3BWY0hFNE0yOHJWMDFJVjJsaVRFZEtTMWdyVWtkbk4wWnNhazR2YXpRM2JYVXpla2xYVHl0Nk1ITm5ZVlkxVDJwdFlXbG1WMVI1YlRsT1YyVjViWEZoWkVaMWExTlljbmR5ZEdGVFYycEJXVEF6SzFGV1JHZDBhVTkwVjBSWk1sWlVaVFl3T1RkVlpreHdla3BxVmpWdFkzQmxTV1J5Y3pCblVrZE1iazlzZEdoU1NVZFNlbG8zVURsR1ZFSjBVQzlIZUVrMWMydDZablE0VnpnNFZXWmtXRnA2VW5jek5TdFdWMDk1UWpBMlEyeElSbkl5WjNKc1RIRkRUbXRQWkV4cWFHOUZTamhQYVV3NVpXb3hOakJXZVVFNVVWUnJkV3BwTm1samJGSm5Zek5DYld3cmFYTldlalYwVGtRMmNIcFRPV1kwY2taRlR6aFFOV2R4ZG5Wc1IwOTJVRXN4YkdreldVa3ZhbWx1YjFsRVdrTmlOSEpPYlVOb01tUTFVRUZ2VGt0UFUzZzNNbWRTVjNaRVpVWTFMMlI2Vm5kS1ZYaDJObTVSVm5BeWVERlNUMGRUTUVwU2JIcFhRbGhvTUN0SFQzSnVVMFJXV1hsNFpUTkxlRVpDYVZOb1VYbHZPRkZaVjFCRmVrcFFTR1o2YzJONWNHaFRUMEpUYWxGMFR6WnVjR3Q1ZGs0eGFIWmpjUzlGU2xNd1JtbDFaVzkxUzBSSk56RndTRnBPUTNodFYzVmpiVkZOTTI1dGQzSnVha0pJY1dSME1DdHdZVWhrWm0xNVFUaERWbHBWUjFKSlMyTkVibmhFTUc1SmIzWjBhREJVWTFwVVpXdDBUbVE0V2t0NmRtNUlZa2hpTldGclpHUllhRUYyT1hSYWRrbE5UekIwSzNCTWFqZFhla040V21adlNUQlBORXhOVGpSeFpHeFBNMGhWVm1sWGNUVTJNV3RMWTBSWGFqQnZNMW8yVFhoek5teFNaVE5HZEZsWk5ISTVhRmRqTUVoUVZrZDZPRXBGTlRWd2NFUnFNbEZSVDJwd1ZYWnVjV1ZsUVZVMVlYRk9UbTgwUlZCcmRXMTVaMUpKZFZKdE5UUlBRbUV4V1ZvME5IVk9hVFJXTWs4eGRWaENVVGxQZWxRM1FuVk1iRFZVTkhkSlVYUXpiRWhuVUVGUFZXWkVlRmh3VERsa1prczBhV0UwYjIxVlNUWlRlQzh2WjJScFUzTnFZemt4VUV4T1FtWmhNbUp5TjB0RlJESkpMM2RoUTB3d1ZGbExWa1pIUXpSbmVtZEhRV1ZCZFdjeVZFc3lVbGNyU21sU1JYcDJURzB6UzIxVmNsQnZZMmhCTlVkdlVIbFdSVW81TUVGcFFVUlJObUZEU1hWRFVXc3ZPVmxPZUZwbVR6WlVSMXA1TkRWc09VZDJkVnByVlRCUGFFdFhhVnBpT1hGS1UyVTNWblpPTmtaME1FbEdUMmc0Vlc1aVdFd3dkMDVXY2xsbmQwdDBOSGN5ZUZGUlpuRlRiVTkyUnpKR1lrWlVkbFYwVkdKTlpHRkhLM2wyVG00MVlUQkhZa3BOTUVkbVVtWkJSbkpQY3pZelYxTkdUek0wTWl0MFVHcFNWMjFUVlVNMFoyODBVMHRJZEhjck9HTlRWRklyZG1OM04yMHlVMWhSUkZwRVNERXdaUzlSWVdGQ1pGZFBkamhTYzJkU1YxQk1TVEppTTBwRFpFRllUVXRqUTNGaFpYVTJOMjQwVXpab2R5OXFWMUEwZERGRE9WZHBaRVk1V0dRMWNWbDBWbnBxUzI1Tk0zTlpZME13VGxaQ2NrRldjaXRLVDFsM1JreENWVFpHV1c1eFJXTnBlamh0ZG1aalZTdFVhSGRLY0U5VlZsY3pkRzQ1WkU1TmNVSjFabEJuU0VweU5FRldPR1pJVVZGV0wzUjNURFJFVVVWM01ETnVabmd5UlM5dWVHRTFZbXhYYW5CSE5VVXJiSE12ZHl0b1VIVTJXQzlsYVVOSmN5c3hZM2s1SzBnMVltYzlQU0lzSW1SaGRHRnJaWGtpT2lKQlVVVkNRVWhvZDIwd1dXRkpVMHBsVW5SS2JUVnVNVWMyZFhGbFpXdFlkVzlZV0ZCbE5WVkdZMlU1VW5FNEx6RTBkMEZCUVVnMGQyWkJXVXBMYjFwSmFIWmpUa0ZSWTBkdlJ6aDNZbEZKUWtGRVFtOUNaMnR4YUd0cFJ6bDNNRUpDZDBWM1NHZFpTbGxKV2tsQlYxVkVRa0ZGZFUxQ1JVVkVVR3RXTHpsU1IyMU1aMWhYUkZobFJGRkpRa1ZKUVRkUUswVnZVMVEyTkdwSVlscG9WWEJuVkZrM0syRXZWR3BzV2toMGIwcENaVVZPSzJVcldHeHlkMXBCVmpsVmJIWTNXVlZ6YTI5NU9GUlJkVGwwVFRjNGEwVkhZV3BLWmxCd1UxWkJVaXRyUFNJc0luWmxjbk5wYjI0aU9pSXlJaXdpZEhsd1pTSTZJa1JCVkVGZlMwVlpJaXdpWlhod2FYSmhkR2x2YmlJNk1UYzROams1T1RNMU1IMD0=
++ mkdir -p /docker-config /metadata
++ printf '%s
+' '{' '  "auths": {' '    904053120094.dkr.ecr.us-east-1.amazonaws.com: {' '      auth: QVdTOmV5SndZWGxzYjJGa0lqb2lSelZUY1hWSldGaFZjRmMxYUdSMmJsaERjMVJPTURWbVZYZFlha0p5TUU5TWRtOUJhUzl1VjJVelNVcDVOVTFoU0VsdVJrdDRhRUk0VTNZelNtNXJiVlpGYlRCcVJVczRaVFl5U0ZaMksxbFBPVGhWVWsxS09GRldRa0ZLWVdGRVVGWXpSbk5hT0VFeVdVdGhLMHg0ZFVJd2JXUkVLMlpoV0RoSFdWVnRZV2Q0TUZOVk9UWnZZM1E0TUd0RWRsSjJNR1Y1Wld4UWIwVk9OMk5JVVRScFluZzJZMDlEWTJnd1ZHcHhiamhJYVRGT2NWVXpSbVl4YTBSeWFqVkJVMVJEZVROVGFWTndSREpaYm5wWGJFVkxNRkJZU1daTmQwRXhUbVUzVEVaTVZtVlFORU4yVG5sUVRrTlFZbGswV20wNFJXNXZjbFZCWmtwWWVrSTVZMEppVWxKbFpuUmtVWEJGY0N0M05HNDJOa0ZTWlRCaGJpODRVVlZGVTJaUmNsbzBUbVpUY1RGclVuQk1VblZPV25WMmNtOXFRMk13VlRneVEzVlBaMDF4SzNVeVdHWXZPRkpwVkZVd2VqWmhaV1JxWVhaSFVYcDNZa0ZhUWtNNVZXaEpPV1J3WmpGNk5qVk9TbFpGV1RkQmFsaFRjV3BrTkZOVlJtZ3hUbmRoWmxVNVZtVk9lRnBhVTJ0UVdHZEpkbmhXTmxkQ1VrdFhZbEY0Wkc5dGJEbEdVV3RzVURsRVYwcFllWGxTVTFGYVVHTkxhbUowY0VSblRVeHVPWFpTWVVsMlVrMURLMWMzZDB3eFUwcE9WRWs1YkdSSlZYQlhUVVpDYXpKeVZXUlVOR1JUY2swd1RGSjFla2xqVEhKRFEwbzJWM0JaYUZKNEwwZFdhMFJETDNWb1FtOW5TazQyTkRkVVNXUnJhMmM0VUU5V0sxZG1VR1JEVUdSaVN6WTNaekp1YVZCMmRHeEhSbEl3YVZZNFRFUkhXV05OYmxBeGNFRmtlV3REUkZVeVYxZDFPQzlGVUVreFFrTklaSFJtVEdSUGIwOXVabmR1ZWs1NE0xVjZUREJ4TkZGaVlYQkZNMUZpYUVoeVRVeGxVbGg1TkRkTGVtUlFkMHR6YW1sWEt5dFdRMlZZY1cxVWFFcFRla2QyV2s4MmJtNTZlV2dyV1hwb1lrVlZLM1ZDU2tkdVUyVlZOV3BDZDNSbmJYWlBOM3BWY0hFNE0yOHJWMDFJVjJsaVRFZEtTMWdyVWtkbk4wWnNhazR2YXpRM2JYVXpla2xYVHl0Nk1ITm5ZVlkxVDJwdFlXbG1WMVI1YlRsT1YyVjViWEZoWkVaMWExTlljbmR5ZEdGVFYycEJXVEF6SzFGV1JHZDBhVTkwVjBSWk1sWlVaVFl3T1RkVlpreHdla3BxVmpWdFkzQmxTV1J5Y3pCblVrZE1iazlzZEdoU1NVZFNlbG8zVURsR1ZFSjBVQzlIZUVrMWMydDZablE0VnpnNFZXWmtXRnA2VW5jek5TdFdWMDk1UWpBMlEyeElSbkl5WjNKc1RIRkRUbXRQWkV4cWFHOUZTamhQYVV3NVpXb3hOakJXZVVFNVVWUnJkV3BwTm1samJGSm5Zek5DYld3cmFYTldlalYwVGtRMmNIcFRPV1kwY2taRlR6aFFOV2R4ZG5Wc1IwOTJVRXN4YkdreldVa3ZhbWx1YjFsRVdrTmlOSEpPYlVOb01tUTFVRUZ2VGt0UFUzZzNNbWRTVjNaRVpVWTFMMlI2Vm5kS1ZYaDJObTVSVm5BeWVERlNUMGRUTUVwU2JIcFhRbGhvTUN0SFQzSnVVMFJXV1hsNFpUTkxlRVpDYVZOb1VYbHZPRkZaVjFCRmVrcFFTR1o2YzJONWNHaFRUMEpUYWxGMFR6WnVjR3Q1ZGs0eGFIWmpjUzlGU2xNd1JtbDFaVzkxUzBSSk56RndTRnBPUTNodFYzVmpiVkZOTTI1dGQzSnVha0pJY1dSME1DdHdZVWhrWm0xNVFUaERWbHBWUjFKSlMyTkVibmhFTUc1SmIzWjBhREJVWTFwVVpXdDBUbVE0V2t0NmRtNUlZa2hpTldGclpHUllhRUYyT1hSYWRrbE5UekIwSzNCTWFqZFhla040V21adlNUQlBORXhOVGpSeFpHeFBNMGhWVm1sWGNUVTJNV3RMWTBSWGFqQnZNMW8yVFhoek5teFNaVE5HZEZsWk5ISTVhRmRqTUVoUVZrZDZPRXBGTlRWd2NFUnFNbEZSVDJwd1ZYWnVjV1ZsUVZVMVlYRk9UbTgwUlZCcmRXMTVaMUpKZFZKdE5UUlBRbUV4V1ZvME5IVk9hVFJXTWs4eGRWaENVVGxQZWxRM1FuVk1iRFZVTkhkSlVYUXpiRWhuVUVGUFZXWkVlRmh3VERsa1prczBhV0UwYjIxVlNUWlRlQzh2WjJScFUzTnFZemt4VUV4T1FtWmhNbUp5TjB0RlJESkpMM2RoUTB3d1ZGbExWa1pIUXpSbmVtZEhRV1ZCZFdjeVZFc3lVbGNyU21sU1JYcDJURzB6UzIxVmNsQnZZMmhCTlVkdlVIbFdSVW81TUVGcFFVUlJObUZEU1hWRFVXc3ZPVmxPZUZwbVR6WlVSMXA1TkRWc09VZDJkVnByVlRCUGFFdFhhVnBpT1hGS1UyVTNWblpPTmtaME1FbEdUMmc0Vlc1aVdFd3dkMDVXY2xsbmQwdDBOSGN5ZUZGUlpuRlRiVTkyUnpKR1lrWlVkbFYwVkdKTlpHRkhLM2wyVG00MVlUQkhZa3BOTUVkbVVtWkJSbkpQY3pZelYxTkdUek0wTWl0MFVHcFNWMjFUVlVNMFoyODBVMHRJZEhjck9HTlRWRklyZG1OM04yMHlVMWhSUkZwRVNERXdaUzlSWVdGQ1pGZFBkamhTYzJkU1YxQk1TVEppTTBwRFpFRllUVXRqUTNGaFpYVTJOMjQwVXpab2R5OXFWMUEwZERGRE9WZHBaRVk1V0dRMWNWbDBWbnBxUzI1Tk0zTlpZME13VGxaQ2NrRldjaXRLVDFsM1JreENWVFpHV1c1eFJXTnBlamh0ZG1aalZTdFVhSGRLY0U5VlZsY3pkRzQ1WkU1TmNVSjFabEJuU0VweU5FRldPR1pJVVZGV0wzUjNURFJFVVVWM01ETnVabmd5UlM5dWVHRTFZbXhYYW5CSE5VVXJiSE12ZHl0b1VIVTJXQzlsYVVOSmN5c3hZM2s1SzBnMVltYzlQU0lzSW1SaGRHRnJaWGtpT2lKQlVVVkNRVWhvZDIwd1dXRkpVMHBsVW5SS2JUVnVNVWMyZFhGbFpXdFlkVzlZV0ZCbE5WVkdZMlU1VW5FNEx6RTBkMEZCUVVnMGQyWkJXVXBMYjFwSmFIWmpUa0ZSWTBkdlJ6aDNZbEZKUWtGRVFtOUNaMnR4YUd0cFJ6bDNNRUpDZDBWM1NHZFpTbGxKV2tsQlYxVkVRa0ZGZFUxQ1JVVkVVR3RXTHpsU1IyMU1aMWhYUkZobFJGRkpRa1ZKUVRkUUswVnZVMVEyTkdwSVlscG9WWEJuVkZrM0syRXZWR3BzV2toMGIwcENaVVZPSzJVcldHeHlkMXBCVmpsVmJIWTNXVlZ6YTI5NU9GUlJkVGwwVFRjNGEwVkhZV3BLWmxCd1UxWkJVaXRyUFNJc0luWmxjbk5wYjI0aU9pSXlJaXdpZEhsd1pTSTZJa1JCVkVGZlMwVlpJaXdpWlhod2FYSmhkR2x2YmlJNk1UYzROams1T1RNMU1IMD0=' '    }' '  }' '}'
++ chmod 600 /docker-config/config.json
++ printf %s 904053120094
++ printf %s 904053120094.dkr.ecr.us-east-1.amazonaws.com
++ echo 'Authenticated to Amazon ECR.'
+Authenticated to Amazon ECR.
+[8mha:////4NPFb9I5YjiIPZJ+N4LPZxpRpl4ZkAMUY82SjwvjonqBAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiRIOEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDud5/avgEbGyOjvgAAAA==[0m[Pipeline] }
+[8mha:////4Eq5fyqOZUHcr+0eMCdNgZag74DvpwpKgDB7/0uT71A8AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJCQYGEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDud5/avgE1GyHJvgAAAA==[0m[Pipeline] // container
+[8mha:////4FxmmYgRWSDL5uUlpL6dc3efoQIWR3wLklsErha7wtOkAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0QoBQJ9aoCycITQhJo/9LkpJOnIircQcClZjwYNmWrPd8QRU8NOQ1swp7g6EzbHCjzokl8v3FUWKWzqwjDOQUa1VqSarjXFuKCmYVJSw4LBV2joJBHWHFrbiL2gnU9Sn6vB04lEbe4AEFz+QofPyWycP6OspA+OP8BcA0RCi3+2y7zedZvQGhPclGwgAAAA==[0m[Pipeline] script
+[8mha:////4NSCLAaOL3Zs/X4HtQoqBgWP4SSC7m3o4tqD7wklTPRpAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0AiEhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LD7lC07jCAAAA[0m[Pipeline] {
+[8mha:////4D9PF4tuBMg8vnwRPTNI0eZygqWeVwJBQGdBUNxtj5j4AAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0AyTE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAR33berCAAAA[0m[Pipeline] container
+[8mha:////4L58Kivh+O2/OJhLDkhgkjg+TrQiolVeoBMDN56wsoyLAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycoh0pBJiYo26cILQhJA0+r9NUtKJE3E17kBLJSY8WLYl673eUMYAJwqGO42dxdha3vvRzIlnCt3NU+aOrrwljOQ1b3RuSOnzWhtKGlYVDDYCthpbT9GiSbATTj5k5SWa6pLCvB0FMKsGeEIhZnKSIX3LFGB/H1Uk/HH+AmDqE7D6sFi9PMsPCJq12sIAAAA=[0m[Pipeline] {
+[8mha:////4I54pI7uIuyf4SYFX55SvhPMp3vOSwCDksapPgR/u4kQAAAAox+LCAAAAAAAAP9tjTESwiAURH/iWNhaegjSxnGsbBkaT4AJIoT5nwCRVJ7Iq3kH0cxYucXOvm3e8wXrGOBIQTOrcDAYO8O8m3RZLFMYro4ys3RhHWEkp5hQWVCvTgsKSgqWVDWsOGwUdo6iQZ1gy628y8ZJ1M05hfIdONSmH+EBFS/mJEP6whxgd5v6SPjz/BXA7BPUbfupvX8DGb6ZU74AAAA=[0m[Pipeline] sh
++ cat /metadata/aws-account-id
+[8mha:////4AEmwobYj8OeJmV0ppkaV5aQP/VdZgqDGrrhhvNFAdGwAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMKhDEJUaa00vMDEh3Fi3RnbIal4EV/jD1hEomKL1c4283rDOgY4cTCiRxosxc4K70aTl5g4DFfHk+j5IjqmyA5Fi1PLGpsFW04IS4oSVhI2SJ3jaMkk2MpePVTlFJnqnEL+jhJKq+/whEJmc1IhfWEOsLuNOjL9PH8FMPsEZV3nOuz9B2dvmYO+AAAA[0m[Pipeline] sh
++ cat /metadata/ecr-registry
+[8mha:////4KVQrBebG7DNRZl6gjrtJ+GGZvEQJe2z08zNRLNQdL1lAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMIRXRCiSmul4QUmPowT687YDknFi/gaf8AiEhVbrHa2mdcb1jHAiYMRPdJgKXZWeDeavMTEYbg6nkTPF9ExRXYoWpxa1tgs2HJCWFKUsJKwQeocR0smwVb26qEqp8hU5xTyd5RQWn2HJxQym5MK6QtzgN1t1JHp5/krgNn7BOVhn6uuPwAJQDG+AAAA[0m[Pipeline] }
+[8mha:////4KITY58WmeCXDaOyVXCP8bJ6urPbfj06lf7B+w0N+FagAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIi0QBCqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKZhiFAetrn2uw8/ZmsnvgAAAA==[0m[Pipeline] // container
+[8mha:////4HPge5UHKwBED7cHerougzmsiCc2vAdGS7QjpeQkQJOuAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSICEQSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4TysM21330ADIUwm74AAAA=[0m[Pipeline] }
+[8mha:////4ApsxVLHHVFiIfyB4y7fSnx4UzDdaD+OzjeLWg9oom3FAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSgARCqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKZhiFAetrn2uw8O5DwfvgAAAA==[0m[Pipeline] // script
+[8mha:////4N/KVyZsj123IpdDEgDIBH6hyOzShgJud8zZ84jGXy+gAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSIRQhqrRWGl5gYmOcWHfGdkgqXsTX+AMWkajYYrWzzbzesI4BThwM9poGS7Gz6N1o8sKJw3B1PGHPF+yYIjuNrZ5aVrpZsOWkYUlRwkrARlPnOFoyCbailw9ZOUmmOqeQv6OA0qo7PKEQ2ZxkSF+YA+xuo4pMP89fAcw+QXmoc9V7/wE6grmBvgAAAA==[0m[Pipeline] echo
+ECR registry: 904053120094.dkr.ecr.us-east-1.amazonaws.com
+[8mha:////4ByzDoLq32KtgBVqzensArffp0qWKq5kgOaGcJDPwZlXAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSgSJEldZKwwtMbIwT687YDknFi/gaf8AiEhVbrHa2mdcb1jHAiYPBXtNgKXYWvRtNXjhxGK6OJ+z5gh1TZKex1VPLSjcLtpw0LClKWAnYaOocR0smwVb08iErJ8lU5xTydxRQWnWHJxQim5MM6QtzgN1tVJHp5/krgNn7BGW9z3WoP+EV2ty+AAAA[0m[Pipeline] }
+[8mha:////4AwCD+MvAhSB7Ol9niKmD870nfxbK44qnq5jjMvCbdcSAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSBoSo0lppeIGJjXFi3RnbIal4EV/jD1hEomKL1c4283rDOgY4cTDYaxosxc6id6PJCycOw9XxhD1fsGOK7DS2empZ6WbBlpOGJUUJKwEbTZ3jaMkk2IpePmTlJJnqnEL+jgJKq+7whEJkc5IhfWEOsLuNKjL9PH8FMHufoDzUuer9B9L2gWC+AAAA[0m[Pipeline] // stage
+[8mha:////4EBXPsg0+lX7bup0diZLvpGD1WuaZjZ87Xeekk828MPbAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUYgGEOrFGXThBaEJIGv1fkpR04kRcjTsQqMSEB8u2ZL3nC6rgoSGvmVXYGwydYYMbdU4ske8vjhKzdGYdYSCnWKtSS1Id59pSVDCrKGHBYamwcxQM6ggrbsVd1E6grk/R5+3AoTTyBg8oeCZH4eO3TB7W11EGwh/nLwCmIUK53WTb7z7P6g2PogF/wgAAAA==[0m[Pipeline] stage
+[8mha:////4HZMIkzNssTHtlSlSHQXuhd7DmBTrb7zYasiP9HB9Zh/AAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycoh0pUJMrFEXThCaEJJG/7dJSjpxIq7GHWipxIQHy7ZkvdcbyhjgRMFwp7GzGFvLez+aOfFMobt5ytzRlbeEkbzmjc4NKX1ea0NJw6qCwUbAVmPrKVo0CXbCyYesvERTXVKYt6MAZtUATyjETE4ypG+ZAuzvo4qEP85fAEx9AlYfFquXZ/kBsPrDv8IAAAA=[0m[Pipeline] { (Build and Push Images)
+[8mha:////4KUKK905fiNBk8V4xix7oUlb3Lt94E3p8sCm/O8Ho/jWAAAApx+LCAAAAAAAAP9tjbEOgjAURR8QBldHP6LgSIwTa8PiF9RSa6F5D9uHMPlF/pr/IEri5J3uucnNeb4gjwGOFKzoDPYOo3Zi8KNdmpgo9BdPk+joLDRhJG9EY6aGWlOv2BAbWJOkkEnYGNSeokPLsJWduqvCK7TFicOyHSSkrr3BAxK5mFkF/sIcYHcd20j48/wVwDwwpFXFkO3L8nPN3zgbWwvDAAAA[0m[Pipeline] parallel
+[8mha:////4M78EPbFQo7AFAt2qfQTMZAgnS4RD2zGyRxkn1qsk+QrAAAApx+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkTBOBon1obFJ6il1kLz/9gWy+QT+Wq+gxUSJ2+43F1y+V5vKL2DEznNeoWDQS8NG+2kU2KR3HC1FFlPFyYJPVnFWhVb6lSz1paCglVZDgWHjUJpyRvUAba8Fw9RWYG6OgeXtiOH3HR3eELGEzkIF5YyO9jdps4T/jh/ATCPAYp9XS9++H7LDy7NSPPEAAAA[0m[Pipeline] { (Branch: Frontend)
+[8mha:////4NIrED0Xe/pEafG2YGcSQSNAYRXniG+Q/ueuX+gHWqqjAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkTBxM04sTYsPkEttRaa/8e2WCafyFfzHayQOHnD5e6Sy/d6Q+kdnMhp1iscDHpp2GgnnRKL5Iarpch6ujBJ6Mkq1qrYUqeatbYUFKzKcig4bBRKS96gDrDlvXiIygrU1Tm4tB055Ka7wxMynshBuLCU2cHuNnWe8Mf5C4B5DFDs63rxw/dbfgCW/U3uxAAAAA==[0m[Pipeline] { (Branch: Backend)
+[8mha:////4BV1Tve8Mkt10bCHe8a1HpwQ8RKLEm0CZcSKKXSh9KT0AAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkTBwck4sTYsPkEttRaa/8e2WCafyFfzHayQOHnD5e6Sy/d6Q+kdnMhp1iscDHpp2GgnnRKL5Iarpch6ujBJ6Mkq1qrYUqeatbYUFKzKcig4bBRKS96gDrDlvXiIygrU1Tm4tB055Ka7wxMynshBuLCU2cHuNnWe8Mf5C4B5DFDs63rxw/dbfgAzLhElxAAAAA==[0m[Pipeline] { (Branch: Worker)
+[8mha:////4KahX3yZV+Yg5GLY30YnhnIqmhoVD4SHu6/DP6zyYpWUAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApCIkFdWKNunCCkISQNPq/JCntxIm4GnegtBITHizbkvVebyhjgJqCYU5jazFKyzrfmymxgUJ79TQwRxcmCSN5zRo9NKT0aakNJQ2LshwKDiuN0lO0aBKsuRMPUXmBpjqnMG1HDrlVd3hCxidyEiHNZQywufUqEv44fwEwdgmK3XY/++H7LT9tjhvUxAAAAA==[0m[Pipeline] stage
+[8mha:////4GAaGq84Ks+k2ieGkJwfC1eeuldMYbhpDx+jMrwG8LTDAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApLDCgTqxRF04QkhCSRv+XJKWdOBFX4w6UVmLCg2Vbst7rDWUMUFMwzGlsLUZpWed7MyU2UGivngbm6MIkYSSvWaOHhpQ+LbWhpGFRlkPBYaVReooWTYI1d+IhKi/QVOcUpu3IIbfqDk/I+EROIqS5jAE2t15Fwh/nLwDGLkGx2+5nP3y/5QfYKuSHxAAAAA==[0m[Pipeline] { (Frontend)
+[8mha:////4LfsKpq4h0zEOeuCfGPaQRsTWNuc8j//fC31p7EgH+FQAAAAqR+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApSAxIqBNr1IUThCSEpNH/JUlpJ07E1bgDpZWY8GDZlqz3ekMZA9QUDHMaW4tRWtb53kyJDRTaq6eBObowSRjJa9booSGlT0ttKGlYlOVQcFhplJ6iRZNgzZ14iMoLNNU5hWk7csitusMTMj6RkwhpLmOAza1XkfDH+QuAsUtQ7Lb72Q/fb/kBkgaJmsQAAAA=[0m[Pipeline] stage
+[8mha:////4PRXZrEftECYpPcAIckisPUbUZwb25WXQ3HxvES0yfW7AAAAqB+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApbCDUiTXqwglCEkLS6P+SpLQTJ+Jq3IHSSkx4sGxL1nu9oYwBagqGOY2txSgt63xvpsQGCu3V08AcXZgkjOQ1a/TQkNKnpTaUNCzKcig4rDRKT9GiSbDmTjxE5QWa6pzCtB055Fbd4QkZn8hJhDSXMcDm1qtI+OP8BcDYJSh22/3sh++3/AC2mN9UxAAAAA==[0m[Pipeline] { (Backend)
+[8mha:////4NkmLWhlBhxOX9j3m7GgrMWDYUMlna4c7kI9uE3NVJNQAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkSBwck4uTYsPkFtay00/49tsUw+ka/mOwiSOHnD5e6Sy/d6Qxk8HMkb1mnsLQZp2eBGMyeWyPdXR4l1dGGSMJDTrNWpJaVPa20paliV5VBw2GiUjoJFE2HLO/EQlRNoqnP083bgkFt1hydkfCZH4eO3TB52t1EFwh/nLwCmIULR1PvFm3r5lh8kwwhLxAAAAA==[0m[Pipeline] stage
+[8mha:////4InJR1OPw3ozwDQnGOes1U+Zz0Z0ku1fceM48kaymLuCAAAAph+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApnRETa5SFE4QkhLTR/yVJaSdOxNW4A6GVmPBg2Zas93pDHQMcKVjWGewdRuXY4EebE5so9FdPE+vowhRhJG+YMJMgbU5rFZQMrCpKqDhsDCpP0aFNsOWdfMjGS7TNOYW8HTiUTt/hCQXP5CRDWsocYHcbdST8cf4CYB4SVG27X7z9fusPFL5hxcQAAAA=[0m[Pipeline] { (Worker)
+[8mha:////4GjGl4LcgZ4xxlq85gWYcP8NQZtNeArEuLNvhzQcSFLlAAAAqR+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApZWFATKxRF04Q2hCSRv+XJCWdOBFX4w6kVGLCg2Vbst7rDaV3cCSnmJHYa/StZoMdVUoskuuvliIzdGEtoScrWSNjQ508LbWhIGFRlkPBYSWxteQ1qgBrbsRDVFagqs7Bpe3AIdfdHZ6Q8UQOwoVvmRxsbmPnCX+cvwCYhgBFvd3PXu/mb/kBsPz76sQAAAA=[0m[Pipeline] container
+[8mha:////4IrttKWmSflR5imEMa9rHzY7lxcgcBYPPyr/SrYvW9P7AAAApx+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkQJOhon1obFJ6il1kLz/9gWy+QT+Wq+gxUSJ2+43F1y+V5vKL2DEznNeoWDQS8NG+2kU2KR3HC1FFlPFyYJPVnFWhVb6lSz1paCglVZDgWHjUJpyRvUAba8Fw9RWYG6OgeXtiOH3HR3eELGEzkIF5YyO9jdps4T/jh/ATCPAYq63i9++H7LD4CBkmTEAAAA[0m[Pipeline] {
+[8mha:////4Cj/FfiH+WXkIjPHOqp/HNwqVDxYwizMi7Ud5NubbiKiAAAAqR+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BAplVgQYmKNunCC0IaQNPq/JCnpxIm4GncgpRITHizbkvVebyi9gyM5xYzEXqNvNRvsqFJikVx/tRSZoQtrCT1ZyRoZG+rkaakNBQmLshwKDiuJrSWvUQVYcyMeorICVXUOLm0HDrnu7vCEjCdyEC58y+Rgcxs7T/jj/AXANAQo6u1+9no3f8sPs8yT1cQAAAA=[0m[Pipeline] container
+[8mha:////4FJ0wTDqctz9O7TeRHH+VTB56v4qwbtu++bo4Xwfr0uAAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkQJiU7GibVh8QlqqbXQ/D+2xTL5RL6a72CFxMkbLneXXL7XG0rv4EROs17hYNBLw0Y76ZRYJDdcLUXW04VJQk9WsVbFljrVrLWloGBVlkPBYaNQWvIGdYAt78VDVFagrs7Bpe3IITfdHZ6Q8UQOwoWlzA52t6nzhD/OXwDMY4CirveLH77f8gN9x/ZdxAAAAA==[0m[Pipeline] {
+[8mha:////4Cr/HczvK7Qtv8KkZlXYcXrYKXNOhDik6gHp92rTJxP5AAAApx+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BCpsrAgJtaoCycITQhJo/9LktJOnIircQdCKzHhwbItWe/1hjoGOFIwzGnsLcbOssGPJic2Ueivnibm6MI6wkhes1ZPLSl9WmtLScOqooRKwEZj5ylaNAm2wsmHbLxE05xTyNtBQGnVHZ5QiExOMqSlzAF2t1FFwh/nLwDmIUHFOV98//3WH8PCwUPEAAAA[0m[Pipeline] container
+[8mha:////4AKFIlx2rvcPulhj8sENrmHtJnrLTl0YP5fCk2FUsa+oAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkQJiw7GibVh8QlqqbXQ/D+2xTL5RL6a72CFxMkbLneXXL7XG0rv4EROs17hYNBLw0Y76ZRYJDdcLUXW04VJQk9WsVbFljrVrLWloGBVlkPBYaNQWvIGdYAt78VDVFagrs7Bpe3IITfdHZ6Q8UQOwoWlzA52t6nzhD/OXwDMY4CirveLH77f8gPp+AX8xAAAAA==[0m[Pipeline] {
+[8mha:////4OLitLRbDExQbnURxN6C8K2YWJDhzo3feUMHG38SduF5AAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjiAYJUaW10vACExtjx7oztkNS8SK+xh+wEomKLVY728z7A5sY4ExBM6twMBh7w7wbdV5sojDcHE3M0pX1hJGcYp2aOpKqXbGjpGBNUULFYauwdxQN6gQ7bsVT1E6gri8p5O/EoTTyAS8oeDYnEdICc4D9fZSR8Of5K4DZJ6ia5rD00X8BKyEINMAAAAA=[0m[Pipeline] sh
+[8mha:////4FQHrIRbmwfSEvjSxT3aWuyeNnddQQEu+ZVgGiyC1Uq4AAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjFBQIUaW10vACExtjx7oztkNS8SK+xh+wEomKLVY728z7A5sY4ExBM6twMBh7w7wbdV5sojDcHE3M0pX1hJGcYp2aOpKqXbGjpGBNUULFYauwdxQN6gQ7bsVT1E6gri8p5O/EoTTyAS8oeDYnEdICc4D9fZSR8Of5K4DZJ6ia5rD00X8B7Rl868AAAAA=[0m[Pipeline] sh
++ set -eu
++ /kaniko/executor '--context=dir:///home/jenkins/agent/workspace/application-ci/docker/frontend' '--dockerfile=/home/jenkins/agent/workspace/application-ci/docker/frontend/Dockerfile' '--destination=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0' '--digest-file=/metadata/frontend-digest.txt' '--push-retry=3' '--verbosity=info'
+[36mINFO[0m[0000] Using dockerignore file: /home/jenkins/agent/workspace/application-ci/docker/frontend/.dockerignore 
+[36mINFO[0m[0000] Retrieving image manifest nginx:alpine       
+[36mINFO[0m[0000] Retrieving image nginx:alpine from registry index.docker.io 
+[8mha:////4MCGIDlPDe2bUxRJKiIXv0mAsVxFg/kQBQtNkG9fHBCbAAAAph+LCAAAAAAAAP9tjTESgjAQRRcYC1tLDxHExsKxss3QeIIIMSZkdmOyCJUn8mreQZQZK3/x57/fvOcLFinCgaIRTmNnMTVWBN+baYmBYnfxNAhHZ9EQJvJa1HqoqdXHGWtiDXOyHAoJS42Np2TRMKykU3dVeoWmPHGcvr2E3LY3eEAmJzOryF8YI6yvfZsIf56/AhgDQ1FVu09vN+ENgBvdesAAAAA=[0m[Pipeline] sh
++ set -eu
++ /kaniko/executor '--context=dir:///home/jenkins/agent/workspace/application-ci/docker/backend' '--dockerfile=/home/jenkins/agent/workspace/application-ci/docker/backend/Dockerfile' '--destination=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0' '--digest-file=/metadata/backend-digest.txt' '--push-retry=3' '--verbosity=info'
+[36mINFO[0m[0000] Using dockerignore file: /home/jenkins/agent/workspace/application-ci/docker/backend/.dockerignore 
+[36mINFO[0m[0000] Retrieving image manifest python:3.12-slim-bookworm 
+[36mINFO[0m[0000] Retrieving image python:3.12-slim-bookworm from registry index.docker.io 
+[36mINFO[0m[0000] Built cross stage deps: map[]                
+[36mINFO[0m[0000] Retrieving image manifest nginx:alpine       
+[36mINFO[0m[0000] Returning cached image manifest              
+[36mINFO[0m[0000] Executing 0 build triggers                   
+[36mINFO[0m[0000] Building stage 'nginx:alpine' [idx: '0', base-idx: '-1'] 
+[36mINFO[0m[0000] Unpacking rootfs as cmd COPY index.html /usr/share/nginx/html/index.html requires it. 
+[36mINFO[0m[0000] Built cross stage deps: map[]                
+[36mINFO[0m[0000] Retrieving image manifest python:3.12-slim-bookworm 
+[36mINFO[0m[0000] Returning cached image manifest              
+[36mINFO[0m[0000] Executing 0 build triggers                   
+[36mINFO[0m[0000] Building stage 'python:3.12-slim-bookworm' [idx: '0', base-idx: '-1'] 
+[36mINFO[0m[0000] Unpacking rootfs as cmd COPY requirements.txt . requires it. 
++ set -eu
++ /kaniko/executor '--context=dir:///home/jenkins/agent/workspace/application-ci/docker/worker' '--dockerfile=/home/jenkins/agent/workspace/application-ci/docker/worker/Dockerfile' '--destination=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0' '--digest-file=/metadata/worker-digest.txt' '--push-retry=3' '--verbosity=info'
+[36mINFO[0m[0000] Using dockerignore file: /home/jenkins/agent/workspace/application-ci/docker/worker/.dockerignore 
+[36mINFO[0m[0000] Retrieving image manifest python:3.12-slim-bookworm 
+[36mINFO[0m[0000] Retrieving image python:3.12-slim-bookworm from registry index.docker.io 
+[36mINFO[0m[0000] Built cross stage deps: map[]                
+[36mINFO[0m[0000] Retrieving image manifest python:3.12-slim-bookworm 
+[36mINFO[0m[0000] Returning cached image manifest              
+[36mINFO[0m[0000] Executing 0 build triggers                   
+[36mINFO[0m[0000] Building stage 'python:3.12-slim-bookworm' [idx: '0', base-idx: '-1'] 
+[36mINFO[0m[0000] Unpacking rootfs as cmd COPY requirements.txt . requires it. 
+[36mINFO[0m[0002] COPY index.html /usr/share/nginx/html/index.html 
+[36mINFO[0m[0002] Taking snapshot of files...                  
+[36mINFO[0m[0002] COPY nginx.conf /etc/nginx/conf.d/default.conf 
+[36mINFO[0m[0002] Taking snapshot of files...                  
+[36mINFO[0m[0003] EXPOSE 80                                    
+[36mINFO[0m[0003] Cmd: EXPOSE                                  
+[36mINFO[0m[0003] Adding exposed port: 80/tcp                  
+[36mINFO[0m[0003] Pushing image to 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0 
+[36mINFO[0m[0003] Pushed 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend@sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf 
+[8mha:////4GMtBzN5dQ7N3VKVGG503RSGpSlXqC/xufg4/R26cbofAAAApR+LCAAAAAAAAP9tjTESwiAURH+SsbC19BBk0NKxSsuk8QQIiBDm/wjEpPJEXs07GM2MlVvs7NvmPV+wShGOFC3zBjuHSTnWh8HOi40Uu0ugkXk6M0WYKBjWmrElbZoFW8oGlhQlVALWBlWg5NBm2Agv77IOEm19ynH+DgJKp2/wgELM5ixj/sIUYXsddCL8ef4KYOr7DBXf8U/z/Rs8MaZPwAAAAA==[0m[Pipeline] }
+[8mha:////4ClHeGfx9BVc/yLZitQ5emiLy1oJ7MBml6804Xrt2yc9AAAApR+LCAAAAAAAAP9tjTESgjAURD8wFraWHiIMtI6VbYbGE8QkxoTM/yEJQuWJvJp3EGXGyi129m3zni/YpAhHioY5jb3FJC0LfjTLYhPF/uppYo4uTBIm8pp1eupI6dOKHWUNa4oSKg5bjdJTsmgy7LgTd1F7gaY+57h8Bw6lVQM8oOCLOYuYvzBH2N9GlQh/nr8CmEPIUDVt++mmfQM3G0kJwAAAAA==[0m[Pipeline] // container
+[8mha:////4IEdcAevutrK4J9mB4kW4VHBl33DMRF7swDuTieEv5hVAAAApx+LCAAAAAAAAP9tjT0SwiAUhF+SsbC19BDEn8LCsbJlaDwBAiIJ814EYlJ5Iq/mHUQzY+UWO/tt8z1fMIsBDhQsawy2DqNyrPO9zYsNFNqLp4E1dGaKMJI3TJhBkDbHCQUlA1OKEioOc4PKU3RoEyx4I++y9hJtfUohf3sOpdM3eEDBsznJkL4wBlheex0Jf56/Ahi7LkG13mw/vdq9AU3VT8bAAAAA[0m[Pipeline] }
+[8mha:////4NSP8EVAE+kmjMA1N+VknRH83EwctLDT2QinnEV6izv6AAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDCNEgKlrLDS8wtjFOrLtgOyQVL+Jr/AFDJCq2WO1sM88XzGKAAwXLGoOtw6gc63xv82IDhfbiaWANnZkijOQNE2YQpM1xQkHJwJSihIrD3KDyFB3aBAveyLusvURbn1LI355D6fQNHlDwbE4ypC+MAZbXXkfCn+evAMauS1CtN9tPr3ZvVdvvdMAAAAA=[0m[Pipeline] // stage
+[8mha:////4KNw+ya9n+xj8uy7ik2OqT2VnS30Sr2VW+22vF/flzx0AAAAph+LCAAAAAAAAP9tjTsOwjAQRDeJKGgpOYTDR1SIitZywwmMbYwTazfYDknFibgad8AQiYopRvOmec8XzGKAAwXLGoOtw6gc63xv82IDhfbiaWANnZkijOQNE2YQpM1xQkHJwJSihIrD3KDyFB3aBAveyLusvURbn1LI355D6fQNHlDwbE4ypC+MAZbXXkfCn+evAMauS1CtN7tPr7ZvbiTyosAAAAA=[0m[Pipeline] }
+[36mINFO[0m[0004] WORKDIR /app                                 
+[36mINFO[0m[0004] Cmd: workdir                                 
+[36mINFO[0m[0004] Changed working directory to /app            
+[36mINFO[0m[0004] Creating directory /app with uid -1 and gid -1 
+[36mINFO[0m[0004] Taking snapshot of files...                  
+[36mINFO[0m[0004] COPY requirements.txt .                      
+[36mINFO[0m[0004] Taking snapshot of files...                  
+[36mINFO[0m[0004] RUN pip install --no-cache-dir -r requirements.txt     && useradd -m appuser 
+[36mINFO[0m[0004] Initializing snapshotter ...                 
+[36mINFO[0m[0004] Taking snapshot of full filesystem...        
+[36mINFO[0m[0004] WORKDIR /app                                 
+[36mINFO[0m[0004] Cmd: workdir                                 
+[36mINFO[0m[0004] Changed working directory to /app            
+[36mINFO[0m[0004] Creating directory /app with uid -1 and gid -1 
+[36mINFO[0m[0004] Taking snapshot of files...                  
+[36mINFO[0m[0004] COPY requirements.txt .                      
+[36mINFO[0m[0004] Taking snapshot of files...                  
+[36mINFO[0m[0004] RUN pip install --no-cache-dir -r requirements.txt     && useradd -m appuser 
+[36mINFO[0m[0004] Initializing snapshotter ...                 
+[36mINFO[0m[0004] Taking snapshot of full filesystem...        
+[36mINFO[0m[0005] Cmd: /bin/sh                                 
+[36mINFO[0m[0005] Args: [-c pip install --no-cache-dir -r requirements.txt     && useradd -m appuser] 
+[36mINFO[0m[0005] Running: [/bin/sh -c pip install --no-cache-dir -r requirements.txt     && useradd -m appuser] 
+[36mINFO[0m[0006] Cmd: /bin/sh                                 
+[36mINFO[0m[0006] Args: [-c pip install --no-cache-dir -r requirements.txt     && useradd -m appuser] 
+[36mINFO[0m[0006] Running: [/bin/sh -c pip install --no-cache-dir -r requirements.txt     && useradd -m appuser] 
+Collecting flask==3.0.3 (from -r requirements.txt (line 1))
+  Downloading flask-3.0.3-py3-none-any.whl.metadata (3.2 kB)
+Collecting psycopg2-binary==2.9.9 (from -r requirements.txt (line 2))
+  Downloading psycopg2_binary-2.9.9-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.4 kB)
+Collecting flask==3.0.3 (from -r requirements.txt (line 1))
+  Downloading flask-3.0.3-py3-none-any.whl.metadata (3.2 kB)
+Collecting Werkzeug>=3.0.0 (from flask==3.0.3->-r requirements.txt (line 1))
+  Downloading werkzeug-3.1.8-py3-none-any.whl.metadata (4.0 kB)
+Collecting Jinja2>=3.1.2 (from flask==3.0.3->-r requirements.txt (line 1))
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting itsdangerous>=2.1.2 (from flask==3.0.3->-r requirements.txt (line 1))
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting boto3==1.34.162 (from -r requirements.txt (line 3))
+  Downloading boto3-1.34.162-py3-none-any.whl.metadata (6.6 kB)
+Collecting requests==2.32.3 (from -r requirements.txt (line 4))
+  Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+Collecting click>=8.1.3 (from flask==3.0.3->-r requirements.txt (line 1))
+  Downloading click-8.4.2-py3-none-any.whl.metadata (2.6 kB)
+Collecting blinker>=1.6.2 (from flask==3.0.3->-r requirements.txt (line 1))
+  Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting MarkupSafe>=2.0 (from Jinja2>=3.1.2->flask==3.0.3->-r requirements.txt (line 1))
+  Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Downloading flask-3.0.3-py3-none-any.whl (101 kB)
+Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Downloading click-8.4.2-py3-none-any.whl (119 kB)
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading werkzeug-3.1.8-py3-none-any.whl (226 kB)
+Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+Installing collected packages: MarkupSafe, itsdangerous, click, blinker, Werkzeug, Jinja2, flask
+Collecting Werkzeug>=3.0.0 (from flask==3.0.3->-r requirements.txt (line 1))
+  Downloading werkzeug-3.1.8-py3-none-any.whl.metadata (4.0 kB)
+Collecting Jinja2>=3.1.2 (from flask==3.0.3->-r requirements.txt (line 1))
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting itsdangerous>=2.1.2 (from flask==3.0.3->-r requirements.txt (line 1))
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting click>=8.1.3 (from flask==3.0.3->-r requirements.txt (line 1))
+  Downloading click-8.4.2-py3-none-any.whl.metadata (2.6 kB)
+Collecting blinker>=1.6.2 (from flask==3.0.3->-r requirements.txt (line 1))
+  Downloading blinker-1.9.0-py3-none-any.whl.metadata (1.6 kB)
+Successfully installed Jinja2-3.1.6 MarkupSafe-3.0.3 Werkzeug-3.1.8 blinker-1.9.0 click-8.4.2 flask-3.0.3 itsdangerous-2.2.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+Collecting botocore<1.35.0,>=1.34.162 (from boto3==1.34.162->-r requirements.txt (line 3))
+  Downloading botocore-1.34.162-py3-none-any.whl.metadata (5.7 kB)
+Collecting jmespath<2.0.0,>=0.7.1 (from boto3==1.34.162->-r requirements.txt (line 3))
+  Downloading jmespath-1.1.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting s3transfer<0.11.0,>=0.10.0 (from boto3==1.34.162->-r requirements.txt (line 3))
+  Downloading s3transfer-0.10.4-py3-none-any.whl.metadata (1.7 kB)
+Collecting charset-normalizer<4,>=2 (from requests==2.32.3->-r requirements.txt (line 4))
+  Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (45 kB)
+Collecting idna<4,>=2.5 (from requests==2.32.3->-r requirements.txt (line 4))
+  Downloading idna-3.18-py3-none-any.whl.metadata (6.1 kB)
+[36mINFO[0m[0012] Taking snapshot of full filesystem...        
+Collecting urllib3<3,>=1.21.1 (from requests==2.32.3->-r requirements.txt (line 4))
+  Downloading urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting certifi>=2017.4.17 (from requests==2.32.3->-r requirements.txt (line 4))
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting python-dateutil<3.0.0,>=2.1 (from botocore<1.35.0,>=1.34.162->boto3==1.34.162->-r requirements.txt (line 3))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting MarkupSafe>=2.0 (from Jinja2>=3.1.2->flask==3.0.3->-r requirements.txt (line 1))
+  Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Collecting six>=1.5 (from python-dateutil<3.0.0,>=2.1->botocore<1.35.0,>=1.34.162->boto3==1.34.162->-r requirements.txt (line 3))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Downloading flask-3.0.3-py3-none-any.whl (101 kB)
+Downloading psycopg2_binary-2.9.9-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 268.8 MB/s eta 0:00:00
+Downloading boto3-1.34.162-py3-none-any.whl (139 kB)
+Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Downloading botocore-1.34.162-py3-none-any.whl (12.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.5/12.5 MB 235.2 MB/s eta 0:00:00
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (248 kB)
+Downloading click-8.4.2-py3-none-any.whl (119 kB)
+Downloading idna-3.18-py3-none-any.whl (65 kB)
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading jmespath-1.1.0-py3-none-any.whl (20 kB)
+Downloading s3transfer-0.10.4-py3-none-any.whl (83 kB)
+Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+Downloading werkzeug-3.1.8-py3-none-any.whl (226 kB)
+Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Installing collected packages: urllib3, six, psycopg2-binary, MarkupSafe, jmespath, itsdangerous, idna, click, charset-normalizer, certifi, blinker, Werkzeug, requests, python-dateutil, Jinja2, flask, botocore, s3transfer, boto3
+[36mINFO[0m[0013] COPY worker.py .                             
+[36mINFO[0m[0013] Taking snapshot of files...                  
+[36mINFO[0m[0013] RUN chown -R appuser:appuser /app            
+[36mINFO[0m[0013] Cmd: /bin/sh                                 
+[36mINFO[0m[0013] Args: [-c chown -R appuser:appuser /app]     
+[36mINFO[0m[0013] Running: [/bin/sh -c chown -R appuser:appuser /app] 
+[36mINFO[0m[0013] Taking snapshot of full filesystem...        
+[36mINFO[0m[0014] USER appuser                                 
+[36mINFO[0m[0014] Cmd: USER                                    
+[36mINFO[0m[0014] EXPOSE 5001                                  
+[36mINFO[0m[0014] Cmd: EXPOSE                                  
+[36mINFO[0m[0014] Adding exposed port: 5001/tcp                
+[36mINFO[0m[0014] CMD ["python", "worker.py"]                  
+[36mINFO[0m[0014] Pushing image to 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0 
+[36mINFO[0m[0015] Pushed 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker@sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c 
+[8mha:////4GSlPQAqzqzqsR3iPD9PvgtCAESuV5iqfkdOwUQqhG7fAAAAph+LCAAAAAAAAP9tjTESwiAURH+SsbC19BBkYqGFY2XL0HgCBEQS5v8IRFJ5Iq/mHYxmxsotdvZt854vWMQABwqWtQY7h1E51vvBTotlCt3FU2YtnZkijOQNEyYL0uY4o6BkYE5RQsVhaVB5ig5tghVv5V3WXqKtTylM355D6fQNHlDwyZxkSF8YA6yvg46EP89fAYx9n6BqNttPN7s3q8tsjcAAAAA=[0m[Pipeline] }
+[8mha:////4JWtUPhMSMQfpCHcWtUtzbUuYTjjmRHUqJABBjJQbmErAAAAph+LCAAAAAAAAP9tjTESwiAURH+SsbC19BBkYqGFY2XL0HgCBEQS5v8IRFJ5Iq/mHYxmxsotdvZt854vWMQABwqWtQY7h1E51vvBTotlCt3FU2YtnZkijOQNEyYL0uY4o6BkYE5RQsVhaVB5ig5tghVv5V3WXqKtTylM355D6fQNHlDwyZxkSF8YA6yvg46EP89fAYx9n6BqNrtPN9s3ifAcXMAAAAA=[0m[Pipeline] // container
+[8mha:////4D0aWQSCSuGSmX/cX4t52NuyEYJoOvTolWbbSFhUxXL1AAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjUyEhqrRWGl5gbGPsWHfBdkgqXsTX+AOBSFRssdrZZp4vWKUIR4qWeYOdw6Qc68Ng58VGit0l0Mg8nZkiTBQMa83YkjbNgi1lA0uKEioBa4MqUHJoM2yEl3dZB4m2PuU4fwcBpdM3eEAhZnOWMX9hirC9DjoR/jx/BTD1fYaK7/af5vwNwxUwNMAAAAA=[0m[Pipeline] }
+[8mha:////4NqI+toUHG6HiC1jGBx0bTyD7fGs01aYRdDvd35aRQJnAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYRD6BCiorXS8AKTGGPHujP2haTiRXyNPxCIRMUWq51t5vmCRYpwoGiE09hZTI0VwfdmWmKg2F08DcLRWTSEibwWtR5qavVxxppYw5wsh0LCUmPjKVk0DCvp1F2VXqEpTxynby8ht+0NHpDJycwq8hfGCOtr3ybCn+evAMYQGIpqu/t0tXkD4S5A5cAAAAA=[0m[Pipeline] // stage
+[8mha:////4DB+t+o/ecLMhQSDuEvzrPLaOdZ+f52Po9CHNGx3y/IgAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQThKgQFa3lhhcY2xgn1l2wHZyKF/E1/kAgEhVbrHa2mecLFjHAgYJlrcHOYVSO9X6w02KZQnfxlFlLZ6YII3nDhMmCtDnOKCgZmFOUUHFYGlSeokObYMVbeZe1l2jrUwrTt+dQOn2DBxR8MicZ0hfGAOvroCPhz/NXAGPfJ6g22+bTze4NYq4D1cAAAAA=[0m[Pipeline] }
+Successfully installed Jinja2-3.1.6 MarkupSafe-3.0.3 Werkzeug-3.1.8 blinker-1.9.0 boto3-1.34.162 botocore-1.34.162 certifi-2026.7.22 charset-normalizer-3.5.1 click-8.4.2 flask-3.0.3 idna-3.18 itsdangerous-2.2.0 jmespath-1.1.0 psycopg2-binary-2.9.9 python-dateutil-2.9.0.post0 requests-2.32.3 s3transfer-0.10.4 six-1.17.0 urllib3-2.7.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+[36mINFO[0m[0016] Taking snapshot of full filesystem...        
+[36mINFO[0m[0019] COPY app.py .                                
+[36mINFO[0m[0019] Taking snapshot of files...                  
+[36mINFO[0m[0019] RUN chown -R appuser:appuser /app            
+[36mINFO[0m[0019] Cmd: /bin/sh                                 
+[36mINFO[0m[0019] Args: [-c chown -R appuser:appuser /app]     
+[36mINFO[0m[0019] Running: [/bin/sh -c chown -R appuser:appuser /app] 
+[36mINFO[0m[0019] Taking snapshot of full filesystem...        
+[36mINFO[0m[0019] USER appuser                                 
+[36mINFO[0m[0019] Cmd: USER                                    
+[36mINFO[0m[0019] EXPOSE 5000                                  
+[36mINFO[0m[0019] Cmd: EXPOSE                                  
+[36mINFO[0m[0019] Adding exposed port: 5000/tcp                
+[36mINFO[0m[0019] CMD ["python", "app.py"]                     
+[36mINFO[0m[0019] Pushing image to 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0 
+[36mINFO[0m[0020] Pushed 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend@sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb 
+[8mha:////4PfTmheNBsVX8BG66eetf6KmLOnaEswMm4HM4AfEBdBFAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjC1EhqrRWGl5gbGPsWHfBdkgqXsTX+AOBSFRssdrZZp4vWKUIR4qWeYOdw6Qc68Ng58VGit0l0Mg8nZkiTBQMa83YkjbNgi1lA0uKEioBa4MqUHJoM2yEl3dZB4m2PuU4fwcBpdM3eEAhZnOWMX9hirC9DjoR/jx/BTD1fYaK7/in+f4Nl5RvasAAAAA=[0m[Pipeline] }
+[8mha:////4NpA1lCpuYb78feb/KdDrdOaGSKV0Ld6XtTfLI92DegiAAAApR+LCAAAAAAAAP9tjTESwiAURH+SsbC19BBkonaOlS1D4wkQEEmY/yMQSeWJvJp3MJoZK7fY2bfNe75gEQMcKFjWGuwcRuVY7wc7LZYpdBdPmbV0ZoowkjdMmCxIm+OMgpKBOUUJFYelQeUpOrQJVryVd1l7ibY+pTB9ew6l0zd4QMEnc5IhfWEMsL4OOhL+PH8FMPZ9gqrZbj7d7N6cvoAswAAAAA==[0m[Pipeline] // container
+[8mha:////4D3kvEbFFyVm0D2mQ2VCkbmztlO6EO3jURNzVWtqi+w2AAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDSoUQFa2VhheYxBg71p2xLyQVL+Jr/IFAJCq2WO1sM88XLFKEA0UjnMbOYmqsCL430xIDxe7iaRCOzqIhTOS1qPVQU6uPM9bEGuZkORQSlhobT8miYVhJp+6q9ApNeeI4fXsJuW1v8IBMTmZWkb8wRlhf+zYR/jx/BTCGwFBsq+rTm90b1Phd7cAAAAA=[0m[Pipeline] }
+[8mha:////4HsPPGGIDgD8zhhkfA97UWPiCjB2xV0LEFK8peIdCUlFAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDggIJUdFabniBsY1xYt0F2yGpeBFf4w8YIlGxxWpnm3m+YBYDHChY1hhsHUblWOd7mxcbKLQXTwNr6MwUYSRvmDCDIG2OEwpKBqYUJVQc5gaVp+jQJljwRt5l7SXa+pRC/vYcSqdv8ICCZ3OSIX1hDLC89joS/jx/BTB2XYJqvdl+erV7A8z2/V/AAAAA[0m[Pipeline] // stage
+[8mha:////4Osee3Msok111M0M0R34HPLQ7yI7HY1hGp+aXwgMYbe0AAAAph+LCAAAAAAAAP9tjTESwiAURH+SsbC19BBER60cK1uGxhMgIJIw/0cgJpUn8mreQTQzVm6xs2+b93zBLAY4ULCsMdg6jMqxzvc2LzZQaC+eBtbQmSnCSN4wYQZB2hwnFJQMTClKqDjMDSpP0aFNsOCNvMvaS7T1KYX87TmUTt/gAQXP5iRD+sIYYHntdST8ef4KYOy6BNV6s/v0avsGU7E88MAAAAA=[0m[Pipeline] }
+[8mha:////4KQ6xR5AYI3rAhmPoh76RotYdfCcioAkdOlnCf6NNqmNAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQThESDqGgtN7zA2MY4se6C7eBUvIiv8QcCkajYYrWzzTxfsIgBDhQsaw12DqNyrPeDnRbLFLqLp8xaOjNFGMkbJkwWpM1xRkHJwJyihIrD0qDyFB3aBCveyrusvURbn1KYvj2H0ukbPKDgkznJkL4wBlhfBx0Jf56/Ahj7PkG12e4+3TRv12+5xsAAAAA=[0m[Pipeline] // parallel
+[8mha:////4EvhzhfqYkeBnyEG8EgaHV+Dkc/uiwbIOI2S4AzimeQeAAAAph+LCAAAAAAAAP9tjbEOgjAURR8lDq6OfkSJcTDEMLk2LH5BLbUWmvewfQiTX+Sv+Q8SSZy80z1nOa83rFKEiqKTrcXOYzJe9mFw85Mjxe4aaJQtXaQhTBSsrO1YU2NPC9bEFpZlAnIFa4smUPLoGDaq1Q9dBI2uOHOc3VGB8M0dnpCpucw68hemCNvb0CTCX+dvAKa+Z8h3+wODKMsPEp5Hwb8AAAA=[0m[Pipeline] }
+[8mha:////4DS/hWv5DTSvIaKdzGEIiBTa8A6DCWwnmJXpSg21yG3uAAAAph+LCAAAAAAAAP9tjbEOgjAURR8lDq6OfkSJccEYJteGxS+opdZC8x62D2Hyi/w1/0EiiZN3uucs5/WGVYpQUXSytdh5TMbLPgxufnKk2F0DjbKlizSEiYKVtR1rauxpwZrYwrJMQK5gbdEESh4dw0a1+qGLoNEVZ46zOyoQvrnDEzI1l1lH/sIUYXsbmkT46/wNwNT3DPluXzKIQ/kBURwWR78AAAA=[0m[Pipeline] // stage
+[8mha:////4F+2FXLmpAG8qii31a6MUdX1WsekCdZHUjaTKEU3i/gaAAAAqR+LCAAAAAAAAP9tjbEOgjAURR8QBldHP6JEHYwhTq4Ni19QodZC8x62D8vkF/lr/oMoiZN3uucmN+f5gjx4OJA3otXYWQy1Fb0bzNREJN9dHEXR0lnUhIGcFpWOFTX6OGNFrGFOkkImYaGxdhQsGoalbNVdFU6hKU7sp62UkNrmBg9I5GRm5fkLo4fVdWgC4c/zVwBjz5DuNgzZerv/XPM30/jIlsMAAAA=[0m[Pipeline] stage
+[8mha:////4EG3qeOvml5tDj8qiHF2CMxkkMxzzpSjhnN/K+y2Oq/ZAAAAqR+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApCBaEmFijLJwgpCGkjf4vSUo6cSKuxh1oqcSEB8u2ZL3XG8rg4UjesEZjazEoyzrXmzGxRL69OkqsoQtThIGcZkInQbU+zVVQ1DAry6HgsNCoHAWLJsKSN/IhKyfRVOfox+3AIbf1HZ6Q8ZEcpY/fMnhY3fo6EP44fwEwdBGKzXY/+W49fcsPzM3wocQAAAA=[0m[Pipeline] { (Image Scan)
+[8mha:////4CZIcup1l04uQ7biXyHQpCaC4ZzppSJR2KKLmailRAOsAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkSRxM04sTYsPkEttRaa/8e2WCafyFfzHayQOHnD5e6Sy/d6Q+kdnMhp1iscDHpp2GgnnRKL5Iarpch6ujBJ6Mkq1qrYUqeatbYUFKzKcig4bBRKS96gDrDlvXiIygrU1Tm4tB055Ka7wxMynshBuLCU2cHuNnWe8Mf5C4B5DFDUh/3i9fdbfgCgInaKxAAAAA==[0m[Pipeline] container
+[8mha:////4LfeKAv/DHVKaQAUNz4rKPcnofBFSBpY1xviscsSwJT9AAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkQJxs04sTYsPkEttRaa/8e2WCafyFfzHayQOHnD5e6Sy/d6Q+kdnMhp1iscDHpp2GgnnRKL5Iarpch6ujBJ6Mkq1qrYUqeatbYUFKzKcig4bBRKS96gDrDlvXiIygrU1Tm4tB055Ka7wxMynshBuLCU2cHuNnWe8Mf5C4B5DFDUh3rx/fdbfgBhHEeXxAAAAA==[0m[Pipeline] {
+[8mha:////4EDbzG3e0k1YJDSjx5kxO5YNnMyVhAh/I5Rhjn36jF0wAAAApR+LCAAAAAAAAP9tjTsOwjAQRDeJKGgpOYQjPh1KRWul4QTGNsaOtRtsB6fiRFyNOxAlEhVTjOZN894fWMUADQXDnMbOYpSW9X4w02KZQnfzlJmjK5OEkbxmrc4tKX1esKWkYUlRQsVhrVF6ihZNgg134ilqL9DUlxSm78ShtOoBLyj4ZE4ipBnGANv7oCLhz/NXAGOfoNod93Mf+i/afwpXwAAAAA==[0m[Pipeline] sh
++ set -eu
++ unset DOCKER_CONFIG
++ echo 'Scanning frontend image with Trivy...'
+Scanning frontend image with Trivy...
++ trivy image --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --ignore-unfixed --no-progress 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0
+2026-08-17T08:42:57Z	INFO	[vulndb] Need to update DB
+2026-08-17T08:42:57Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-08-17T08:42:57Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-08-17T08:43:11Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-08-17T08:43:11Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-17T08:43:14Z	INFO	Detected OS	family="alpine" version="3.24.1"
+2026-08-17T08:43:14Z	WARN	This OS version is not on the EOL list	family="alpine" version="3.24"
+2026-08-17T08:43:14Z	INFO	[alpine] Detecting vulnerabilities...	os_version="3.24" repository="3.24" pkg_num=71
+2026-08-17T08:43:14Z	INFO	Number of language-specific files	num=0
+
+Report Summary
+
+┌───────────────────────────────────────────────────────────────────────────────┬────────┬─────────────────┐
+│                                    Target                                     │  Type  │ Vulnerabilities │
+├───────────────────────────────────────────────────────────────────────────────┼────────┼─────────────────┤
+│ 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0 (alpine │ alpine │        0        │
+│ 3.24.1)                                                                       │        │                 │
+└───────────────────────────────────────────────────────────────────────────────┴────────┴─────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+📣 [34mNotices:[0m
+  - Version 0.74.0 of Trivy is now available, current version is 0.67.2
+
+To suppress version checks, run Trivy scans with the --skip-version-check flag
+
++ echo 'Scanning backend image with Trivy...'
+Scanning backend image with Trivy...
++ trivy image --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --ignore-unfixed --no-progress 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0
+2026-08-17T08:43:14Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-17T08:43:19Z	INFO	[python] Licenses acquired from one or more METADATA files may be subject to additional terms. Use `--debug` flag to see all affected packages.
+2026-08-17T08:43:21Z	INFO	Detected OS	family="debian" version="12.15"
+2026-08-17T08:43:21Z	INFO	[debian] Detecting vulnerabilities...	os_version="12" pkg_num=105
+2026-08-17T08:43:21Z	INFO	Number of language-specific files	num=1
+2026-08-17T08:43:21Z	INFO	[python-pkg] Detecting vulnerabilities...
+2026-08-17T08:43:21Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/v0.67/docs/scanner/vulnerability#severity-selection for details.
+
+Report Summary
+
+┌──────────────────────────────────────────────────────────────────────────────────┬────────────┬─────────────────┐
+│                                      Target                                      │    Type    │ Vulnerabilities │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0 (debian     │   debian   │        0        │
+│ 12.15)                                                                           │            │                 │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/blinker-1.9.0.dist-info/METADATA          │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/boto3-1.34.162.dist-info/METADATA         │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/botocore-1.34.162.dist-info/METADATA      │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/certifi-2026.7.22.dist-info/METADATA      │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/charset_normalizer-3.5.1.dist-info/METAD- │ python-pkg │        0        │
+│ ATA                                                                              │            │                 │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/click-8.4.2.dist-info/METADATA            │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/flask-3.0.3.dist-info/METADATA            │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/idna-3.18.dist-info/METADATA              │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/itsdangerous-2.2.0.dist-info/METADATA     │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/jinja2-3.1.6.dist-info/METADATA           │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/jmespath-1.1.0.dist-info/METADATA         │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/markupsafe-3.0.3.dist-info/METADATA       │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/pip-25.0.1.dist-info/METADATA             │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/psycopg2_binary-2.9.9.dist-info/METADATA  │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/python_dateutil-2.9.0.post0.dist-info/ME- │ python-pkg │        0        │
+│ TADATA                                                                           │            │                 │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/requests-2.32.3.dist-info/METADATA        │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/s3transfer-0.10.4.dist-info/METADATA      │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/six-1.17.0.dist-info/METADATA             │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/urllib3-2.7.0.dist-info/METADATA          │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/werkzeug-3.1.8.dist-info/METADATA         │ python-pkg │        0        │
+└──────────────────────────────────────────────────────────────────────────────────┴────────────┴─────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+📣 [34mNotices:[0m
+  - Version 0.74.0 of Trivy is now available, current version is 0.67.2
+
+To suppress version checks, run Trivy scans with the --skip-version-check flag
+
++ echo 'Scanning worker image with Trivy...'
+Scanning worker image with Trivy...
++ trivy image --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --ignore-unfixed --no-progress 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0
+2026-08-17T08:43:21Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-17T08:43:22Z	INFO	Detected OS	family="debian" version="12.15"
+2026-08-17T08:43:22Z	INFO	[debian] Detecting vulnerabilities...	os_version="12" pkg_num=105
+2026-08-17T08:43:22Z	INFO	Number of language-specific files	num=1
+2026-08-17T08:43:22Z	INFO	[python-pkg] Detecting vulnerabilities...
+2026-08-17T08:43:22Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/v0.67/docs/scanner/vulnerability#severity-selection for details.
+
+Report Summary
+
+┌──────────────────────────────────────────────────────────────────────────────┬────────────┬─────────────────┐
+│                                    Target                                    │    Type    │ Vulnerabilities │
+├──────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0 (debian  │   debian   │        0        │
+│ 12.15)                                                                       │            │                 │
+├──────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/blinker-1.9.0.dist-info/METADATA      │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/click-8.4.2.dist-info/METADATA        │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/flask-3.0.3.dist-info/METADATA        │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/itsdangerous-2.2.0.dist-info/METADATA │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/jinja2-3.1.6.dist-info/METADATA       │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/markupsafe-3.0.3.dist-info/METADATA   │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/pip-25.0.1.dist-info/METADATA         │ python-pkg │        0        │
+├──────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+│ usr/local/lib/python3.12/site-packages/werkzeug-3.1.8.dist-info/METADATA     │ python-pkg │        0        │
+└──────────────────────────────────────────────────────────────────────────────┴────────────┴─────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+📣 [34mNotices:[0m
+  - Version 0.74.0 of Trivy is now available, current version is 0.67.2
+
+To suppress version checks, run Trivy scans with the --skip-version-check flag
+
++ echo 'All Trivy image scans passed.'
+All Trivy image scans passed.
+[8mha:////4FUXyJcKRn/Kqe3MPCFfPs17NwO7aaCyN/CesAbpEu28AAAApR+LCAAAAAAAAP9tjbEOgjAURR8QB1dHP6JEw2acWJsufkEttRaa9/C1CJNf5K/5DxJInLzDzT13Oe8PbCLDmdiJ1mLnMRov+jC4eYmRuLsFGkVLV2EIIwUrlB0VNbZeUVGysCbLoZCwtWgCRY8uwU62+qnLoNGVl8Tzd5KQ++YBL8jkbE6a0wITw/4+NJHw5/krgKnvExSHqlr6+AXP04HRwAAAAA==[0m[Pipeline] }
+[8mha:////4Pam+x+YJuPxjrjviQU56X/9m4w5Y/MOLci04VcHlwOWAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjSFAhqrRWGl5gYmPsWHfGdkgqXsTX+ANWIlGxxWpnm3l/YBMDnCloZhUOBmNvmHejzotNFIabo4lZurKeMJJTrFNTR1K1K3aUFKwpSqg4bBX2jqJBnWDHrXiK2gnU9SWF/J04lEY+4AUFz+YkQlpgDrC/jzIS/jx/BTB7n6BqDselmy/Bif/uwAAAAA==[0m[Pipeline] // container
+[8mha:////4ElkChoujhW8mkucswp+cxCr/nc3Kj9a9JPlPujRuoIyAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDEqJBqWitNLzA2MbYse6C7eBUvIiv8QeiRKJii9XONvP+wCoGaCgY5jR2FqO0rPeDmRbLFLqbp8wcXZkkjOQ1a3VuSenzgi0lDUuKEioOa43SU7RoEmy4E09Re4GmvqQwfScOpVUPeEHBJ3MSIc0wBtjeBxUJf56/Ahj7PkG1Pxzn3n0ByqMQqMAAAAA=[0m[Pipeline] }
+[8mha:////4OxMWQteGxBC3W4ck40fOSWvOu3OEV8mjGPsBtO9W8ILAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjBBJCiIrWcsMLjG2ME+su2A5JxYv4Gn/AEImKLVY728zzBbMY4EDBssZg6zAqxzrf27zYQKG9eBpYQ2emCCN5w4QZBGlznFBQMjClKKHiMDeoPEWHNsGCN/Iuay/R1qcU8rfnUDp9gwcUPJuTDOkLY4DltdeR8Of5K4Cx6xJUq8320+vdGx2G+jjAAAAA[0m[Pipeline] // stage
+[8mha:////4Dkqm/9nvEDkOnuuDJ8qw2gGUBsNHObhKir7E/TZENuzAAAAqh+LCAAAAAAAAP9tjUEOgjAQRQcIC7cuPUSJxkQT4sptw8YTVKi10MxgO1hWnsireQdRElf+1X8/+XnPF+TBw4G8Ea3GzmKorejdYKYmIvnu4iiKls6iJgzktKh0rKjRxxkrYg1zkhQyCQuNtaNg0TAsZavuqnAKTXFiP22lhNQ2N3hAIiczK89fGD2srkMTCH+evwIYe4Z0t2HI1tv955q/AfgVM5jDAAAA[0m[Pipeline] stage
+[8mha:////4OulyxvurmjwuZFeMo1QG7/g8vSnAB6u5ddX3/hshS/BAAAAqR+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BCpkBhAqBNr1IUThCSEpNH/JUlpJ07E1bgDpZWY8GDZlqz3ekMZA9QUDHMaW4tRWtb53kyJDRTaq6eBObowSRjJa9booSGlT0ttKGlYlOVQcFhplJ6iRZNgzZ14iMoLNNU5hWk7csitusMTMj6RkwhpLmOAza1XkfDH+QuAsUtQbHf72Q/fb/kBM9YpYMQAAAA=[0m[Pipeline] { (Publish Metadata)
+[8mha:////4CCtPhGvNYwOoAb8kbau7pMwemtH6D0f1eO9Isp51zHGAAAAqh+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApSDAgxMQaZeEEIQ0hbfR/SVLSiRNxNe5ASyUmPFi2Jeu93lAGD0fyhjUaW4tBWda53oyJJfLt1VFiDV2YIgzkNBM6Car1aa6CooZZWQ4Fh4VG5ShYNBGWvJEPWTmJpjpHP24HDrmt7/CEjI/kKH38lsHD6tbXgfDH+QuAoYtQbLb7yXfr6Vt+ACDA9HrEAAAA[0m[Pipeline] container
+[8mha:////4Nca9FbGMJUBf4MfBdEGZ6Ca5tukMYIhYj1gxfuqXn7KAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkSRwck4sTYsPkEttRaa/8e2WCafyFfzHayQOHnD5e6Sy/d6Q+kdnMhp1iscDHpp2GgnnRKL5Iarpch6ujBJ6Mkq1qrYUqeatbYUFKzKcig4bBRKS96gDrDlvXiIygrU1Tm4tB055Ka7wxMynshBuLCU2cHuNnWe8Mf5C4B5DFDUh/3i9fdbfgCR8JfxxAAAAA==[0m[Pipeline] {
+[8mha:////4Og/HjaOZPmQD1/a5dMLgwkQpic4j8NTarP1SjauUuUnAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjIFEhqrRWGl5gYmPsWHfGdkgqXsTX+ANWIlGxxWpnm3l/YBMDnCloZhUOBmNvmHejzotNFIabo4lZurKeMJJTrFNTR1K1K3aUFKwpSqg4bBX2jqJBnWDHrXiK2gnU9SWF/J04lEY+4AUFz+YkQlpgDrC/jzIS/jx/BTD7BFVzbJY++C8MNyfWwAAAAA==[0m[Pipeline] sh
++ set -eu
++ python -c import json, os; from pathlib import Path; m=Path("/metadata"); services={"frontend":os.environ["FRONTEND_REPOSITORY"],"backend":os.environ["BACKEND_REPOSITORY"],"worker":os.environ["WORKER_REPOSITORY"]}; digests={s:(m/f"{s}-digest.txt").read_text(encoding="utf-8").strip() for s in services}; bad=[f"{s}: {d!r}" for s,d in digests.items() if not d.startswith("sha256:")]; bad and (_ for _ in ()).throw(SystemExit("Invalid image digest(s): "+", ".join(bad))); release={"ci_build_number":os.environ["BUILD_NUMBER"],"git_commit_sha":os.environ["GIT_COMMIT_SHA"],"git_short_sha":os.environ["GIT_SHORT_SHA"],"git_branch":os.environ["GIT_BRANCH_NAME"],"image_tag":os.environ["IMAGE_TAG"],"aws_region":os.environ["AWS_REGION"],"ecr_registry":os.environ["ECR_REGISTRY"],"images":{s:{"repository":r,"reference":f"{os.environ["ECR_REGISTRY"]}/{r}:{os.environ["IMAGE_TAG"]}","digest":digests[s]} for s,r in services.items()}}; out=Path("release-metadata.json"); out.write_text(json.dumps(release,indent=2)+"\n",encoding="utf-8"); print(out.read_text(encoding="utf-8"))
+{
+  "ci_build_number": "5",
+  "git_commit_sha": "199763a0a50c470cd1553c173e9459e8585a65cb",
+  "git_short_sha": "199763a0",
+  "git_branch": "task4",
+  "image_tag": "199763a0",
+  "aws_region": "us-east-1",
+  "ecr_registry": "904053120094.dkr.ecr.us-east-1.amazonaws.com",
+  "images": {
+    "frontend": {
+      "repository": "devops-frontend",
+      "reference": "904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0",
+      "digest": "sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf"
+    },
+    "backend": {
+      "repository": "devops-backend",
+      "reference": "904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0",
+      "digest": "sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb"
+    },
+    "worker": {
+      "repository": "devops-worker",
+      "reference": "904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0",
+      "digest": "sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c"
+    }
+  }
+}
+
+[8mha:////4PT6mjtKfTtcxk46grtZRME2UJ61Iqmk6TAg5Eju9cP/AAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjCFEhqrRWGl5gYmPsWHfGdkgqXsTX+ANWIlGxxWpnm3l/YBMDnCloZhUOBmNvmHejzotNFIabo4lZurKeMJJTrFNTR1K1K3aUFKwpSqg4bBX2jqJBnWDHrXiK2gnU9SWF/J04lEY+4AUFz+YkQlpgDrC/jzIS/jx/BTB7n6Bqjoelmy8kjZ5YwAAAAA==[0m[Pipeline] }
+[8mha:////4PAxos+qAM1cLWRtXqZod/Wl31KzH0S2qPfLFqB5e4ZHAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDElQoFa2VhhcY2xg71l2wHZyKF/E1/kCUSFRssdrZZt4fWMUADQXDnMbOYpSW9X4w02KZQnfzlJmjK5OEkbxmrc4tKX1esKWkYUlRQsVhrVF6ihZNgg134ilqL9DUlxSm78ShtOoBLyj4ZE4ipBnGANv7oCLhz/NXAGPfJ6j2x8Pcuy88gz7qwAAAAA==[0m[Pipeline] // container
+[8mha:////4Lef2flPPt8vw2CVz3hQYQe7bpXQAtSQAvRiK1K+8pv3AAAAqh+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BCpkOiAEBNr1IUThCaEpNH/JUlpJ07E1bgDKZWY8GDZlqz3ekMZPBzJa2YVdgZDa1jvBp0SG8l3V0cjs3RhLWEgp1ijxoakOi21oahgUZZDwWGlsHUUDOoIa27FQ1ROoK7O0aftwCE38g5PyHgiR+Hjt0weNrdBBsIf5y8Apj5Csd3tZ6/r+Vt+AJNROSrEAAAA[0m[Pipeline] script
+[8mha:////4P9OiFniei5u1a/6xWOQwIKcqiTdiBPs4r4RA93OBjTzAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkSJAy7GibVh8QlqqbXQ/D+2xTL5RL6a72CFxMkbLneXXL7XG0rv4EROs17hYNBLw0Y76ZRYJDdcLUXW04VJQk9WsVbFljrVrLWloGBVlkPBYaNQWvIGdYAt78VDVFagrs7Bpe3IITfdHZ6Q8UQOwoWlzA52t6nzhD/OXwDMY4BiX9eLH77f8gM5tzF0xAAAAA==[0m[Pipeline] {
+[8mha:////4OsDMohrYvS9C6G0HrsyQvbROwymN9PS38Vja79sEfmlAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BCpGIABdWKNunCCkISQNPq/JCntxIm4GnegtBITHizbkvVebyhjgJqCYU5jazFKyzrfmymxgUJ79TQwRxcmCSN5zRo9NKT0aakNJQ2LshwKDiuN0lO0aBKsuRMPUXmBpjqnMG1HDrlVd3hCxidyEiHNZQywufUqEv44fwEwdgmK7W4/++H7LT9stvPIxAAAAA==[0m[Pipeline] container
+[8mha:////4J1eanzEk/gEhdHxhGlp67nw5c8pR62F7Ox5IDistQkHAAAAqR+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BCpGBBIqBNr1IUThCSEpNH/JUlpJ07E1bgDpZWY8GDZlqz3ekMZA9QUDHMaW4tRWtb53kyJDRTaq6eBObowSRjJa9booSGlT0ttKGlYlOVQcFhplJ6iRZNgzZ14iMoLNNU5hWk7csitusMTMj6RkwhpLmOAza1XkfDH+QuAsUtQbHf72Q/fb/kB1kgAosQAAAA=[0m[Pipeline] {
+[8mha:////4Nzb0nXEpDjl0Krwg9FZMq1ZT+jxNTCwDT1G9EAyiMA/AAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjCiQQSkVrpeEFxjbGjnUXbAen4kV8jT8QJRIVW6x2tpn3B1YxQEPBMKexsxilZb0fzLRYptDdPGXm6MokYSSvWatzS0qfF2wpaVhSlFBxWGuUnqJFk2DDnXiK2gs09SWF6TtxKK16wAsKPpmTCGmGMcD2PqhI+PP8FcDYJ6h2+8Pcx/4L7PWcKsAAAAA=[0m[Pipeline] sh
++ cat /metadata/frontend-digest.txt
+[8mha:////4HR7422sdaka/cyep0YBoa6KMIDutniIhGn7XP9Pw49YAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDBQgJUdFabniBsY1xYt0F2yGpeBFf4w8YIlGxxWpnm3m+YBYDHChY1hhsHUblWOd7mxcbKLQXTwNr6MwUYSRvmDCDIG2OEwpKBqYUJVQc5gaVp+jQJljwRt5l7SXa+pRC/vYcSqdv8ICCZ3OSIX1hDLC89joS/jx/BTB2Car1Zvfp7ap7A/zwGPnAAAAA[0m[Pipeline] sh
++ cat /metadata/backend-digest.txt
+[8mha:////4L5/qZnnDff4Xvu2PBeUk0SsY1Aqxhv8HqwRscTbY9qpAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjFCAkREVrueEFxjbGiXUXbAen4kV8jT8QiETFFqudbeb5gkUMcKBgWWuwcxiVY70f7LRYptBdPGXW0pkpwkjeMGGyIG2OMwpKBuYUJVQclgaVp+jQJljxVt5l7SXa+pTC9O05lE7f4AEFn8xJhvSFMcD6OuhI+PP8FcDYJ6iaze7T26Z/A73BA+DAAAAA[0m[Pipeline] sh
++ cat /metadata/worker-digest.txt
+[8mha:////4KXuZ8dqEseI2c8+sv0oEWS2IMuq14P9GZ0A+vUTFqOLAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjkEBIiIrWcsMLjG2ME+su2A5JxYv4Gn/AEImKLVY728zzBbMY4EDBssZg6zAqxzrf27zYQKG9eBpYQ2emCCN5w4QZBGlznFBQMjClKKHiMDeoPEWHNsGCN/Iuay/R1qcU8rfnUDp9gwcUPJuTDOkLY4DltdeR8Of5K4Cx6xJUq+3605vdG9c5ugnAAAAA[0m[Pipeline] }
+[8mha:////4ChlDW2MXmsFUmBGFJvOFDlXPvcHeiDLskOsvtBQ/OnXAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjhIACUdFabniBsY1xYt0F2yGpeBFf4w8YIlGxxWpnm3m+YBYDHChY1hhsHUblWOd7mxcbKLQXTwNr6MwUYSRvmDCDIG2OEwpKBqYUJVQc5gaVp+jQJljwRt5l7SXa+pRC/vYcSqdv8ICCZ3OSIX1hDLC89joS/jx/BTB2XYJqtV1/erN7A/Ivcj/AAAAA[0m[Pipeline] // container
+[8mha:////4JQ2hiO9Y58vnxDeQ1ckdFu+slh1vg4cHCWwWesAGa9GAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjJEiDqGitNLzAJMbYse6MfSGpeBFf4w8EIlGxxWpnm3m+YJEiHCga4TR2FlNjRfC9mZYYKHYXT4NwdBYNYSKvRa2Hmlp9nLEm1jAny6GQsNTYeEoWDcNKOnVXpVdoyhPH6dtLyG17gwdkcjKzivyFMcL62reJ8Of5K4AxBIZiU20/vave6iHSjcAAAAA=[0m[Pipeline] }
+[8mha:////4LdSH+bilD8yQjFiz7u+C6NebGKuCoxAYkKFJjy0p6sVAAAAph+LCAAAAAAAAP9tjTESwiAURH+SsbC19BBkLLBxrNIyaTwBAiIJ838EYlJ5Iq/mHUQzY+UWO/u2ec8XrGKAIwXLOoO9w6gcG/xo82IThf7iaWIdnZkijOQNa83UkjbNgi0lA0uKEioBa4PKU3RoE2xEJ++y9hJtfUohfwcBpdM3eEAhsjnJkL4wB9heRx0Jf56/ApiHIUG12/NPc/4G5HusssAAAAA=[0m[Pipeline] // script
+[8mha:////4JID3R4zs7hQyaYoHTaCtv3OLAl4tjjhxRlw7sYlkjr6AAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjJBQJISpaKw0vMIkxdqw7Y19IKl7E1/gDgUhUbLHa2WaeL1ikCAeKRjiNncXUWBF8b6YlBordxdMgHJ1FQ5jIa1HroaZWH2esiTXMyXIoJCw1Np6SRcOwkk7dVekVmvLEcfr2EnLb3uABmZzMrCJ/YYywvvZtIvx5/gpgDAzFZrv7dFWFN6dDk3TAAAAA[0m[Pipeline] echo
+
+Frontend digest: sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+Backend digest: sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+Worker digest: sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
+
+[8mha:////4D2rVeH3JMsLyRc6va8nG2EJTJDl06cyHpjuNToI3j7/AAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjJARCiIrWcsMLjG2ME+su2A5JxYv4Gn/AEImKLVY728zzBbMY4EDBssZg6zAqxzrf27zYQKG9eBpYQ2emCCN5w4QZBGlznFBQMjClKKHiMDeoPEWHNsGCN/Iuay/R1qcU8rfnUDp9gwcUPJuTDOkLY4DltdeR8Of5K4CxS1Ct1rtPb7bdG+ZyiG3AAAAA[0m[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[8mha:////4MdX9eauBuirC16NONkwA0v9PSDtxXf2uiqEtmGfb35VAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjJIRAiIrWcsMLjG2ME+su2A5JxYv4Gn/AEImKLVY728zzBbMY4EDBssZg6zAqxzrf27zYQKG9eBpYQ2emCCN5w4QZBGlznFBQMjClKKHiMDeoPEWHNsGCN/Iuay/R1qcU8rfnUDp9gwcUPJuTDOkLY4DltdeR8Of5K4Cx6xJUq8320+vdG05n1sPAAAAA[0m[Pipeline] }
+[8mha:////4P5kfL6+GQCwTOg7eGJUVs8Pd3uhZWisD3/eaV4r/dXLAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjJIRAiIrWcsMLjG2ME+su2A5JxYv4Gn/AEImKLVY728zzBbMY4EDBssZg6zAqxzrf27zYQKG9eBpYQ2emCCN5w4QZBGlznFBQMjClKKHiMDeoPEWHNsGCN/Iuay/R1qcU8rfnUDp9gwcUPJuTDOkLY4DltdeR8Of5K4Cx6xJUq83u0+vtG2xcphLAAAAA[0m[Pipeline] // stage
+[8mha:////4IqLNvndpSEaHGTCLjyEruib6Z3SYAaXDX1NAzCwuHnBAAAAqB+LCAAAAAAAAP9tjTESgjAQRRcYCltLDxHUhsKhss3QeIIYYgxkdjFZhMoTeTXvIMqMlb/678/8ec8X5DFARcGK1mDnMGonej/YuYmRQnfxNIqWzkITRvJG1GasqTHHBWtiA0uSFDIJK4PaU3RoGdayVXdVeIW2OHGYt4OE1DU3eEAiZzOrwF+YAmyuQxMJf56/Aph6hrTcM2S7cvu55m8IjYhFwwAAAA==[0m[Pipeline] stage
+[8mha:////4F/7FKtl+GZQ+J4FxI1DbAmlpa4wgpwwQP+pj10BJHarAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkSRycE4sTYsPkEttRaa/8e2WCafyFfzHayQOHnD5e6Sy/d6Q+kdnMhp1iscDHpp2GgnnRKL5Iarpch6ujBJ6Mkq1qrYUqeatbYUFKzKcig4bBRKS96gDrDlvXiIygrU1Tm4tB055Ka7wxMynshBuLCU2cHuNnWe8Mf5C4B5DFDUh/3i9fdbfgDzVFQGxAAAAA==[0m[Pipeline] { (Trigger CD)
+[8mha:////4NVW6vNxU0QLRmoF6Phx6fPwqEMl6SB+BT+XCSXqT9q+AAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSj0FAgqrRWGl5gYmPsWHfGdkgqXsTX+ANWIlGxxWpnm3l/YBMDnCloZhUOBmNvmHejzotNFIabo4lZurKeMJJTrFNTR1K1K3aUFKwpSqg4bBX2jqJBnWDHrXiK2gnU9SWF/J04lEY+4AUFz+YkQlpgDrC/jzIS/jx/BTD7BFVzbJY++C/ky1X7wAAAAA==[0m[Pipeline] echo
+
+Triggering application-cd with:
+CI build: 5
+Commit: 199763a0a50c470cd1553c173e9459e8585a65cb
+Image tag: 199763a0
+
+[8mha:////4Hk12JTfeue3OeJZa8FooJogAP1uZXikwUVQHBgAIzqsAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjiIICUaW10vACExtjx7oztkNS8SK+xh+wEomKLVY728z7A5sY4ExBM6twMBh7w7wbdV5sojDcHE3M0pX1hJGcYp2aOpKqXbGjpGBNUULFYauwdxQN6gQ7bsVT1E6gri8p5O/EoTTyAS8oeDYnEdICc4D9fZSR8Of5K4DZJ6iaY7P0wX8BpfpO4sAAAAA=[0m[Pipeline] build
+Scheduling project: [8mha:////4J7+uUcJk2GwWyNfctSSxEskpRGLphRF7txw8hgs6vISAAAAoB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgYR/az8JP3EgoKczOTEksz8PN3kFH0AjxNpcskAAAA=[0mapplication-cd
+[8mha:////4PympRMb0sU4KzyvQJi0ow56OdlPyLyJxx1nfE/ICRopAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjSEgUiCqtlYYXmNgYO9adsR2SihfxNf6AlUhUbLHa2WbeH9jEAGcKmlmFg8HYG+bdqPNiE4Xh5mhilq6sJ4zkFOvU1JFU7YodJQVrihIqDluFvaNoUCfYcSueonYCdX1JIX8nDqWRD3hBwbM5iZAWmAPs76OMhD/PXwHM3ieomuNh6eYLVdYq7cAAAAA=[0m[Pipeline] }
+[8mha:////4J4Zpy9LGNGpTypfBNu0vKVDM9DDa0xGmsjE6Gxm/K4CAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDBaJAqWitNLzA2MbYse6C7eBUvIiv8QeiRKJii9XONvP+wCoGaCgY5jR2FqO0rPeDmRbLFLqbp8wcXZkkjOQ1a3VuSenzgi0lDUuKEioOa43SU7RoEmy4E09Re4GmvqQwfScOpVUPeEHBJ3MSIc0wBtjeBxUJf56/Ahj7PkG1Px7m3n0Bd+1aPMAAAAA=[0m[Pipeline] // stage
+Post stage
+[8mha:////4OhUn1bF6IofDmc5xYU0nj/TwBD61QJ3yYRqyrwWNr5ZAAAAqR+LCAAAAAAAAP9tjbEOgjAURR8QBldHP6JEBxkMk2vD4hfUUmuheQ/bhzD5Rf6a/yBK4uSd7rnJzXm+II8BKgpWtAY7h1E70fvBzk2MFLqLp1G0dBaaMJI3ojZjTY05LlgTG1iSpJBJWBnUnqJDy7CWrbqrwiu0xYnDvB0kpK65wQMSOZtZBf7CFGBzHZpI+PP8FcDUM6TljiHblvvPNX8DFW7Rk8MAAAA=[0m[Pipeline] container
+[8mha:////4EebqBHGiLcsU7PwapB/KmJD3/QA2A84f1oQZgpsyPWqAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkSJiwzGibVh8QlqqbXQ/D+2xTL5RL6a72CFxMkbLneXXL7XG0rv4EROs17hYNBLw0Y76ZRYJDdcLUXW04VJQk9WsVbFljrVrLWloGBVlkPBYaNQWvIGdYAt78VDVFagrs7Bpe3IITfdHZ6Q8UQOwoWlzA52t6nzhD/OXwDMY4BiXx8Wr7/f8gMOEjA/xAAAAA==[0m[Pipeline] {
+[8mha:////4B69pJqJpIKjefpS1KjzRU/lg5fDsP5YQSfcBnooXLjwAAAApR+LCAAAAAAAAP9tjbEOgjAURR8QB1dHP+IRJ0yME2vTxS+opdZC8x62RZj8In/Nf5BA4uQdbu65y3l/YBMDnDlYbA11jqJ22PvBzgtHDt3N84gtX1EzRfYGpRklN6ZeUXIysCbLoRCwNaQ9R0c2wU606qlKr8iWlxTm7yQgd80DXpCJ2ZxUSAtMAfb3oYlMP89fAUx9guJQVUsf+y/pKtXHwAAAAA==[0m[Pipeline] sh
++ rm -f /docker-config/config.json
++ rm -rf /metadata/aws-account-id /metadata/backend-digest.txt /metadata/ecr-registry /metadata/frontend-digest.txt /metadata/worker-digest.txt
+[8mha:////4CNfgA5DQIaf4r5TojW2Nns8xNCRSZ1CMJiAL0pPBsnWAAAApR+LCAAAAAAAAP9tjbEOgjAURR8QB1dHP+IRJ2KME2vTxS+opdZC8x62RZj8In/Nf5BA4uQdbu65y3l/YBMDnDlYbA11jqJ22PvBzgtHDt3N84gtX1EzRfYGpRklN6ZeUXIysCbLoRCwNaQ9R0c2wU606qlKr8iWlxTm7yQgd80DXpCJ2ZxUSAtMAfb3oYlMP89fAUx9n6A4VMelqy+gEp5lwAAAAA==[0m[Pipeline] }
+[8mha:////4KrJv/aUyIKEOLhemdZNC63u+F7wp6WLTrQwDuHyOOV4AAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDDSAhKlrLDS8wtjFOrLtgOyQVL+Jr/AFDJCq2WO1sM88XzGKAAwXLGoOtw6gc63xv82IDhfbiaWANnZkijOQNE2YQpM1xQkHJwJSihIrD3KDyFB3aBAveyLusvURbn1LI355D6fQNHlDwbE4ypC+MAZbXXkfCn+evAMauS1Ctd6tPbzdvSXUhXsAAAAA=[0m[Pipeline] // container
+[8mha:////4DVWdT5UwCd4mzuE3IfztIMVJaS6XywfOHDTaoiH1MjQAAAAph+LCAAAAAAAAP9tjbEOgjAURR8QB1dHP6IEF00Mk2vD4hfUUmuheQ/bhzD5Rf6a/2AjiZN3uucs5/WGVQxQU7CiM9g7jNqJwY82PTFR6K+eJtHRRWjCSN6IxkwNtea0YENsYFmWQyFhbVB7ig4tw0Z26qFKr9CWZw7JHSXkrr3DEzKZyqwCf2EOsL2NbST8df4GYB4Y8v2OoagO1fABnw6OAL8AAAA=[0m[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is disabled by the job configuration...
+[WS-CLEANUP] done
+[8mha:////4FvgyCkLTs6P9cHyah7B3gtf/dBLUNKPuldpD1RAQuu5AAAAph+LCAAAAAAAAP9tjbEOgjAURR8QB1dHP6JEFk0Mk2vD4hdUWmuheQ/bhzD5Rf6a/2AjiZN3uucs5/WGVQxQU7CiM9g7jK0Tgx9temKi0F89TaKji2gJI3kjGjM1pM1pwYbYwLIsh0LC2mDrKTq0DBvZqYcqvUJbnjkkd5SQO32HJ2QylVkF/sIcYHsbdST8df4GYB4GhmJ3qBjyffUBXa/cmr8AAAA=[0m[Pipeline] }
+[8mha:////4M1mE2OFeqLYJKXqq3dSkiGi6K8Fzkskc5cxGQcnfDVhAAAAph+LCAAAAAAAAP9tjbEOgjAURR8QB1dHP6KEOGhimFwbFr+glloLzXvYPoTJL/LX/AcbSZy80z1nOa83rGKAmoIVncHeYdRODH606YmJQn/1NImOLkITRvJGNGZqqDWnBRtiA8uyHAoJa4PaU3RoGTayUw9VeoW2PHNI7ighd+0dnpDJVGYV+AtzgO1tbCPhr/M3APMwMBTVYceQ76sPQi2JyL8AAAA=[0m[Pipeline] // node
+[8mha:////4IW0gvESgqF7QLM7UUsxGRQONBnBym8POs8IBs7scZZMAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDEhJIERWtlYYXmNgYJ9ZdsC8kFS/ia/wBi0hUbLUzzbzesIgBjhSsaA12DmPjRO8Hm54YKXRXT6No6SIawkjeiNqMNWlzmrEmNjAvy6GQsDTYeIoOLcNKtuqhSq/QlmcOyVUScqfv8IRMpjKrwF+YAqxvg46Ev87fAEx9z1BsDzuGfL/5AGwti6K/AAAA[0m[Pipeline] }
+[8mha:////4Ka+jsN+LtHTHKXQy8bFtbHkzzU2nqPtfGnhaSl2BkXXAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjChAooqK10vACExvjxLoL9oWk4kV8jT9gEYmKrXammdcbFjHAkYIVrcHOYWyc6P1g0xMjhe7qaRQtXURDGMkbUZuxJm1OM9bEBuZlORQSlgYbT9GhZVjJVj1U6RXa8swhuUpC7vQdnpDJVGYV+AtTgPVt0JHw1/kbgKnvGYrNfsuQ7w4fLHcQCb8AAAA=[0m[Pipeline] // stage
+[8mha:////4ISxkq+n6bh8lmbSbsmObMAfEkcXZaDeoSm/t22rZNhVAAAAqB+LCAAAAAAAAP9tjUEKwjAQRSctXbh16SFSBBFBXLkN3XiC2MaYNszUZGq68kRezTtYLbjyr/778HnPFxQxwIGCla3BzmGsnez9YKcmE4Xu4inJls6yJozkjaxMqqgxxxkrYgNzRAa5goXB2lN0aBmWqtV3XXqNtjxxmLa9gsw1N3iAUJOZdeAvjAFW16GJhD/PXwGMPYPYMOTr3fbzLN5g6LjawgAAAA==[0m[Pipeline] stage
+[8mha:////4JeiQwR6tBEbonWObbXtksU6+/lsM4OtnJ8myVTyphvfAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BCpWAAJdWKNunCCkISQNPq/JCntxIm4GnegtBITHizbkvVebyhjgJqCYU5jazFKyzrfmymxgUJ79TQwRxcmCSN5zRo9NKT0aakNJQ2LshwKDiuN0lO0aBKsuRMPUXmBpjqnMG1HDrlVd3hCxidyEiHNZQywufUqEv44fwEwdgmK7WE3+/77LT/StwjuxAAAAA==[0m[Pipeline] { (Declarative: Post Actions)
+[8mha:////4Bu7qCrOBAWjh7l/1pFzUrwzWJ33woMD9i6i8Ri3dDmeAAAApR+LCAAAAAAAAP9tjbEOgjAURR8QB1dHP6LESRLjxNp08QtqqbXQvIevRZj8In/Nf5BA4uQdbu65y3l/YBMZzsROtBY7j9F40YfBzUuMxN0t0ChaugpDGClYoeyoqLH1ioqShTVZDoWErUUTKHp0CXay1U9dBo2uvCSev5OE3DcPeEEmZ3PSnBaYGPb3oYmEP89fAUx9guJQHZeu+i8FojATwAAAAA==[0m[Pipeline] echo
+
+CI completed successfully.
+Commit: 199763a0a50c470cd1553c173e9459e8585a65cb
+Image tag: 199763a0
+Registry: 904053120094.dkr.ecr.us-east-1.amazonaws.com
+CD job was triggered.
+
+[8mha:////4G5a/iA6VKkmYin0k5edYgyfXa24Ygvhipd0zEgwZs9WAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjKkAoFa2VhhcY2xg71l2wHZyKF/E1/kCUSFRssdrZZt4fWMUADQXDnMbOYpSW9X4w02KZQnfzlJmjK5OEkbxmrc4tKX1esKWkYUlRQsVhrVF6ihZNgg134ilqL9DUlxSm78ShtOoBLyj4ZE4ipBnGANv7oCLhz/NXAGPfJ6h2h+Pc+y/DHCY7wAAAAA==[0m[Pipeline] }
+[8mha:////4HCaSLT40zrE06naN3eitAPH9HJFMe+kw/h1H99m2CU2AAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDDQIhKlrLDS8wtjFOrLtgOyQVL+Jr/AFDJCq2WO1sM88XzGKAAwXLGoOtw6gc63xv82IDhfbiaWANnZkijOQNE2YQpM1xQkHJwJSihIrD3KDyFB3aBAveyLusvURbn1LI355D6fQNHlDwbE4ypC+MAZbXXkfCn+evAMauS1Ctd6tPbzdvGGkTFcAAAAA=[0m[Pipeline] // stage
+[8mha:////4A9GAZsdyT7BqpNmggIWQ/AoeipB3VXx1YjD2Uy/7jtEAAAApR+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjSDQIUdFaaXiBiY1xYt0F+4JT8SK+xh+IiETFVjvTzOsNqxThSNHJzmLvMbVeDmF085OZYn8NlGVHF9kSJgpWNjY3ZOxpwYbYwjJRQKlgbbENlDw6ho3q9ENXQaOrzhxnd1BQeHOHJwg1l1lH/sIUYXsbTSL8df4GYBoGhrLe1wxi9wGZMK5SvgAAAA==[0m[Pipeline] }
+[8mha:////4DB6Nv+LmRkEVpRNdnaVqspOZltHhOU7koBK4JkN4wCLAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYQjoEKIitZKwwuMY4wT6y7YF5yKF/E1/kBEJCq22plmXm9YpAhHik62FjuPyXjZh8FNT2aK3TVQli1dpCFMFKysba6psacZa2IL80QBpYKlRRMoeXQMK9Xqh66CRledOU7uoKDwzR2eINRUZh35C2OE9W1oEuGv8zcAY98zlJv9lkHsPurfaou+AAAA[0m[Pipeline] // withEnv
+[8mha:////4HZk3G7NVvPinapC+VMKY7f7Xd+tppt/gXIdD3DkRGIfAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYQjoEKIitZKwwuMY4wT6y7YF5yKF/E1/kBEJCq22plmXm9YpAhHik62FjuPyXjZh8FNT2aK3TVQli1dpCFMFKysba6psacZa2IL80QBpYKlRRMoeXQMK9Xqh66CRledOU7uoKDwzR2eINRUZh35C2OE9W1oEuGv8zcAY98zlJv9jkFsP8zGDcG+AAAA[0m[Pipeline] End of Pipeline
+Finished: SUCCESS

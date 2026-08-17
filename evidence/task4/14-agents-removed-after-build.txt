@@ -1,0 +1,2 @@
+NAME        READY   STATUS    RESTARTS   AGE   IP           NODE                          NOMINATED NODE   READINESS GATES
+jenkins-0   2/2     Running   0          83m   10.0.11.54   ip-10-0-11-192.ec2.internal   <none>           <none>

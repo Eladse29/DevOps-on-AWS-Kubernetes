@@ -1,0 +1,27 @@
+===== FINAL GIT REVISION =====
+199763a Increase EKS capacity for Jenkins workloads
+
+===== FINAL CI =====
+CI_BUILD=5
+
+===== FINAL CD =====
+CD_BUILD=3
+
+===== CI COMMIT / IMAGE TAG / DIGESTS =====
+Commit SHA: 199763a0a50c470cd1553c173e9459e8585a65cb
+Immutable image tag: 199763a0
+Frontend digest: sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+Backend digest: sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+Worker digest: sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
+
+===== CD RUNNING DIGESTS =====
+FRONTEND_RUNNING_DIGEST=sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+BACKEND_RUNNING_DIGEST=sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+WORKER_RUNNING_DIGEST=sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
+
+===== FINAL RESULTS =====
+CI completed successfully.
+Finished: SUCCESS
+Smoke tests passed.
+CD completed successfully.
+Finished: SUCCESS

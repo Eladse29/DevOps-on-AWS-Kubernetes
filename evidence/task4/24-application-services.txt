@@ -1,0 +1,4 @@
+NAME               TYPE           CLUSTER-IP       EXTERNAL-IP                                                              PORT(S)        AGE
+backend-service    ClusterIP      172.20.101.115   <none>                                                                   5000/TCP       11m
+frontend-service   LoadBalancer   172.20.241.95    a376da152ef044b669f06b86b4e1e4ef-856190384.us-east-1.elb.amazonaws.com   80:30449/TCP   11m
+worker-service     ClusterIP      172.20.117.161   <none>                                                                   5001/TCP       12m

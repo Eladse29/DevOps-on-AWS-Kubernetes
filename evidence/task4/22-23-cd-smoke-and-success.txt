@@ -1,0 +1,51 @@
+[8mha:////4C7xjsfpAq82O/L9IRdeuL0AOqR1DEiALCLWoNHqY6xQAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0BISYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLDbrb9/Cw+091n58IAAAA=[0m[Pipeline] container
+[8mha:////4HZMIkzNssTHtlSlSHQXuhd7DmBTrb7zYasiP9HB9Zh/AAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycoh0pUJMrFEXThCaEJJG/7dJSjpxIq7GHWipxIQHy7ZkvdcbyhjgRMFwp7GzGFvLez+aOfFMobt5ytzRlbeEkbzmjc4NKX1ea0NJw6qCwUbAVmPrKVo0CXbCyYesvERTXVKYt6MAZtUATyjETE4ypG+ZAuzvo4qEP85fAEx9AlYfFquXZ/kBsPrDv8IAAAA=[0m[Pipeline] {
+[8mha:////4N4/FUN80YXk/7R3x+r4w0y5vx2HtBSBmEOcGgj91VsJAAAApB+LCAAAAAAAAP9tjTESgjAQRRcYC1tLDxGwZBwr2gyNJ4hJjIHMLiaLUHkir+YdZGTGyl/995r3esMmRThRdKKz2HtM2oshjG55YqLYXwNNoqOL0ISJghWtnVoytlmxJbawLsuhkLC1qAMlj45hJzv1UGVQ6Mozx8UdJeTe3OEJmVzKrCJ/YY6wv40mEf46fwMwDwx5XTMUh6oaPqKpLoK/AAAA[0m[Pipeline] sh
++ set -eu
++ frontend_url=http://frontend-service.devops-app.svc.cluster.local
++ backend_url=http://backend-service.devops-app.svc.cluster.local:5000
++ worker_url=http://worker-service.devops-app.svc.cluster.local:5001
++ curl --fail --silent --show-error --retry 12 --retry-delay 5 http://frontend-service.devops-app.svc.cluster.local/
++ curl --fail --silent --show-error --retry 12 --retry-delay 5 http://backend-service.devops-app.svc.cluster.local:5000/health
++ curl --fail --silent --show-error --retry 12 --retry-delay 5 http://worker-service.devops-app.svc.cluster.local:5001/health
++ grep -q '"status":"healthy"' smoke-backend.json
++ grep -q '"service":"backend"' smoke-backend.json
++ grep -q '"status":"healthy"' smoke-worker.json
++ grep -q '"service":"worker"' smoke-worker.json
++ echo 'Smoke tests passed.'
+Smoke tests passed.
+[8mha:////4N87w5yoz4zYWCs+R2NDOIjMn9YfSR+DwMSgJpc9bZx2AAAApB+LCAAAAAAAAP9tjTESgjAQRRcYC1tLDxGkZBwr2gyNJ4ghxkBmF5NFqDyRV/MOZmTGyl/995r3esMmBjhRsKI3ODiM2onRTzY9MVMYrp5m0dNFaMJI3ojWzC11plmxJTawLsuhkLA1qD1Fh5ZhJ3v1UKVXaMszh+SOEnLX3eEJmUxlVoG/sATY36YuEv46fwOwjCNDUR0qhryuP5Jn9ia/AAAA[0m[Pipeline] }
+[8mha:////4PUrGr1mK7rl8nbxpvJWoGvLHeV1tnIMwxnm+z+n72o7AAAApR+LCAAAAAAAAP9tjTESgjAQRRcYC1tLDxHUSoexss3QeIJIYgxkdjFZhMoTeTXvYEZmrPzVf695rzcsYoAjBStag53D2DjR+8GmJ0YK3dXTKFq6iIYwkjeiNmNN2pxmrIkNzMtyKCQsDTaeokPLsJKteqjSK7TlmUNylYTc6Ts8IZOpzCrwF6YA69ugI+Gv8zcAU98zFNvNjiE/7D+qJWXXvwAAAA==[0m[Pipeline] // container
+[8mha:////4JC+sxsX06VS0IEm12joMUiUDsBZIIOugodg6+ZKSW2VAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDokAooqK10vACExvjxLoL9oWk4kV8jT9gEYmKrXammdcbFjHAkYIVrcHOYWyc6P1g0xMjhe7qaRQtXURDGMkbUZuxJm1OM9bEBuZlORQSlgYbT9GhZVjJVj1U6RXa8swhuUpC7vQdnpDJVGYV+AtTgPVt0JHw1/kbgKlnyA97hmK72fUfU+iJvL8AAAA=[0m[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[8mha:////4Ja6sZS4ESxaB09Rb/l4h9OvVA+wi/c65rsL5H1+D1E/AAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDEhJCERWtlYYXmNgYJ9ZdsC8kFS/ia/wBi0hUbLUzzbzesIgBjhSsaA12DmPjRO8Hm54YKXRXT6No6SIawkjeiNqMNWlzmrEmNjAvy6GQsDTYeIoOLcNKtuqhSq/QlmcOyVUScqfv8IRMpjKrwF+YAqxvg46Ev87fAEx9z1BsNzuG/LD/ACbbg5G/AAAA[0m[Pipeline] }
+[8mha:////4K+SUa8YGztN6dPJJev3Io64Pbb3QdNpEVX57ABQZVeNAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDBUgooqK10vACExvjxLoL9oWk4kV8jT9gEYmKrXammdcbFjHAkYIVrcHOYWyc6P1g0xMjhe7qaRQtXURDGMkbUZuxJm1OM9bEBuZlORQSlgYbT9GhZVjJVj1U6RXa8swhuUpC7vQdnpDJVGYV+AtTgPVt0JHw1/kbgKnvGYrtZseQH/YfFTjYLb8AAAA=[0m[Pipeline] // stage
+[8mha:////4LGS2Izz+fZqaSdX77D4nH9U/rgd/ngLi/pl0z7dCLwdAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JUtBS8ggHmjSIitZKwwuMY4wT6y7YF5KKF/E1/oAhEhVb7ay0mucLyhjgQMGKzmDvMGonBj/a1MREob94mkRHZ6EJI3kjGjM11Jrjgg2xgSVZDoWElUHtKTq0DGvZqbuqvEJbnTikbS8hd+0NHpDJZGYV+AtzgM11bCPhz/NXAPPAkNUMxW5bf57lG5g4bAXCAAAA[0m[Pipeline] stage
+[8mha:////4GAaGq84Ks+k2ieGkJwfC1eeuldMYbhpDx+jMrwG8LTDAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApLDCgTqxRF04QkhCSRv+XJKWdOBFX4w6UVmLCg2Vbst7rDWUMUFMwzGlsLUZpWed7MyU2UGivngbm6MIkYSSvWaOHhpQ+LbWhpGFRlkPBYaVReooWTYI1d+IhKi/QVOcUpu3IIbfqDk/I+EROIqS5jAE2t15Fwh/nLwDGLkGx2+5nP3y/5QfYKuSHxAAAAA==[0m[Pipeline] { (Declarative: Post Actions)
+[8mha:////4KDIxTb1aUlm/SYH1TuoRx1KfG+2MG6GrcNFrHAVS3VRAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDFUgoFa2VhhcY2xg71l2wHZyKF/E1/kCUSFRssdrZZt4fWMUADQXDnMbOYpSW9X4w02KZQnfzlJmjK5OEkbxmrc4tKX1esKWkYUlRQsVhrVF6ihZNgg134ilqL9DUlxSm78ShtOoBLyj4ZE4ipBnGANv7oCLhz/NXAGOfoNrvDnMf+y+lUfumwAAAAA==[0m[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is disabled by the job configuration...
+[WS-CLEANUP] done
+[8mha:////4AELcXHJ53WlEXZR7Nhb770GQwHeV6r6c9JfKFXgpjtuAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDFUIoFa2VhhcY2xg71l2wHZyKF/E1/kCUSFRssdrZZt4fWMUADQXDnMbOYpSW9X4w02KZQnfzlJmjK5OEkbxmrc4tKX1esKWkYUlRQsVhrVF6ihZNgg134ilqL9DUlxSm78ShtOoBLyj4ZE4ipBnGANv7oCLhz/NXAGOfoNrvDnMf+y/kYOC/wAAAAA==[0m[Pipeline] echo
+
+CD completed successfully.
+
+Triggered by: Started by upstream project "application-ci" build number 1
+CI build: 1
+Commit: bf8f30850aeffa7cde71b2ef4acfd6192039872e
+Image tag: bf8f3085
+Frontend digest: sha256:da4b149256fdae796b5e33ea927f5f77292310655b263d01f4506cb55f3b2fb8
+Backend digest: sha256:785bec7fec9228795038f0314f66f36a197f4734ff0c7176bde14a938c39439a
+Worker digest: sha256:b64eb279af8a1691c5f76bd686c3a35a28e75c60d48cc3e169670620422f67bc
+Cluster: infra-automation-dev-eks
+Namespace: devops-app
+
+[8mha:////4NjGv1wPsiGRc2YYRek+1QtmX2QVgnPzTG5vPaMpV/anAAAApR+LCAAAAAAAAP9tjTESgjAQRRcYC1tLDxGgsnCsbDM0niCSGAOZXUwWofJEXs07GGXGyl/8+e837/mCVQxwoGBFZ7B3GFsnBj/atMREob94mkRHZ9ESRvJGNGZqSJvjgg2xgSVZDoWEtcHWU3RoGTayU3dVeoW2PHFI315C7vQNHpDJZGYV+AtzgO111JHw5/krgHkYGIq6rj5d7d4zyCh5wAAAAA==[0m[Pipeline] }
+[8mha:////4Cve3fFXnQPvP5KAKzDgHrIMyJEV76N5SUTMlnqpQdBQAAAApR+LCAAAAAAAAP9tjTESwiAURH+SsbC19BBEGhvHKi2TxhMgIJIw/0cgJpUn8mreQTQzVm6xs2+b93zBKgY4UrCsM9g7jMqxwY82LzZR6C+eJtbRmSnCSN6w1kwtadMs2FIysKQooRKwNqg8RYc2wUZ08i5rL9HWpxTydxBQOn2DBxQim5MM6QtzgO111JHw5/krgHkYElSc80/v9m8R81iowAAAAA==[0m[Pipeline] // stage
+[8mha:////4KgETs2LgqivZQYu7UAMLTsev1G+4yy2iA4L3lMJRkRYAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjUNAgKlorDS8wsTFOrLtgX3AqXsTX+AMRkajYameaeb1hlSIcKTrZWew9ptbLIYxufjJT7K+BsuzoIlvCRMHKxuaGjD0t2BBbWCYKKBWsLbaBkkfHsFGdfugqaHTVmePsDgoKb+7wBKHmMuvIX5gibG+jSYS/zt8ATMPAUNb1jkHsPwipUxe+AAAA[0m[Pipeline] }
+[8mha:////4DM98sdttckujKWFMKqIqcAR/P+Va5PbYTg0Je+fOQFCAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjCFEhKlorDS8wsTFOrLtgX3AqXsTX+AMRkajYameaeb1hlSIcKTrZWew9ptbLIYxufjJT7K+BsuzoIlvCRMHKxuaGjD0t2BBbWCYKKBWsLbaBkkfHsFGdfugqaHTVmePsDgoKb+7wBKHmMuvIX5gibG+jSYS/zt8ATMPAUNb1jkHsPwLROrO+AAAA[0m[Pipeline] // withEnv
+[8mha:////4MDCYTUF9sEhumzh2E+nepr7FJ6GsQLzY+anFur+ywIQAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjSOkQFa2VhheYxBgn1p2xLyQVL+Jr/AGLSFRstTPNvN6wSRGOFK0cDI4OU+dk8JPNT84Ux6unWQ50kR1hIm9ka+aWenNasSU2sE4UUCrYGuw8JYeWYacG/dCV12irM8fsDgoK19/hCULlMuvIX1gi7G9Tnwh/nb8BWEJgKOu6YRDNB4Q9HXa+AAAA[0m[Pipeline] }
+[8mha:////4E6AUIYpoSmABRCOfscxf6AyR1E4A4W+9rtPsnibfHPKAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjCFEhKlorDS8wsTFOrLtgX3AqXsTX+AMRkajYameaeb1hlSIcKTrZWew9ptbLIYxufjJT7K+BsuzoIlvCRMHKxuaGjD0t2BBbWCYKKBWsLbaBkkfHsFGdfugqaHTVmePsDgoKb+7wBKHmMuvIX5gibG+jSYS/zt8ATMPAUNb1nkHsPpeBGdW+AAAA[0m[Pipeline] // node
+[8mha:////4Lj7yXtYouHKyot8Vi5ez7Pj4tEiNbbjxFYKgkw5izntAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjUNAgKlorDS8wsTFOrLtgX3AqXsTX+AMRkajYameaeb1hlSIcKTrZWew9ptbLIYxufjJT7K+BsuzoIlvCRMHKxuaGjD0t2BBbWCYKKBWsLbaBkkfHsFGdfugqaHTVmePsDgoKb+7wBKHmMuvIX5gibG+jSYS/zt8ATMPAUNb1nkHsPtHLvuW+AAAA[0m[Pipeline] End of Pipeline
+Finished: SUCCESS

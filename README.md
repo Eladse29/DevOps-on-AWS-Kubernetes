@@ -318,7 +318,7 @@ Terraform provisions and manages the AWS infrastructure required by the project,
 - NAT Gateway
 - Security Groups
 - Amazon EKS cluster
-- EKS managed node group
+- EKS managed node group with four worker nodes
 - EKS OIDC provider
 - Amazon ECR repositories
 - Amazon RDS PostgreSQL
@@ -432,6 +432,8 @@ kubernetes.io/hostname
 ```
 
 with `maxSkew: 1` to distribute replicas across available worker nodes.
+
+The three replicas are distributed across the available worker nodes rather than being tied to a fixed one-replica-per-node model.
 
 ---
 
@@ -675,6 +677,8 @@ Git commit
 # Jenkins agents
 
 All pipeline work is performed on ephemeral Kubernetes agent Pods.
+
+Jenkins agent Pod templates define explicit CPU and memory requests/limits. Build-agent requests were sized to fit reliably on the course EKS worker nodes while retaining higher memory limits for Kaniko and Trivy during image build and scan stages.
 
 ## CI validation agent
 
