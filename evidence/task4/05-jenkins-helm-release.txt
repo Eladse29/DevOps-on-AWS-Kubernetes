@@ -1,0 +1,2 @@
+NAME   	NAMESPACE	REVISION	UPDATED                                	STATUS  	CHART         	APP VERSION
+jenkins	jenkins  	1       	2026-08-17 09:27:44.400638034 +0300 IDT	deployed	jenkins-5.9.49	2.568.1    

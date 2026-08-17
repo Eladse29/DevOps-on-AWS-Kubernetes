@@ -1,0 +1,4 @@
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+backend    3/3     3            3           57m
+frontend   3/3     3            3           57m
+worker     3/3     3            3           58m

@@ -1,0 +1,33 @@
+[8mha:////4JAGo51VztsHX0BNJXUFT+j0K/UK9FLAdIc7+LK+RpomAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUYgEJMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLku/1sh/lZfAAnLfKUwgAAAA==[0m[Pipeline] { (Manifest Validation)
+[8mha:////4C8yjCSRQcLgf9l6WYf1KF4aHAppwabW6dxwHdXhtSq5AAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUYgIhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYJ8t5/tMD+LD0QKVszCAAAA[0m[Pipeline] withCredentials
+Masking supported pattern matches of $BACKEND_VALUES_FILE
+[8mha:////4EOFznyIsnuhS4TtHyrID/jKCHDt4SoozvzaumiUedViAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUwYRQJ9aoCycITQhJo/9LkpJOnIircQcClZjwYNmWrPd8QRU8NOQ1swp7g6EzbHCjzokl8v3FUWKWzqwjDOQUa1VqSarjXFuKCmYVJSw4LBV2joJBHWHFrbiL2gnU9Sn6vB04lEbe4AEFz+QofPyWycP6OspA+OP8BcA0RCi3+2y7zedZvQH4j6CMwgAAAA==[0m[Pipeline] {
+[8mha:////4HCm7fvedMvZP7/n5S9wbotPXw7l710TtIrW1mXC0FkAAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUxIiYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLDbrb9/Cw+ty4Up8IAAAA=[0m[Pipeline] container
+[8mha:////4KXNu0f5rr8oPhsD3v0BuiGg7HGmOBpYtb9sh65TGztoAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUwIiYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLDbrb9/Cw+2YMO4MIAAAA=[0m[Pipeline] {
+[8mha:////4ONESke55zM1zZAUWQZlZfikLJfuoP6exXRRMKLwgIfsAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIikRJR0VppeIFJjLFj3Tm2g1PxIr7GHwhEomKL1c4283zBOgY4ctBoFfWGYmvQu1HPCzOH/uo4o+ULtkyRncJG5YY7dVqw4aRgSVHCSsBGUes4GtIJtsLKu6ycJF2dU5i/g4DSdAM8oBCzOcmQvjAF2N3GLjL9PH8FMPkEZb3/VO3favo5XL4AAAA=[0m[Pipeline] sh
++ set -eu
++ helm lint helm/frontend --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend' --set 'image.tag=bf8f3085'
+==> Linting helm/frontend
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
++ helm lint helm/backend --values **** --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend' --set 'image.tag=bf8f3085'
+==> Linting helm/backend
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
++ helm lint helm/worker --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker' --set 'image.tag=bf8f3085'
+==> Linting helm/worker
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
++ mkdir -p rendered-manifests
++ helm template frontend helm/frontend --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend' --set 'image.tag=bf8f3085'
++ helm template backend helm/backend --namespace devops-app --values **** --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend' --set 'image.tag=bf8f3085'
++ helm template worker helm/worker --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker' --set 'image.tag=bf8f3085'
++ grep -R bf8f3085 rendered-manifests
++ echo 'Helm lint and template validation passed.'
+Helm lint and template validation passed.
+[8mha:////4C5cBNFSTwtsgNF78cIUBWHhrK9kTADLwnL/FpB8vPuSAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiAR2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwhQ7nbf2r7Bij33Ma+AAAA[0m[Pipeline] }
+[8mha:////4P4p2Qn9m7t1NVmZr+Meg0OkT/NZmQFc4FhytjMKHlvJAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIihKgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGMIGcrd/lPbNzd1iZS+AAAA[0m[Pipeline] // container
+[8mha:////4DFSdRICXMQq3xRW/dc82LzkD5xgR121etJXrNi3lr13AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKChESDqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgEPNxplvgAAAA==[0m[Pipeline] }

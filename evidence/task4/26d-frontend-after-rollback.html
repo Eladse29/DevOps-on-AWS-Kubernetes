@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VM Provisioning Dashboard</title>
+
+<style>
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f3f4f6;
+    margin: 0;
+    color: #111827;
+}
+
+header {
+    background: #111827;
+    color: white;
+    padding: 22px 32px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+header p {
+    margin: 6px 0 0;
+    color: #d1d5db;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 24px;
+    padding: 28px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+h2 {
+    margin-top: 0;
+}
+
+label {
+    font-weight: 600;
+    display: block;
+    margin-top: 14px;
+}
+
+input, select {
+    width: 100%;
+    padding: 11px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 16px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+.secondary {
+    background: #374151;
+}
+
+.secondary:hover {
+    background: #1f2937;
+}
+
+.success {
+    color: #047857;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+.error {
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+.info {
+    color: #1d4ed8;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+.helper {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    background: #f9fafb;
+}
+
+.badge {
+    display: inline-block;
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>VM Provisioning Dashboard</h1>
+    <p>Multi-service AWS application: Frontend, Backend, Worker, RDS, S3 and SNS</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Create VM</h2>
+
+        <label>VM Name</label>
+        <input id="name" placeholder="example: web-server-01">
+        <div class="helper">Only English letters, numbers, hyphen and underscore. Minimum 2 characters.</div>
+
+        <label>Operating System</label>
+        <select id="os">
+            <option value="ubuntu-22.04-lts">Ubuntu 22.04 LTS</option>
+            <option value="ubuntu-24.04-lts">Ubuntu 24.04 LTS</option>
+            <option value="debian-12">Debian 12</option>
+        </select>
+
+        <label>CPU</label>
+        <select id="cpu" onchange="updateRamOptions()">
+            <option value="">Select CPU</option>
+            <option value="1">1 vCPU</option>
+            <option value="2">2 vCPU</option>
+            <option value="4">4 vCPU</option>
+            <option value="8">8 vCPU</option>
+        </select>
+
+        <label>RAM</label>
+        <select id="ram">
+            <option value="">Select RAM</option>
+            <option value="2">2 GB</option>
+            <option value="4">4 GB</option>
+            <option value="8">8 GB</option>
+            <option value="16">16 GB</option>
+        </select>
+        <div class="helper">Allowed combinations: 1 CPU → 2/4GB, 2 CPU → 4/8GB, 4 CPU → 8/16GB, 8 CPU → 16GB.</div>
+
+        <button onclick="createVM()">Create VM</button>
+
+        <button class="secondary" onclick="checkWorker()">Check Worker Health</button>
+        <button class="secondary" onclick="uploadFile()">Upload Report to S3 + Send SNS</button>
+
+        <div id="status"></div>
+    </div>
+
+    <div class="card">
+        <h2>Provisioned Machines</h2>
+        <button class="secondary" onclick="loadVMs()">Refresh List</button>
+
+        <div id="list"></div>
+    </div>
+
+</div>
+
+<script>
+const API = "/api";
+
+const validCpuRam = {
+    1: [2, 4],
+    2: [4, 8],
+    4: [8, 16],
+    8: [16]
+};
+
+function showStatus(message, type) {
+    const status = document.getElementById("status");
+    status.innerHTML = message;
+    status.className = type;
+}
+
+function updateRamOptions() {
+    const cpu = parseInt(document.getElementById("cpu").value);
+    const ramSelect = document.getElementById("ram");
+
+    ramSelect.innerHTML = '<option value="">Select RAM</option>';
+
+    if (!cpu || !validCpuRam[cpu]) {
+        [2, 4, 8, 16].forEach(ram => {
+            ramSelect.innerHTML += `<option value="${ram}">${ram} GB</option>`;
+        });
+        return;
+    }
+
+    validCpuRam[cpu].forEach(ram => {
+        ramSelect.innerHTML += `<option value="${ram}">${ram} GB</option>`;
+    });
+}
+
+function validateForm(name, cpu, ram) {
+    const englishNameRegex = /^[A-Za-z0-9_-]+$/;
+
+    if (!name.trim()) {
+        return "VM name is required.";
+    }
+
+    if (name.trim().length < 2) {
+        return "VM name must contain at least 2 characters.";
+    }
+
+    if (!englishNameRegex.test(name.trim())) {
+        return "VM name must contain only English letters, numbers, hyphen or underscore.";
+    }
+
+    if (!cpu) {
+        return "Please select a valid CPU value.";
+    }
+
+    if (!ram) {
+        return "Please select a valid RAM value.";
+    }
+
+    const cpuValue = parseInt(cpu);
+    const ramValue = parseInt(ram);
+
+    if (!validCpuRam[cpuValue].includes(ramValue)) {
+        return `${cpuValue} CPU supports only ${validCpuRam[cpuValue].join("GB or ")}GB RAM.`;
+    }
+
+    return null;
+}
+
+async function createVM() {
+    const name = document.getElementById("name").value;
+    const os = document.getElementById("os").value;
+    const cpu = document.getElementById("cpu").value;
+    const ram = document.getElementById("ram").value;
+
+    const validationError = validateForm(name, cpu, ram);
+
+    if (validationError) {
+        showStatus(validationError, "error");
+        return;
+    }
+
+    try {
+        const res = await fetch(API + "/provision", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                name: name.trim(),
+                os: os,
+                cpu: parseInt(cpu),
+                ram_gb: parseInt(ram)
+            })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            showStatus(data.message || "Backend validation failed.", "error");
+            return;
+        }
+
+        showStatus("VM created successfully and saved to RDS.", "success");
+
+        document.getElementById("name").value = "";
+        document.getElementById("cpu").value = "";
+        document.getElementById("ram").innerHTML = `
+            <option value="">Select RAM</option>
+            <option value="2">2 GB</option>
+            <option value="4">4 GB</option>
+            <option value="8">8 GB</option>
+            <option value="16">16 GB</option>
+        `;
+
+        loadVMs();
+
+    } catch (e) {
+        showStatus("Cannot reach backend service.", "error");
+    }
+}
+
+async function loadVMs() {
+    const list = document.getElementById("list");
+
+    try {
+        const res = await fetch(API + "/machines");
+        const data = await res.json();
+
+        if (!data.items || data.items.length === 0) {
+            list.innerHTML = "<p>No machines yet.</p>";
+            return;
+        }
+
+        let html = `
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>OS</th>
+                    <th>CPU</th>
+                    <th>RAM</th>
+                </tr>
+        `;
+
+        data.items.forEach(vm => {
+            html += `
+                <tr>
+                    <td>${vm.id}</td>
+                    <td><b>${vm.name}</b></td>
+                    <td><span class="badge">${vm.os || "N/A"}</span></td>
+                    <td>${vm.cpu || "N/A"}</td>
+                    <td>${vm.ram_gb ? vm.ram_gb + " GB" : "N/A"}</td>
+                </tr>
+            `;
+        });
+
+        html += "</table>";
+        list.innerHTML = html;
+
+    } catch (e) {
+        list.innerHTML = "<div class='error'>Cannot reach backend.</div>";
+    }
+}
+
+async function checkWorker() {
+    try {
+        const res = await fetch(API + "/worker");
+        const data = await res.json();
+
+        showStatus("Worker status: " + data.status, "info");
+
+    } catch (e) {
+        showStatus("Cannot reach worker through backend.", "error");
+    }
+}
+
+async function uploadFile() {
+    try {
+        const res = await fetch(API + "/upload", {
+            method: "POST"
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            showStatus(
+                "Report uploaded to S3 bucket: " + data.bucket + ". SNS notification sent. File: " + data.file,
+                "success"
+            );
+        } else {
+            showStatus(data.message || "Upload failed.", "error");
+        }
+
+    } catch (e) {
+        showStatus("Cannot upload file through backend.", "error");
+    }
+}
+
+loadVMs();
+</script>
+
+</body>
+</html>

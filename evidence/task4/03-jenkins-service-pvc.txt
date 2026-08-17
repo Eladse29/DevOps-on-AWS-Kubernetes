@@ -1,0 +1,6 @@
+NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)     AGE
+service/jenkins         ClusterIP   172.20.34.6      <none>        8080/TCP    6m50s
+service/jenkins-agent   ClusterIP   172.20.185.163   <none>        50000/TCP   6m50s
+
+NAME                            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/jenkins   Bound    pvc-66393546-d105-4513-a1ef-2d85c2099349   8Gi        RWO            jenkins-ebs    <unset>                 6m51s

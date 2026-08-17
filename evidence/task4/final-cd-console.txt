@@ -1,0 +1,648 @@
+Started by upstream project "[8mha:////4HLVVSny0ZBdr8BJy2qlVvbqgbIEyp3UuUbc7X8nWPWOAAAAoB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgYR/az8JP3EgoKczOTEksz8PN3kTH0Awm3Hx8kAAAA=[0mapplication-ci" build number [8mha:////4DNSPTsM6qwZtGeonxopEXGMH2lgKWQlRrYpEhreeIYDAAAAoB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLQIwSBlH9rPwk/cSCgpzM5MSSzPw83eRMfVMAgERvBMoAAAA=[0m5
+originally caused by:
+ Started by GitHub push by Eladse29
+Checking out git https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git into /var/jenkins_home/workspace/application-cd@script/8c2e6da44fe3cf328954b48563ecc9e6db95137bbba0ef21ff7d29ddbd439f29 to read Jenkinsfile-cd
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/application-cd@script/8c2e6da44fe3cf328954b48563ecc9e6db95137bbba0ef21ff7d29ddbd439f29/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git # timeout=10
+Cleaning workspace
+ > git rev-parse --verify HEAD # timeout=10
+Resetting working tree
+ > git reset --hard # timeout=10
+ > git clean -fdx # timeout=10
+Fetching upstream changes from https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/task4^{commit} # timeout=10
+Checking out Revision 199763a0a50c470cd1553c173e9459e8585a65cb (refs/remotes/origin/task4)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 199763a0a50c470cd1553c173e9459e8585a65cb # timeout=10
+Commit message: "Increase EKS capacity for Jenkins workloads"
+ > git rev-list --no-walk 1cb8a0f36e4f75a6b4eb9a008c2c875d283b6980 # timeout=10
+[8mha:////4JS0jQyGkSY5j3imHaK8OkzSoRbA0xIzor3WkVDepbyuAAAAoh+LCAAAAAAAAP9tjTEOwjAQBM8BClpKHuFItIiK1krDC0x8GCfWnbEdkooX8TX+gCESFVvtrLSa5wtWKcKBo5UdUu8otU4GP9jS5Mixv3geZcdn2TIl9igbHBs2eJyx4YwwR1SwULBGaj0nRzbDRnX6rmuvydanHMu2V1A5c4MHCFXMWcf8hSnC9jqYxPTz/BXAFEIGsfuclm8zQVqFvQAAAA==[0m[Pipeline] Start of Pipeline
+[8mha:////4I/1jC318UNmI/9nYRYv8OvJz4Xq8U8VKxTNMCXNEiKuAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycohUghExsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jduZBmjwAAAAA==[0m[Pipeline] node
+Still waiting to schedule task
+‘[8mha:////4FwioykZ4FwHaXqVUk7SfZZ0rk8udWXeO8ioPqvY5PQuAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgZZ/eT83ILSktQi/eQUVSOXxPTUvBIgbZZimGGmDwD6SzDx0gAAAA==[0mcd-agent-6d1h6’ is offline
+Agent [8mha:////4NMHSQ3bdNev8gZup2mPoYW0uRxWta0MaIZ2jZ6WCyn3AAAApB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgYJ/eT83ILSktQi/eQU3cT01LwSXbMUwwwzAL9tODHNAAAA[0mcd-agent-6d1h6 is provisioned from template cd-agent
+---
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  annotations:
+    kubernetes.jenkins.io/last-refresh: "1786956219968"
+  labels:
+    app.kubernetes.io/name: "jenkins-cd-agent"
+    app.kubernetes.io/component: "cd-agent"
+    jenkins/jenkins-jenkins-agent: "true"
+    jenkins/label-digest: "2bdbcdaa725db53b4168b85c4e171091c7b326ef"
+    jenkins/label: "jenkins-cd"
+    kubernetes.jenkins.io/controller: "http___jenkins_jenkins_svc_cluster_local_8080x"
+  name: "cd-agent-6d1h6"
+  namespace: "jenkins"
+spec:
+  automountServiceAccountToken: true
+  containers:
+  - env:
+    - name: "JENKINS_SECRET"
+      value: "********"
+    - name: "JENKINS_TUNNEL"
+      value: "jenkins-agent.jenkins.svc.cluster.local:50000"
+    - name: "JENKINS_AGENT_NAME"
+      value: "cd-agent-6d1h6"
+    - name: "REMOTING_OPTS"
+      value: "-noReconnectAfter 1d"
+    - name: "JENKINS_NAME"
+      value: "cd-agent-6d1h6"
+    - name: "JENKINS_AGENT_WORKDIR"
+      value: "/home/jenkins/agent"
+    - name: "JENKINS_URL"
+      value: "http://jenkins.jenkins.svc.cluster.local:8080/"
+    image: "jenkins/inbound-agent:3384.v60d89463d9e0-1-jdk21"
+    imagePullPolicy: "IfNotPresent"
+    name: "jnlp"
+    resources:
+      limits:
+        cpu: "200m"
+        memory: "256Mi"
+      requests:
+        cpu: "50m"
+        memory: "128Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - "ALL"
+      readOnlyRootFilesystem: true
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/tmp"
+      name: "tmp"
+  - args:
+    - "cat"
+    command:
+    - "/bin/sh"
+    - "-c"
+    image: "alpine/helm:3.21.0"
+    imagePullPolicy: "IfNotPresent"
+    name: "helm"
+    resources:
+      limits:
+        cpu: "300m"
+        memory: "256Mi"
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - "ALL"
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/home/jenkins/.cache"
+      name: "helm-cache"
+    - mountPath: "/home/jenkins/.config"
+      name: "helm-config"
+    - mountPath: "/tmp"
+      name: "tmp"
+    workingDir: "/home/jenkins/agent"
+  - args:
+    - "cat"
+    command:
+    - "/bin/sh"
+    - "-c"
+    image: "bitnami/kubectl@sha256:bb91d6086d968982b7589dbed517aac72409337c76556e4ddcc15d810b6cc06d"
+    imagePullPolicy: "IfNotPresent"
+    name: "kubectl"
+    resources:
+      limits:
+        cpu: "300m"
+        memory: "256Mi"
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - "ALL"
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/tmp"
+      name: "tmp"
+    workingDir: "/home/jenkins/agent"
+  - args:
+    - "cat"
+    command:
+    - "/bin/sh"
+    - "-c"
+    image: "curlimages/curl:8.16.0"
+    imagePullPolicy: "IfNotPresent"
+    name: "curl"
+    resources:
+      limits:
+        cpu: "100m"
+        memory: "128Mi"
+      requests:
+        cpu: "25m"
+        memory: "32Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - "ALL"
+      runAsNonRoot: true
+    tty: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace"
+    - mountPath: "/tmp"
+      name: "tmp"
+    workingDir: "/home/jenkins/agent"
+  nodeSelector:
+    kubernetes.io/os: "linux"
+  restartPolicy: "Never"
+  securityContext:
+    fsGroup: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
+    runAsUser: 1000
+    seccompProfile:
+      type: "RuntimeDefault"
+  serviceAccountName: "jenkins-cd-agent"
+  volumes:
+  - emptyDir: {}
+    name: "workspace"
+  - emptyDir: {}
+    name: "helm-cache"
+  - emptyDir: {}
+    name: "tmp"
+  - emptyDir: {}
+    name: "helm-config"
+  - emptyDir:
+      medium: ""
+    name: "workspace-volume"
+
+Running on [8mha:////4FwioykZ4FwHaXqVUk7SfZZ0rk8udWXeO8ioPqvY5PQuAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgZZ/eT83ILSktQi/eQUVSOXxPTUvBIgbZZimGGmDwD6SzDx0gAAAA==[0mcd-agent-6d1h6 in /home/jenkins/agent/workspace/application-cd
+[8mha:////4E/8YW9O7RjFhnlGbP5J6rNb0tJBb/20Yj3ywr+7SGWNAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gA0xsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jfoP95RwAAAAA==[0m[Pipeline] {
+[8mha:////4JzQW4UGka1jtqqlY1tDVqH3qIJKBE2OEW1U/fNbIm77AAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gQkxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jc09154wAAAAA==[0m[Pipeline] withEnv
+[8mha:////4LEU7hovGP9sr6GdUYj/taQodXA5dek8QXJinVUceFUwAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0ggUxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jek7ggRwAAAAA==[0m[Pipeline] {
+[8mha:////4Fcy3YJI7s+LtjuUAvMFLcILPGrumjlLP0ayMKqRpKoyAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gwExsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jcChmMxwAAAAA==[0m[Pipeline] stage
+[8mha:////4FGZWjc8YC40H9Kw9W4YvJ1l44751OTKAc7k1oRHwn6MAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0BAkxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jfpX/cvwAAAAA==[0m[Pipeline] { (Checkout)
+[8mha:////4GBkHz3eB/5ISQ5aMIhCjRVSt/MvCRBXlMWshpF1hiypAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQTbaoyVLaHxBMgiwpL/WWDdrTyRV/MOEjexcpJJ5k3zXm9Y5wQnSpZ7g73DrB2PYbR18YlSfws0cU9XrgkzBcOlmSR15rygpGJgCWtgJWBjUAfKDm2BrfDqodqg0LaXkup3FNC4boAnMFHNRaXyhTnB7j52mfDn+SuAORZg+9pD/AAeoCAqvAAAAA==[0m[Pipeline] checkout
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git
+ > git init /home/jenkins/agent/workspace/application-cd # timeout=10
+Fetching upstream changes from https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+Checking out Revision 199763a0a50c470cd1553c173e9459e8585a65cb (refs/remotes/origin/task4)
+ > git rev-parse refs/remotes/origin/task4^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 199763a0a50c470cd1553c173e9459e8585a65cb # timeout=10
+Commit message: "Increase EKS capacity for Jenkins workloads"
+[8mha:////4IfE/fnlXv/aZUNmGzZknZGLxzgVC7lSbonKMoCi+pmVAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQDHRKiorXc8AITG+PEugv2haTiRXyNPxCIRMVWOyut5vmCMic4UPKycdgGzHWQXez91ORAqb1EGmRDZ1kTZopOajdosu44oyZ2MEcUsFCwdFhHygE9w0o15m6qaNBXJ07TtldQBHuDBwg1mdkk/sKYYH3tbSb8ef4KYOwYxI6h2G4+x/INcXYwW8EAAAA=[0m[Pipeline] script
+[8mha:////4MT6CVIjFUos4RnJTer1IKfU07xUZXTwamoK0iwiX4GGAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycoiUzoiJNerCCUITQtLo/zZJSSdOxNW4Ay2VmPBg2Zas93pDGQOcKBjuNHYWY2t570czJ54pdDdPmTu68pYwkte80bkhpc9rbShpWFUw2AjYamw9RYsmwU44+ZCVl2iqSwrzdhTArBrgCYWYyUmG9C1TgP19VJHwx/kLgKlPwOrDYvXyLD8BobDcwgAAAA==[0m[Pipeline] {
+[8mha:////4HzkLjozgCNqwbYz7Hb1VrIkIkT1PcKabIXAPxSYngjBAAAAox+LCAAAAAAAAP9tjTESwiAURH/iWNhaeggysXWsbBkaT4AJIoT5nwCRVJ7Iq3kH0cxYucXOvm3e8wXrGOBIQTOrcDAYO8O8m3RZLFMYro4ys3RhHWEkp5hQWVCvTgsKSgqWVDWsOGwUdo6iQZ1gy628y8ZJ1M05hfIdONSmH+EBFS/mJEP6whxgd5v6SPjz/BXA7BPUbfupvX8DpQJrNb4AAAA=[0m[Pipeline] sh
++ git rev-parse HEAD
+[8mha:////4DelvLOrJ1u5XQ4TebKtPkVdTiAJncJnUnD2tyDywmdrAAAAox+LCAAAAAAAAP9tjTESwiAURH/iWNhaeggyGUvHypah8QSYIEKY/wkQSeWJvJp3EM2MlVvs7NvmPV+wjgGOFDSzCgeDsTPMu0mXxTKF4eooM0sX1hFGcooJlQX16rSgoKRgSVXDisNGYecoGtQJttzKu2ycRN2cUyjfgUNt+hEeUPFiTjKkL8wBdrepj4Q/z18BzN4nqNv9p9o3geV5574AAAA=[0m[Pipeline] }
+[8mha:////4H7bU5b4LxRzsnz7lfsIAYAm06MpNmgk5TqDKp5R0QtsAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICEh2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwhQ7nbf2r7Bq/le42+AAAA[0m[Pipeline] // script
+[8mha:////4PjnfLneBv0kYt5IvG8TQQ2o/qEglW/jWJEF5gRGW3icAAAApB+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMIRBRISoqK10vACkxjjxLoL9oWk4kV8jT8QEYmKrXammdcbyxRx5OhUY6n1lCqvutC76amBY3sNPKiGL6piShysKu1Qcm1PM5YsFvOyHAuNlaUqcPLkBGvdmIcpgiFXnCVO7qCR+/qOJzI9lcVE+cIYsbn1dWL6df4GMHaCbC/It7vuA2TGium9AAAA[0m[Pipeline] echo
+
+Deployment requested by: Started by upstream project "application-ci" build number 5
+CD repository commit: 199763a0a50c470cd1553c173e9459e8585a65cb
+CI build number: 5
+Application commit: 199763a0a50c470cd1553c173e9459e8585a65cb
+Image tag: 199763a0
+Frontend digest: sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+Backend digest: sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+Worker digest: sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
+Target cluster: infra-automation-dev-eks
+Target namespace: devops-app
+Release description: Automatic deployment from CI build 5
+
+[8mha:////4FIUa+5zkoC2uvC+y6knnsUkUKhCsVzuq97scGV0JQsjAAAApB+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMIRDUJCVLRWGl5gEmOcWHfBvpBUvIiv8QciIlGx1c4083pjmSKOHJ1qLLWeUuVVF3o3PTVwbK+BB9XwRVVMiYNVpR1Kru1pxpLFYl6WY6GxslQFTp6cYK0b8zBFMOSKs8TJHTRyX9/xRKanspgoXxgjNre+Tky/zt8Axq4T5NudINt/AA6Ss1S9AAAA[0m[Pipeline] }
+[8mha:////4OQJs56oMj/A0KGQjjWc/nAwIaHWfEY+By2SsQeIhxAIAAAAox+LCAAAAAAAAP9tjTESgjAQRT84FraWHiKMFYVjZZuh8QQRYgxkdjFZhMoTeTXvICMzVv7qv9e81xvrFHHk6FRrqfOUaq/6MLj5qZFjdw08qpYvqmZKHKyq7FhxY08LViwWy7IcK42NpTpw8uQEW92ahymCIVecJc7uoJH75o4nMj2XxUT5whSxuw1NYvp1/gYw9b0g35eCrPwAL6Zs+b0AAAA=[0m[Pipeline] // stage
+[8mha:////4KwPa4REvCrvtVA0NRrYw7Pr9kAl6LnbO3NxG7tRI/0yAAAApx+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQjGoSEqGgtN7zAxMY4se6CfSGpeBFf4w8EIlGx1c5Kq3m+oMwJDpS8bBy2AXMdZBd7PzU5UGovkQbZ0FnWhJmik9oNmqw7zqiJHcwRBSwULB3WkXJAz7BSjbmbKhr01YnTtO0VFMHe4AFCTWY2ib8wJlhfe5sJf56/Ahg7BrFlKDa7z7F8AxrfFeXBAAAA[0m[Pipeline] stage
+[8mha:////4PLNpCRa7V3jUC8K9ipypZy37vTvkzYxP3djela0r/uSAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUbCDE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5Dv9rMd5mfxASnCIIrCAAAA[0m[Pipeline] { (Input Validation)
+[8mha:////4KhRAkR5uXbVsnB8e/aJ/02W1clvDyRQkzR5kSwzgJT2AAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogU2BDqxBp14QShCSFp9H9JUtKJE3E17kCgEhMeLNuS9Z4vqIKHhrxmVmFvMHSGDW7UObFEvr84SszSmXWEgZxirUotSXWca0tRwayihAWHpcLOUTCoI6y4FXdRO4G6PkWftwOH0sgbPKDgmRyFj98yeVhfRxkIf5y/AJiGCOV2n223+TyrN7xWSV3CAAAA[0m[Pipeline] container
+[8mha:////4JK2LCnhiaipYJFJ5rzWIggHgRbUY5rDDibyMuEM34owAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUWBFT1ygLJwhNCGmj/8tPSjtxIq7GHWipxIQHy7ZkvdcbishwInaisdh6jLUXXejdlMRA3F4DDaKhi6gJIwUrlB0UGVstVVGysCjLYSVhbbEOFD26BBvZ6Icug0ZXnhNP21FC7s0dnpDJiZw0p28ZGba33kTCH+cvAMYuQX7Yzbafn8UHbGnGmsIAAAA=[0m[Pipeline] {
+[8mha:////4OPwJvGNSIPKu8MiQlHbbJOJuUVOAY8BLymXjvUZRIYAAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIi0iIqWisNLzCJMXasO8d2cCpexNf4A4FIVGyx2tlmni9YxwBHDhqtot5QbA16N+p5YebQXx1ntHzBlimyU9io3HCnTgs2nBQsKUpYCdgoah1HQzrBVlh5l5WTpKtzCvN3EFCaboAHFGI2JxnSF6YAu9vYRaaf568AJp+grPefqv0bH7uiub4AAAA=[0m[Pipeline] sh
++ set -eu
++ '[' -z 199763a0 ]
++ '[' 199763a0 '=' latest ]
++ digest_value=sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
++ printf '%s' sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
++ grep -Eq '^sha256:[0-9a-f]{64}$'
++ digest_value=sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
++ printf '%s' sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
++ grep -Eq '^sha256:[0-9a-f]{64}$'
++ digest_value=sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
++ printf '%s' sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
++ grep -Eq '^sha256:[0-9a-f]{64}$'
++ '[' devops-app '!=' devops-app ]
++ required_files='
+                        helm/frontend/Chart.yaml
+                        helm/frontend/values.yaml
+                        helm/backend/Chart.yaml
+                        helm/backend/values.yaml
+                        helm/worker/Chart.yaml
+                        helm/worker/values.yaml
+                        '
++ '[' '!' -f helm/frontend/Chart.yaml ]
++ '[' '!' -f helm/frontend/values.yaml ]
++ '[' '!' -f helm/backend/Chart.yaml ]
++ '[' '!' -f helm/backend/values.yaml ]
++ '[' '!' -f helm/worker/Chart.yaml ]
++ '[' '!' -f helm/worker/values.yaml ]
++ echo 'CD input validation passed.'
+CD input validation passed.
+[8mha:////4F4+c846sVtXJf3+wmEgtjaJr7UBlAX99B0j5wYvfYXDAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIioERUaS03vMDExjix7oztkFS8iK/xBwKRqNhitbPNPF+wTBGOHC22hjpHqXEYfG+nhQPH7uJ5wJbP2DAl9galGSRrU88oORuYU5SwELAy1HhOjmyGtWjVXVVeka1OOU7fQUDp9A0eUIjJnFXMXxgjbK69Tkw/z18BjCFkKHf7T23f36y8/b4AAAA=[0m[Pipeline] }
+[8mha:////4Fwgd8wupXc9UxvJFmGj2d+Pb9YVoKZ7NkuJZOJG4CEOAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKCEB2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwhQ7nbf2r7BvGsvpe+AAAA[0m[Pipeline] // container
+[8mha:////4H1vBYjUj16mIBJewM8q6CRh1YpwhSTnzc8FGGuSIvpCAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIikCgQSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryt8+1PXwAM5QTDr4AAAA=[0m[Pipeline] }
+[8mha:////4D1icuswAzz5dj0H7v9GUpirIwJxIVeKoD7ScaGrz9C+AAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiKBASSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryt8+1PXwAC9aA/74AAAA=[0m[Pipeline] // stage
+[8mha:////4JJlGDAxW9iLjmaBWceGiljN/mBkZr3c3rkHfjWMLsCnAAAApx+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQjUUCBqGgtN7zAxMY4se6CfSGpeBFf4w8EIlGx1c5Kq3m+oMwJDpS8bBy2AXMdZBd7PzU5UGovkQbZ0FnWhJmik9oNmqw7zqiJHcwRBSwULB3WkXJAz7BSjbmbKhr01YnTtO0VFMHe4AFCTWY2ib8wJlhfe5sJf56/Ahg7BrFlKDa7z7F8A1J3qyXBAAAA[0m[Pipeline] stage
+[8mha:////4JAGo51VztsHX0BNJXUFT+j0K/UK9FLAdIc7+LK+RpomAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUYgEJMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLku/1sh/lZfAAnLfKUwgAAAA==[0m[Pipeline] { (Manifest Validation)
+[8mha:////4C8yjCSRQcLgf9l6WYf1KF4aHAppwabW6dxwHdXhtSq5AAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUYgIhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYJ8t5/tMD+LD0QKVszCAAAA[0m[Pipeline] withCredentials
+Masking supported pattern matches of $BACKEND_VALUES_FILE
+[8mha:////4EOFznyIsnuhS4TtHyrID/jKCHDt4SoozvzaumiUedViAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUwYRQJ9aoCycITQhJo/9LkpJOnIircQcClZjwYNmWrPd8QRU8NOQ1swp7g6EzbHCjzokl8v3FUWKWzqwjDOQUa1VqSarjXFuKCmYVJSw4LBV2joJBHWHFrbiL2gnU9Sn6vB04lEbe4AEFz+QofPyWycP6OspA+OP8BcA0RCi3+2y7zedZvQH4j6CMwgAAAA==[0m[Pipeline] {
+[8mha:////4HCm7fvedMvZP7/n5S9wbotPXw7l710TtIrW1mXC0FkAAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUxIiYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLDbrb9/Cw+ty4Up8IAAAA=[0m[Pipeline] container
+[8mha:////4KXNu0f5rr8oPhsD3v0BuiGg7HGmOBpYtb9sh65TGztoAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUwIiYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLDbrb9/Cw+2YMO4MIAAAA=[0m[Pipeline] {
+[8mha:////4ONESke55zM1zZAUWQZlZfikLJfuoP6exXRRMKLwgIfsAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIikRJR0VppeIFJjLFj3Tm2g1PxIr7GHwhEomKL1c4283zBOgY4ctBoFfWGYmvQu1HPCzOH/uo4o+ULtkyRncJG5YY7dVqw4aRgSVHCSsBGUes4GtIJtsLKu6ycJF2dU5i/g4DSdAM8oBCzOcmQvjAF2N3GLjL9PH8FMPkEZb3/VO3favo5XL4AAAA=[0m[Pipeline] sh
++ set -eu
++ helm lint helm/frontend --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend' --set 'image.tag=199763a0'
+==> Linting helm/frontend
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
++ helm lint helm/backend --values **** --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend' --set 'image.tag=199763a0'
+==> Linting helm/backend
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
++ helm lint helm/worker --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker' --set 'image.tag=199763a0'
+==> Linting helm/worker
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
++ mkdir -p rendered-manifests
++ helm template frontend helm/frontend --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend' --set 'image.tag=199763a0'
++ helm template backend helm/backend --namespace devops-app --values **** --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend' --set 'image.tag=199763a0'
++ helm template worker helm/worker --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker' --set 'image.tag=199763a0'
++ grep -R 199763a0 rendered-manifests
++ echo 'Helm lint and template validation passed.'
+Helm lint and template validation passed.
+[8mha:////4C5cBNFSTwtsgNF78cIUBWHhrK9kTADLwnL/FpB8vPuSAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiAR2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwhQ7nbf2r7Bij33Ma+AAAA[0m[Pipeline] }
+[8mha:////4P4p2Qn9m7t1NVmZr+Meg0OkT/NZmQFc4FhytjMKHlvJAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIihKgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGMIGcrd/lPbNzd1iZS+AAAA[0m[Pipeline] // container
+[8mha:////4DFSdRICXMQq3xRW/dc82LzkD5xgR121etJXrNi3lr13AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKChESDqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgEPNxplvgAAAA==[0m[Pipeline] }
+[8mha:////4IMvySxjwUt9AdniNP1c8g5UC6Q8Q3AB0jzOrmFNcLk/AAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiQYEQSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryt8+1PXwAT22Bzr4AAAA=[0m[Pipeline] // withCredentials
+[8mha:////4ISSnWJNMzHQZ2UZk4OWp9W4yjaRc1ZJ8LAT9oAbnhFUAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiQRMJUaW10vACExvjxLoztkNS8SK+xh+wiETFFqudbeb1hnUMcOJgsNc0WIqdRe9GkxdOHIar4wl7vmDHFNlpbPXUstLNgi0nDUuKElYCNpo6x9GSSbAVvXzIykky1TmF/B0FlFbd4QmFyOYkQ/rCHGB3G1Vk+nn+CmD2Ccp9netQ+w9xfBfXvgAAAA==[0m[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[8mha:////4ImCb1k/HUCc3YA05jMUgULdEIh/GBNk5fyxuOFXZZhDAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiQQNCqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKZhiFDuDrm2+w+pPIyDvgAAAA==[0m[Pipeline] }
+[8mha:////4FFbGBI5zqNL2iFvk/BcVGOIUyk5zIEeyGWnQBRE2cJgAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKCEBIFSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryv821O3wAfk6b8b4AAAA=[0m[Pipeline] // stage
+[8mha:////4Fd0BxcHlasyV/03r4G3GQBbmyu64ECxANcZEDt3z1ldAAAApx+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQjJESDqGgtN7zAxMY4se6CfSGpeBFf4w8EIlGx1c5Kq3m+oMwJDpS8bBy2AXMdZBd7PzU5UGovkQbZ0FnWhJmik9oNmqw7zqiJHcwRBSwULB3WkXJAz7BSjbmbKhr01YnTtO0VFMHe4AFCTWY2ib8wJlhfe5sJf56/Ahg7BrFjKLabz7F8A3WhIpDBAAAA[0m[Pipeline] stage
+[8mha:////4IF9wb3H22iTp9USg8nGG0EqC40tO9dn4pvQcXDTSdXrAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUIDbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAdhUMVHCAAAA[0m[Pipeline] { (Authenticate)
+[8mha:////4MKRSkTdq4Hxn/r2xQuepnUixq3hEejq4vCMRtRR8TkzAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUAjbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAXzhjwPCAAAA[0m[Pipeline] container
+[8mha:////4ACZfzIrQ/75XEVqJ9lbIqPc+iqow+yCyjEc2IFyQM3JAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycoh0oBtiYo26cILQhJA0+r9NUtKJE3E17kBLJSY8WLYl673eUMYAJwqGO42dxdha3vvRzIlnCt3NU+aOrrwljOQ1b3RuSOnzWhtKGlYVDDYCthpbT9GiSbATTj5k5SWa6pLCvB0FMKsGeEIhZnKSIX3LFGB/H1Uk/HH+AmDqE7D6sFi9PMsPBA4E38IAAAA=[0m[Pipeline] {
+[8mha:////4LsTQkswYK5LbHrSe5FnRMKH7XBPFK5YiPXAKbNmJgnEAAAAox+LCAAAAAAAAP9tjTESwiAURH/iWNhaegjSxMqxsmVoPAEmiBDmfwJEUnkir+YdRDNj5RY7+7Z5zxesY4AjBc2swsFg7AzzbtJlsUxhuDrKzNKFdYSRnGJCZUG9Oi0oKClYUtWw4rBR2DmKBnWCLbfyLhsnUTfnFMp34FCbfoQHVLyYkwzpC3OA3W3qI+HP81cAs09Qt+2n9v4NSnc5Zr4AAAA=[0m[Pipeline] sh
++ set -eu
++ kubectl auth can-i get deployments --namespace devops-app
+yes
++ kubectl auth can-i create deployments --namespace devops-app
+yes
++ kubectl auth can-i patch deployments --namespace devops-app
+yes
++ kubectl auth can-i create deployments --namespace default
++ grep -q '^yes$'
++ echo 'Kubernetes ServiceAccount authentication verified.'
+Kubernetes ServiceAccount authentication verified.
+[8mha:////4PUtYSIGPMTFkXCCijEH9EICpGZihgJmSa+QZnCK7cWAAAAAox+LCAAAAAAAAP9tjTESwiAURH/iWNhaegjSZGwcK1uGxhNggghh/idAJJUn8mreQTQzVm6xs2+b93zBOgY4UtDMKhwMxs4w7yZdFssUhqujzCxdWEcYySkmVBbUq9OCgpKCJVUNKw4bhZ2jaFAn2HIr77JxEnVzTqF8Bw616Ud4QMWLOcmQvjAH2N2mPhL+PH8FMHufoG73n2rfX1uR6L4AAAA=[0m[Pipeline] }
+[8mha:////4HGdI1SeE1zPwowC1MmrUMAjRuXRmn24GpQuW4xfSchiAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSgESBqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgFZHam9vgAAAA==[0m[Pipeline] // container
+[8mha:////4Px/9MOOirHJpKBMHfVz9CegKH4bZAv0oGkfovMS6Ny5AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiIQokRJXWcsMLTGyME+vO2A5JxYv4Gn8gEImKLVY728zzBcsU4cjRYmuoc5Qah8H3dlo4cOwungds+YwNU2JvUJpBsjb1jJKzgTlFCQsBK0ON5+TIZliLVt1V5RXZ6pTj9B0ElE7f4AGFmMxZxfyFMcLm2uvE9PP8FcAYQoZyt//U9g0an/g7vgAAAA==[0m[Pipeline] }
+[8mha:////4H0pdsBWxLPC805fQjb03QAk6Q88zudgRUgkFSGD5HVFAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiJBqEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgEFHa1pvgAAAA==[0m[Pipeline] // stage
+[8mha:////4Fuh5yvlsjCDYQw5fxzPs5rq1oFnfajMBIKn8klYfcAtAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYRDAw2iorXc8AITG+PEugv2haTiRXyNPxCIRMVWOyut5vmCMic4UPKycdgGzHWQXez91ORAqb1EGmRDZ1kTZopOajdosu44oyZ2MEcUsFCwdFhHygE9w0o15m6qaNBXJ07TtldQBHuDBwg1mdkk/sKYYH3tbSb8ef4KYOwYxI6h2G4+x/INZHkJ/cEAAAA=[0m[Pipeline] stage
+[8mha:////4H8wRpPCtX9rbCA7Y43Ft2Y6skHC+exYX+EU2iIUTm97AAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUBibE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAW2++SvCAAAA[0m[Pipeline] { (Record Current Revisions)
+[8mha:////4GposgKt2aUIccIKjtnJAu+Z0gcFYuvZ4V9CnwKYvsXZAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUIDEhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LDwMT42zCAAAA[0m[Pipeline] container
+[8mha:////4BVn7UYQZr5E5vGC7th+vD6RNZZicoSPWokRYFm7VwDLAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUAjEhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LD6emXT7CAAAA[0m[Pipeline] {
+[8mha:////4LxTPEfOIHtT5SN10rFP64IwgmvwoaIQm8QAUy8uXeL6AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSABWiSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwZyv32U7vwBiwS7Xe+AAAA[0m[Pipeline] sh
++ set -eu
++ mkdir -p deployment-state
++ helm history frontend --namespace devops-app --output json
++ tail -n 1
++ + grepcut -o -d: '"revision":[0-9]*' -f2
+
++ revision=3
++ '[' -z 3 ]
++ printf '%s' 3
++ helm history backend --namespace devops-app --output json
++ grep -o '"revision":[0-9]*'
++ tail -n+  1cut
+ -d: -f2
++ revision=3
++ '[' -z 3 ]
++ printf '%s' 3
++ helm history worker --namespace devops-app --output json
++ grep -o '"revision":[0-9]*'
++ cut -d: -f2
++ tail -n 1
++ revision=3
++ '[' -z 3 ]
++ printf '%s' 3
++ echo 'Current Helm revisions recorded.'
+Current Helm revisions recorded.
+[8mha:////4Cx5LPfrAvd06fL09jMJ8sBXWf0T+k7p9ynVFx93U1RPAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSoFSIitZKwwtMYowd686xHZyKF/E1/kAgEhVbrHa2mecL1jHAkYNGq6g3FFuD3o16Xpg59FfHGS1fsGWK7BQ2KjfcqdOCDScFS4oSVgI2ilrH0ZBOsBVW3mXlJOnqnML8HQSUphvgAYWYzUmG9IUpwO42dpHp5/krgMn7BGVdf2r/BqeGDU++AAAA[0m[Pipeline] }
+[8mha:////4GCfPshRSxj2AZUnHIDs8E2CVtQfkZtOR72dlv0y06igAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiIUGDqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgGfxJ6+vgAAAA==[0m[Pipeline] // container
+[8mha:////4Ks2H2s2ZXWQPs4pQtIny79K3X552eaOwI4kInQET0TJAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiCkSBqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgGARsvsvgAAAA==[0m[Pipeline] }
+[8mha:////4GhoUfKyy6pH08/sRrBIe683jZ7pCGkMhBTOm/IAYT3KAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJCg4SEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgHDxJpqvgAAAA==[0m[Pipeline] // stage
+[8mha:////4D5lMnnVfmZCXz8RQIgLcl4L9RLQmVbk55zO5ak83MXzAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYRTgYQQFa3lhheY2Bgn1l2wLyQVL+Jr/IFAJCq22llpNc8XlDnBgZKXjcM2YK6D7GLvpyYHSu0l0iAbOsuaMFN0UrtBk3XHGTWxgzmigIWCpcM6Ug7oGVaqMXdTRYO+OnGatr2CItgbPECoycwm8RfGBOtrbzPhz/NXAGPHILYMxWb3OZZvrCgG2sEAAAA=[0m[Pipeline] stage
+[8mha:////4DeAS8VvJaW8eig/WiSA8c3cspwkR8ttfRUP2dujaKYAAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoiUBSSEOrFGXThBaEJIGv1fkpR04kRcjTsQqMSEB8u2ZL3nC6rgoSGvmVXYGwydYYMbdU4ske8vjhKzdGYdYSCnWKtSS1Id59pSVDCrKGHBYamwcxQM6ggrbsVd1E6grk/R5+3AoTTyBg8oeCZH4eO3TB7W11EGwh/nLwCmIUK53WfbbT7P6g3QSQCqwgAAAA==[0m[Pipeline] { (Deploy)
+[8mha:////4CouCwHAAQsOD3ZoWm2mdFpBK9hLYQDQtqdrvF52nYxrAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUFhbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAQB2j23CAAAA[0m[Pipeline] withCredentials
+Masking supported pattern matches of $BACKEND_VALUES_FILE
+[8mha:////4AtV6C08q+KPuTXQdqGqHg5/IlAU/UFuqNiKz8oxmiJrAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUMLAgpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LD27blSrCAAAA[0m[Pipeline] {
+[8mha:////4L/wvJrzCYOI2BgH62fahJfJgfg4u3pv1tfLvNCptVYqAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUAokFMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLkh91s+/lZfADKbit4wgAAAA==[0m[Pipeline] container
+[8mha:////4Agog6N0xRjQBe4EdnItsYeLsPgCzI1SS74rk31eAbahAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0ALEgpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LD7KBoKTCAAAA[0m[Pipeline] {
+[8mha:////4H5Z6xd0ok4Shlg1PzmjP+mP5yMjLOo8KJTOUJHKwoYXAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSAA2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwZyv32U7vwBlmkmCe+AAAA[0m[Pipeline] sh
++ set -eu
++ helm upgrade --install worker helm/worker --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker' --set 'image.tag=199763a0' --wait --timeout 5m --history-max 10
+Release "worker" has been upgraded. Happy Helming!
+NAME: worker
+LAST DEPLOYED: Mon Aug 17 08:45:00 2026
+NAMESPACE: devops-app
+STATUS: deployed
+REVISION: 4
+TEST SUITE: None
++ helm upgrade --install backend helm/backend --namespace devops-app --values **** --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend' --set 'image.tag=199763a0' --wait --timeout 5m --history-max 10
+Release "backend" has been upgraded. Happy Helming!
+NAME: backend
+LAST DEPLOYED: Mon Aug 17 08:45:47 2026
+NAMESPACE: devops-app
+STATUS: deployed
+REVISION: 4
+TEST SUITE: None
++ helm upgrade --install frontend helm/frontend --namespace devops-app --set 'image.repository=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend' --set 'image.tag=199763a0' --wait --timeout 5m --history-max 10
+Release "frontend" has been upgraded. Happy Helming!
+NAME: frontend
+LAST DEPLOYED: Mon Aug 17 08:46:34 2026
+NAMESPACE: devops-app
+STATUS: deployed
+REVISION: 4
+TEST SUITE: None
++ echo 'Helm deployment completed.'
+Helm deployment completed.
+[8mha:////4HBw77bfDOMeaxrl3PdgFKeUHkxmjpcsRuCnoThsw6nnAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSoDSIitZKwwtMYowd686xHZyKF/E1/kAgEhVbrHa2mecL1jHAkYNGq6g3FFuD3o16Xpg59FfHGS1fsGWK7BQ2KjfcqdOCDScFS4oSVgI2ilrH0ZBOsBVW3mXlJOnqnML8HQSUphvgAYWYzUmG9IUpwO42dpHp5/krgMn7BGVdf2r/BvQoOE2+AAAA[0m[Pipeline] }
+[8mha:////4DM4yf7ekFRG4p2dgGmlEsJaxwqEzWvvDZ2fnfPPFVfXAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSIEGBqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgHybgAYvgAAAA==[0m[Pipeline] // container
+[8mha:////4J8HLGBCkNoJuhx1NEhcFZl72cPBmCvAGx6y+zuQjHpUAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiUSAkRJXWcsMLTGyME+vO2A5JxYv4Gn8gEImKLVY728zzBcsU4cjRYmuoc5Qah8H3dlo4cOwungds+YwNU2JvUJpBsjb1jJKzgTlFCQsBK0ON5+TIZliLVt1V5RXZ6pTj9B0ElE7f4AGFmMxZxfyFMcLm2uvE9PP8FcAYQoZyt//U9g2x7FGevgAAAA==[0m[Pipeline] }
+[8mha:////4OLeXk1NwLLjoYPJH7Z5WnKBJ/Z83OWVIJXvulWF9mWlAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiGiSEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgGubgTMvgAAAA==[0m[Pipeline] // withCredentials
+[8mha:////4O9EVvsgske4b31B0zR+cRuazp6WvyQ2HYYGHyePWGGOAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKSCgpEldZKwwtMbIwT687YDknFi/gaf8AiEhVbrHa2mdcb1jHAiYPBXtNgKXYWvRtNXjhxGK6OJ+z5gh1TZKex1VPLSjcLtpw0LClKWAnYaOocR0smwVb08iErJ8lU5xTydxRQWnWHJxQim5MM6QtzgN1tVJHp5/krgNn7BOWhzrWvP0QEezq+AAAA[0m[Pipeline] }
+[8mha:////4HXltjASdb9S+ZOCpJuNJ7odTQtb9IzBM7w54X48l5BmAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiCoQQSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryv821O3wAhjzWo74AAAA=[0m[Pipeline] // stage
+[8mha:////4OUckPLlhXfjEcB6CBe6fIn1Zb/P52xyRcWAC0LpaHNhAAAApx+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQjUUCBqGgtN7zAxMY4se6CfSGpeBFf4w8EIlGx1c5Kq3m+oMwJDpS8bBy2AXMdZBd7PzU5UGovkQbZ0FnWhJmik9oNmqw7zqiJHcwRBSwULB3WkXJAz7BSjbmbKhr01YnTtO0VFMHe4AFCTWY2ib8wJlhfe5sJf56/Ahg7BrFlKHabz7F8A0bJXifBAAAA[0m[Pipeline] stage
+[8mha:////4Dy/OBSrV9nsX1invrhmWpvgGmpNB7c/5V3ZuqWHhfJbAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUgoEBMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLkh91s+/lZfAARKflFwgAAAA==[0m[Pipeline] { (Rollout)
+[8mha:////4B8fdrmjPME9mkESxoT4ncf4uho/ADjRkwypNnvAM4kxAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0AIkBMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLkh91s+/lZfABpxnKZwgAAAA==[0m[Pipeline] container
+[8mha:////4Pp9X7AMWo4jv8cBwe6G4cge1rQ2rYOvtiT0ftIlJ/I1AAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0ATEgpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LD08AFXvCAAAA[0m[Pipeline] {
+[8mha:////4BzciaYkOGf8mYgMffQ4GTjWFJNYO6hEv89EbRKCYzpKAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSAQWiSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwZyv32U7vwBoeWqme+AAAA[0m[Pipeline] sh
++ set -eu
++ kubectl rollout status deployment/worker --namespace devops-app --timeout=180s
+deployment "worker" successfully rolled out
++ kubectl rollout status deployment/backend --namespace devops-app --timeout=180s
+deployment "backend" successfully rolled out
++ kubectl rollout status deployment/frontend --namespace devops-app --timeout=180s
+deployment "frontend" successfully rolled out
++ echo 'All deployments completed rollout successfully.'
+All deployments completed rollout successfully.
++ echo
+
++ echo 'Deployment status:'
+Deployment status:
++ kubectl get deployments --namespace devops-app
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+backend    3/3     3            3           71m
+frontend   3/3     3            3           70m
+worker     3/3     3            3           71m
++ echo
+
++ echo 'Running Pods:'
+Running Pods:
++ kubectl get pods --namespace devops-app --output wide
+NAME                        READY   STATUS    RESTARTS   AGE     IP            NODE                          NOMINATED NODE   READINESS GATES
+backend-5c6d6f86f4-74klp    1/1     Running   0          94s     10.0.12.40    ip-10-0-12-151.ec2.internal   <none>           <none>
+backend-5c6d6f86f4-95h52    1/1     Running   0          78s     10.0.11.168   ip-10-0-11-34.ec2.internal    <none>           <none>
+backend-5c6d6f86f4-xbdjg    1/1     Running   0          64s     10.0.12.170   ip-10-0-12-100.ec2.internal   <none>           <none>
+frontend-7559db659c-5pqw2   1/1     Running   0          48s     10.0.12.148   ip-10-0-12-151.ec2.internal   <none>           <none>
+frontend-7559db659c-lx5vm   1/1     Running   0          22s     10.0.11.115   ip-10-0-11-192.ec2.internal   <none>           <none>
+frontend-7559db659c-pv78f   1/1     Running   0          35s     10.0.12.183   ip-10-0-12-100.ec2.internal   <none>           <none>
+worker-7f9996fd44-mw9w4     1/1     Running   0          112s    10.0.12.26    ip-10-0-12-151.ec2.internal   <none>           <none>
+worker-7f9996fd44-vh8vm     1/1     Running   0          2m21s   10.0.12.167   ip-10-0-12-100.ec2.internal   <none>           <none>
+worker-7f9996fd44-wm4xd     1/1     Running   0          2m6s    10.0.11.43    ip-10-0-11-192.ec2.internal   <none>           <none>
++ echo
+
++ echo Services:
+Services:
++ kubectl get services --namespace devops-app
+NAME               TYPE           CLUSTER-IP       EXTERNAL-IP                                                              PORT(S)        AGE
+backend-service    ClusterIP      172.20.101.115   <none>                                                                   5000/TCP       71m
+frontend-service   LoadBalancer   172.20.241.95    a376da152ef044b669f06b86b4e1e4ef-856190384.us-east-1.elb.amazonaws.com   80:30449/TCP   70m
+worker-service     ClusterIP      172.20.117.161   <none>                                                                   5001/TCP       71m
+[8mha:////4FcjPVe+SNVby75UYQWmrR1U1+TMoOXgKcCq4BIXt/PNAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSoRSIitZKwwtMYowd686xHZyKF/E1/kAgEhVbrHa2mecL1jHAkYNGq6g3FFuD3o16Xpg59FfHGS1fsGWK7BQ2KjfcqdOCDScFS4oSVgI2ilrH0ZBOsBVW3mXlJOnqnML8HQSUphvgAYWYzUmG9IUpwO42dpHp5/krgMn7BGVdf2r/BjLxD06+AAAA[0m[Pipeline] }
+[8mha:////4DIZ+Z9Y4nE1/L7zTZ40yB1Gn4JOnipvq8xvE0VgDuCeAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSIIGEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgFxc17IvgAAAA==[0m[Pipeline] // container
+[8mha:////4MkOrIOcIvg1DYlQ1TKzsMgcUXXTuKO4Gkzhe3v3fonvAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSUCCEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDu9p/avgF3NWadvgAAAA==[0m[Pipeline] }
+[8mha:////4IVO3NZ+oNpD1f6KzkBdqOnbNovHwKIG0G8/VpbvCOAhAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKCaEBCqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKZhiFAetrn2uw/AJCY7vgAAAA==[0m[Pipeline] // stage
+[8mha:////4O7rmQzW73Kj/dEfavEakqSj3mJoOihsK/lepSUubOa7AAAApx+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQjGoSEqGgtN7zAxMY4se6CfSGpeBFf4w8EIlGx1c5Kq3m+oMwJDpS8bBy2AXMdZBd7PzU5UGovkQbZ0FnWhJmik9oNmqw7zqiJHcwRBSwULB3WkXJAz7BSjbmbKhr01YnTtO0VFMHe4AFCTWY2ib8wJlhfe5sJf56/Ahg7BrFlKHabz7F8AwHLglfBAAAA[0m[Pipeline] stage
+[8mha:////4HHRQwY3/rGa6ncSoQkv/hNcvpYu8LV+ed7EkvuD5snPAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUMCEhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYL8sJttPz+LDy1zm5PCAAAA[0m[Pipeline] { (Verify)
+[8mha:////4MrX/UDb7/Peg188WrV72Z8CBWOnbdMJvgJxHE6Y8MLuAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUggUJMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLkh91s+/lZfACJxiXBwgAAAA==[0m[Pipeline] container
+[8mha:////4DIQCSKF/lxJvyoM7kh2HtNQDag6DQcCPiZ3SG2snQE8AAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0gAEJMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLkh91s+/lZfADxKa4dwgAAAA==[0m[Pipeline] {
+[8mha:////4PLfAh7MQKMZMXtImMO9eBb96UxX8WUaIMbtYTuk3eU8AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSgISEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDhnK//dQuvAFhm4w4vgAAAA==[0m[Pipeline] sh
++ set -eu
++ kubectl get deployments,pods,services --namespace devops-app --output wide
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                                  SELECTOR
+deployment.apps/backend    3/3     3            3           71m   backend      904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0    app=backend
+deployment.apps/frontend   3/3     3            3           70m   frontend     904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0   app=frontend
+deployment.apps/worker     3/3     3            3           71m   worker       904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0     app=worker
+
+NAME                            READY   STATUS    RESTARTS   AGE     IP            NODE                          NOMINATED NODE   READINESS GATES
+pod/backend-5c6d6f86f4-74klp    1/1     Running   0          96s     10.0.12.40    ip-10-0-12-151.ec2.internal   <none>           <none>
+pod/backend-5c6d6f86f4-95h52    1/1     Running   0          80s     10.0.11.168   ip-10-0-11-34.ec2.internal    <none>           <none>
+pod/backend-5c6d6f86f4-xbdjg    1/1     Running   0          66s     10.0.12.170   ip-10-0-12-100.ec2.internal   <none>           <none>
+pod/frontend-7559db659c-5pqw2   1/1     Running   0          50s     10.0.12.148   ip-10-0-12-151.ec2.internal   <none>           <none>
+pod/frontend-7559db659c-lx5vm   1/1     Running   0          24s     10.0.11.115   ip-10-0-11-192.ec2.internal   <none>           <none>
+pod/frontend-7559db659c-pv78f   1/1     Running   0          37s     10.0.12.183   ip-10-0-12-100.ec2.internal   <none>           <none>
+pod/worker-7f9996fd44-mw9w4     1/1     Running   0          114s    10.0.12.26    ip-10-0-12-151.ec2.internal   <none>           <none>
+pod/worker-7f9996fd44-vh8vm     1/1     Running   0          2m23s   10.0.12.167   ip-10-0-12-100.ec2.internal   <none>           <none>
+pod/worker-7f9996fd44-wm4xd     1/1     Running   0          2m8s    10.0.11.43    ip-10-0-11-192.ec2.internal   <none>           <none>
+
+NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP                                                              PORT(S)        AGE   SELECTOR
+service/backend-service    ClusterIP      172.20.101.115   <none>                                                                   5000/TCP       71m   app=backend
+service/frontend-service   LoadBalancer   172.20.241.95    a376da152ef044b669f06b86b4e1e4ef-856190384.us-east-1.elb.amazonaws.com   80:30449/TCP   70m   app=frontend
+service/worker-service     ClusterIP      172.20.117.161   <none>                                                                   5001/TCP       71m   app=worker
+++ kubectl get deployment frontend --namespace devops-app --output 'jsonpath={.spec.template.spec.containers[0].image}'
++ frontend_image=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0
+++ kubectl get deployment backend --namespace devops-app --output 'jsonpath={.spec.template.spec.containers[0].image}'
++ backend_image=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0
+++ kubectl get deployment worker --namespace devops-app --output 'jsonpath={.spec.template.spec.containers[0].image}'
++ worker_image=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0
++ expected_frontend=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0
++ expected_backend=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0
++ expected_worker=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0
++ test 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0 = 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0
++ test 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0 = 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0
++ test 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0 = 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0
+++ kubectl get pods --namespace devops-app -l app=frontend --output 'jsonpath={.items[0].status.containerStatuses[0].imageID}'
+++ sed 's|.*@||'
++ frontend_running_digest=sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+++ kubectl get pods --namespace devops-app -l app=backend --output 'jsonpath={.items[0].status.containerStatuses[0].imageID}'
+++ sed 's|.*@||'
++ backend_running_digest=sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+++ kubectl get pods --namespace devops-app -l app=worker --output 'jsonpath={.items[0].status.containerStatuses[0].imageID}'
+++ sed 's|.*@||'
++ worker_running_digest=sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
++ test sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf = sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
++ test sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb = sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
++ test sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c = sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
++ echo CI_BUILD_NUMBER=5
++ echo GIT_COMMIT_SHA=199763a0a50c470cd1553c173e9459e8585a65cb
++ echo IMAGE_TAG=199763a0
++ echo FRONTEND_DIGEST=sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
++ echo BACKEND_DIGEST=sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
++ echo WORKER_DIGEST=sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
++ echo FRONTEND_RUNNING_DIGEST=sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
++ echo BACKEND_RUNNING_DIGEST=sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
++ echo WORKER_RUNNING_DIGEST=sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
++ echo TARGET_CLUSTER=infra-automation-dev-eks
++ echo TARGET_NAMESPACE=devops-app
++ echo FRONTEND_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0
++ echo BACKEND_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0
++ echo WORKER_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0
++ cat deployment-verification.txt
+CI_BUILD_NUMBER=5
+GIT_COMMIT_SHA=199763a0a50c470cd1553c173e9459e8585a65cb
+IMAGE_TAG=199763a0
+FRONTEND_DIGEST=sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+BACKEND_DIGEST=sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+WORKER_DIGEST=sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
+FRONTEND_RUNNING_DIGEST=sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+BACKEND_RUNNING_DIGEST=sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+WORKER_RUNNING_DIGEST=sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
+TARGET_CLUSTER=infra-automation-dev-eks
+TARGET_NAMESPACE=devops-app
+FRONTEND_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:199763a0
+BACKEND_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:199763a0
+WORKER_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:199763a0
+[8mha:////4C9TDOYopW/egrtxjgLdmtvjLRdYNnvknx7xONULOofBAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSIISEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDud5/avgEnfoSDvgAAAA==[0m[Pipeline] }
+[8mha:////4AQc3Oq23ODOOZnT9W2Lz4xy9jmK0qtqJaJnhlNNLEarAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSUICEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDud5/avgEhOLzWvgAAAA==[0m[Pipeline] // container
+[8mha:////4ErKpP3qy062aE6rDPKMQ5+y6RT/pqOBfdW+ZIRY3e6MAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycohUYqqEmFijLpwgNCEkjf5vk5R04kRcjTvQUokJD5ZtyXqvN5QxwImC4U5jZzG2lvd+NHPimUJ385S5oytvCSN5zRudG1L6vNaGkoZVBYONgK3G1lO0aBLshJMPWXmJprqkMG9HAcyqAZ5QiJmcZEjfMgXY30cVCX+cvwCY+gSsPixWL8/yA0o24qvCAAAA[0m[Pipeline] container
+[8mha:////4AzGlMLHX/8kVzAoAh+Rq5keSIrSBO18rTSRHo4XNAeDAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0LUJMrFEWThCaEJJG/7dJSjpxIq7GHWipxIQHy7ZkvdcbqhjgRMEwp7GzGFvLej+aObFMobt5yszRlbWEkbxmQmdBSp/XKihpWFWUsOGw1dh6ihZNgh138iFrL9HUlxTm7cihtGqAJxR8JicZ0rdMAfb3UUXCH+cvAKY+Qdk0ix2WZ/UBa70RgsIAAAA=[0m[Pipeline] {
+[8mha:////4EohXK42tG6SbJh4LJM1HCaT5Md4RizX2ew0IVOG0BOeAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJCSYSo0lppeIGJjXFi3RnbIal4EV/jD1hEomKL1c4283rDOgY4cTDYaxosxc6id6PJCycOw9XxhD1fsGOK7DS2empZ6WbBlpOGJUUJKwEbTZ3jaMkk2IpePmTlJJnqnEL+jgJKq+7whEJkc5IhfWEOsLuNKjL9PH8FMPsE5aHOVe/9B9Nk7iW+AAAA[0m[Pipeline] sh
++ set -eu
++ echo
+
++ echo 'Helm release history: frontend'
+Helm release history: frontend
++ helm history frontend --namespace devops-app
+REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION     
+1       	Mon Aug 17 07:36:37 2026	superseded	frontend-0.1.0	v1         	Install complete
+2       	Mon Aug 17 08:28:35 2026	superseded	frontend-0.1.0	v1         	Upgrade complete
+3       	Mon Aug 17 11:30:50 2026	superseded	frontend-0.1.0	v1         	Rollback to 1   
+4       	Mon Aug 17 08:46:34 2026	deployed  	frontend-0.1.0	v1         	Upgrade complete
++ echo
+
++ echo 'Helm release history: backend'
+Helm release history: backend
++ helm history backend --namespace devops-app
+REVISION	UPDATED                 	STATUS    	CHART        	APP VERSION	DESCRIPTION     
+1       	Mon Aug 17 07:36:19 2026	superseded	backend-0.1.0	v3         	Install complete
+2       	Mon Aug 17 08:27:48 2026	superseded	backend-0.1.0	v3         	Upgrade complete
+3       	Mon Aug 17 11:31:35 2026	superseded	backend-0.1.0	v3         	Rollback to 1   
+4       	Mon Aug 17 08:45:47 2026	deployed  	backend-0.1.0	v3         	Upgrade complete
++ echo
+
++ echo 'Helm release history: worker'
+Helm release history: worker
++ helm history worker --namespace devops-app
+REVISION	UPDATED                 	STATUS    	CHART       	APP VERSION	DESCRIPTION     
+1       	Mon Aug 17 07:35:58 2026	superseded	worker-0.1.0	v1         	Install complete
+2       	Mon Aug 17 08:27:00 2026	superseded	worker-0.1.0	v1         	Upgrade complete
+3       	Mon Aug 17 11:32:24 2026	superseded	worker-0.1.0	v1         	Rollback to 1   
+4       	Mon Aug 17 08:45:00 2026	deployed  	worker-0.1.0	v1         	Upgrade complete
+[8mha:////4JpHUKOEywvH9qweQjsJ6543CusKz20pwatUskX75pYlAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiOiJEldZKwwtMbIwT687YDknFi/gaf8AiEhVbrHa2mdcb1jHAiYPBXtNgKXYWvRtNXjhxGK6OJ+z5gh1TZKex1VPLSjcLtpw0LClKWAnYaOocR0smwVb08iErJ8lU5xTydxRQWnWHJxQim5MM6QtzgN1tVJHp5/krgNn7BGW9z3WoP5Y5R0a+AAAA[0m[Pipeline] }
+[8mha:////4D4FJeBLf46mJGPqzOwYD5nNu/yVRNZVAW9BsDmFPdWFAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMKRqIIQVVorDS8w8WGcWHfGdkgqXsTX+AMWkajYYrWzzbzesI4BThyM6JEGS7GzwrvR5CUmDsPV8SR6voiOKbJD0eLUssZmwZYTwpKihJWEDVLnOFoyCbayVw9VOUWmOqeQv6OE0uo7PKGQ2ZxUSF+YA+xuo45MP89fAczeJygP+1x1/QGue9S3vgAAAA==[0m[Pipeline] // container
+[8mha:////4Owv4Z/93oCwxUD8Lr1ewMQcTxTlojLs/ubRDpXSx3WSAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiQQNCqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKYhQrnf5jrshg/qY8QMvgAAAA==[0m[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[8mha:////4IzTKgDKXTtC70p22WY+9nSrj6GY274pIzqCkPBFRgItAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiIQoQSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4TysMu1334ArXFYgb4AAAA=[0m[Pipeline] }
+[8mha:////4Pcj3g7ges3NjYW7/QoJOe8+3HeLRLj8GUcgzwKgKZaeAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiCiQQSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4TysMu1334AsvMN074AAAA=[0m[Pipeline] // stage
+[8mha:////4KumccGGGdI3BtnREOHnESTRd0X+8fVguLQszOS+T71YAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BKWgpeYTTRUKIitZywwtMbIwT6y7YF5KKF/E1/oAhEhVb7ay0mucLqhThQNGJzmLvMbVeDGF0uYmJYn8JNImOzqIlTBSsUHZSZOxxQUVsYUlRwkrC2mIbKHl0DBvZ6buug0ZXnzjmbS+h9OYGDyhkNrOO/IU5wvY6mkT48/wVwDwwFA1DuWs+x+oNDfDw7MEAAAA=[0m[Pipeline] stage
+[8mha:////4Ke2KA25oeWSanc94GpcnaacWN8f38xd1BGqXhgHIIULAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0AyHE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAcawv9fCAAAA[0m[Pipeline] { (Smoke Test)
+[8mha:////4C7xjsfpAq82O/L9IRdeuL0AOqR1DEiALCLWoNHqY6xQAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0BISYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLDbrb9/Cw+091n58IAAAA=[0m[Pipeline] container
+[8mha:////4HZMIkzNssTHtlSlSHQXuhd7DmBTrb7zYasiP9HB9Zh/AAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycoh0pUJMrFEXThCaEJJG/7dJSjpxIq7GHWipxIQHy7ZkvdcbyhjgRMFwp7GzGFvLez+aOfFMobt5ytzRlbeEkbzmjc4NKX1ea0NJw6qCwUbAVmPrKVo0CXbCyYesvERTXVKYt6MAZtUATyjETE4ypG+ZAuzvo4qEP85fAEx9AlYfFquXZ/kBsPrDv8IAAAA=[0m[Pipeline] {
+[8mha:////4N4/FUN80YXk/7R3x+r4w0y5vx2HtBSBmEOcGgj91VsJAAAApB+LCAAAAAAAAP9tjTESgjAQRRcYC1tLDxGwZBwr2gyNJ4hJjIHMLiaLUHkir+YdZGTGyl/995r3esMmRThRdKKz2HtM2oshjG55YqLYXwNNoqOL0ISJghWtnVoytlmxJbawLsuhkLC1qAMlj45hJzv1UGVQ6Mozx8UdJeTe3OEJmVzKrCJ/YY6wv40mEf46fwMwDwx5XTMUh6oaPqKpLoK/AAAA[0m[Pipeline] sh
++ set -eu
++ frontend_url=http://frontend-service.devops-app.svc.cluster.local
++ backend_url=http://backend-service.devops-app.svc.cluster.local:5000
++ worker_url=http://worker-service.devops-app.svc.cluster.local:5001
++ curl --fail --silent --show-error --retry 12 --retry-delay 5 http://frontend-service.devops-app.svc.cluster.local/
++ curl --fail --silent --show-error --retry 12 --retry-delay 5 http://backend-service.devops-app.svc.cluster.local:5000/health
++ curl --fail --silent --show-error --retry 12 --retry-delay 5 http://worker-service.devops-app.svc.cluster.local:5001/health
++ grep -q '"status":"healthy"' smoke-backend.json
++ grep -q '"service":"backend"' smoke-backend.json
++ grep -q '"status":"healthy"' smoke-worker.json
++ grep -q '"service":"worker"' smoke-worker.json
++ echo 'Smoke tests passed.'
+Smoke tests passed.
+[8mha:////4N87w5yoz4zYWCs+R2NDOIjMn9YfSR+DwMSgJpc9bZx2AAAApB+LCAAAAAAAAP9tjTESgjAQRRcYC1tLDxGkZBwr2gyNJ4ghxkBmF5NFqDyRV/MOZmTGyl/995r3esMmBjhRsKI3ODiM2onRTzY9MVMYrp5m0dNFaMJI3ojWzC11plmxJTawLsuhkLA1qD1Fh5ZhJ3v1UKVXaMszh+SOEnLX3eEJmUxlVoG/sATY36YuEv46fwOwjCNDUR0qhryuP5Jn9ia/AAAA[0m[Pipeline] }
+[8mha:////4PUrGr1mK7rl8nbxpvJWoGvLHeV1tnIMwxnm+z+n72o7AAAApR+LCAAAAAAAAP9tjTESgjAQRRcYC1tLDxHUSoexss3QeIJIYgxkdjFZhMoTeTXvYEZmrPzVf695rzcsYoAjBStag53D2DjR+8GmJ0YK3dXTKFq6iIYwkjeiNmNN2pxmrIkNzMtyKCQsDTaeokPLsJKteqjSK7TlmUNylYTc6Ts8IZOpzCrwF6YA69ugI+Gv8zcAU98zFNvNjiE/7D+qJWXXvwAAAA==[0m[Pipeline] // container
+[8mha:////4JC+sxsX06VS0IEm12joMUiUDsBZIIOugodg6+ZKSW2VAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDokAooqK10vACExvjxLoL9oWk4kV8jT9gEYmKrXammdcbFjHAkYIVrcHOYWyc6P1g0xMjhe7qaRQtXURDGMkbUZuxJm1OM9bEBuZlORQSlgYbT9GhZVjJVj1U6RXa8swhuUpC7vQdnpDJVGYV+AtTgPVt0JHw1/kbgKlnyA97hmK72fUfU+iJvL8AAAA=[0m[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[8mha:////4Ja6sZS4ESxaB09Rb/l4h9OvVA+wi/c65rsL5H1+D1E/AAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDEhJCERWtlYYXmNgYJ9ZdsC8kFS/ia/wBi0hUbLUzzbzesIgBjhSsaA12DmPjRO8Hm54YKXRXT6No6SIawkjeiNqMNWlzmrEmNjAvy6GQsDTYeIoOLcNKtuqhSq/QlmcOyVUScqfv8IRMpjKrwF+YAqxvg46Ev87fAEx9z1BsNzuG/LD/ACbbg5G/AAAA[0m[Pipeline] }
+[8mha:////4K+SUa8YGztN6dPJJev3Io64Pbb3QdNpEVX57ABQZVeNAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDBUgooqK10vACExvjxLoL9oWk4kV8jT9gEYmKrXammdcbFjHAkYIVrcHOYWyc6P1g0xMjhe7qaRQtXURDGMkbUZuxJm1OM9bEBuZlORQSlgYbT9GhZVjJVj1U6RXa8swhuUpC7vQdnpDJVGYV+AtTgPVt0JHw1/kbgKnvGYrtZseQH/YfFTjYLb8AAAA=[0m[Pipeline] // stage
+[8mha:////4LGS2Izz+fZqaSdX77D4nH9U/rgd/ngLi/pl0z7dCLwdAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JUtBS8ggHmjSIitZKwwuMY4wT6y7YF5KKF/E1/oAhEhVb7ay0mucLyhjgQMGKzmDvMGonBj/a1MREob94mkRHZ6EJI3kjGjM11Jrjgg2xgSVZDoWElUHtKTq0DGvZqbuqvEJbnTikbS8hd+0NHpDJZGYV+AtzgM11bCPhz/NXAPPAkNUMxW5bf57lG5g4bAXCAAAA[0m[Pipeline] stage
+[8mha:////4GAaGq84Ks+k2ieGkJwfC1eeuldMYbhpDx+jMrwG8LTDAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApLDCgTqxRF04QkhCSRv+XJKWdOBFX4w6UVmLCg2Vbst7rDWUMUFMwzGlsLUZpWed7MyU2UGivngbm6MIkYSSvWaOHhpQ+LbWhpGFRlkPBYaVReooWTYI1d+IhKi/QVOcUpu3IIbfqDk/I+EROIqS5jAE2t15Fwh/nLwDGLkGx2+5nP3y/5QfYKuSHxAAAAA==[0m[Pipeline] { (Declarative: Post Actions)
+[8mha:////4KDIxTb1aUlm/SYH1TuoRx1KfG+2MG6GrcNFrHAVS3VRAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDFUgoFa2VhhcY2xg71l2wHZyKF/E1/kCUSFRssdrZZt4fWMUADQXDnMbOYpSW9X4w02KZQnfzlJmjK5OEkbxmrc4tKX1esKWkYUlRQsVhrVF6ihZNgg134ilqL9DUlxSm78ShtOoBLyj4ZE4ipBnGANv7oCLhz/NXAGOfoNrvDnMf+y+lUfumwAAAAA==[0m[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is disabled by the job configuration...
+[WS-CLEANUP] done
+[8mha:////4AELcXHJ53WlEXZR7Nhb770GQwHeV6r6c9JfKFXgpjtuAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDFUIoFa2VhhcY2xg71l2wHZyKF/E1/kCUSFRssdrZZt4fWMUADQXDnMbOYpSW9X4w02KZQnfzlJmjK5OEkbxmrc4tKX1esKWkYUlRQsVhrVF6ihZNgg134ilqL9DUlxSm78ShtOoBLyj4ZE4ipBnGANv7oCLhz/NXAGOfoNrvDnMf+y/kYOC/wAAAAA==[0m[Pipeline] echo
+
+CD completed successfully.
+
+Triggered by: Started by upstream project "application-ci" build number 5
+CI build: 5
+Commit: 199763a0a50c470cd1553c173e9459e8585a65cb
+Image tag: 199763a0
+Frontend digest: sha256:22213578411a447e8aa9b47317549f88ee80e6d920f34a79ec031ce0296ab7bf
+Backend digest: sha256:d5b32c0277a69a5a54f6ced6c5996db13dd4c338fbe9a33e83c3fac277aa34bb
+Worker digest: sha256:d37da3cf39beab29dc690633cd397567e77410a85617ba3615eb7fd6fe92f72c
+Cluster: infra-automation-dev-eks
+Namespace: devops-app
+
+[8mha:////4NjGv1wPsiGRc2YYRek+1QtmX2QVgnPzTG5vPaMpV/anAAAApR+LCAAAAAAAAP9tjTESgjAQRRcYC1tLDxGgsnCsbDM0niCSGAOZXUwWofJEXs07GGXGyl/8+e837/mCVQxwoGBFZ7B3GFsnBj/atMREob94mkRHZ9ESRvJGNGZqSJvjgg2xgSVZDoWEtcHWU3RoGTayU3dVeoW2PHFI315C7vQNHpDJZGYV+AtzgO111JHw5/krgHkYGIq6rj5d7d4zyCh5wAAAAA==[0m[Pipeline] }
+[8mha:////4Cve3fFXnQPvP5KAKzDgHrIMyJEV76N5SUTMlnqpQdBQAAAApR+LCAAAAAAAAP9tjTESwiAURH+SsbC19BBEGhvHKi2TxhMgIJIw/0cgJpUn8mreQTQzVm6xs2+b93zBKgY4UrCsM9g7jMqxwY82LzZR6C+eJtbRmSnCSN6w1kwtadMs2FIysKQooRKwNqg8RYc2wUZ08i5rL9HWpxTydxBQOn2DBxQim5MM6QtzgO111JHw5/krgHkYElSc80/v9m8R81iowAAAAA==[0m[Pipeline] // stage
+[8mha:////4KgETs2LgqivZQYu7UAMLTsev1G+4yy2iA4L3lMJRkRYAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjUNAgKlorDS8wsTFOrLtgX3AqXsTX+AMRkajYameaeb1hlSIcKTrZWew9ptbLIYxufjJT7K+BsuzoIlvCRMHKxuaGjD0t2BBbWCYKKBWsLbaBkkfHsFGdfugqaHTVmePsDgoKb+7wBKHmMuvIX5gibG+jSYS/zt8ATMPAUNb1jkHsPwipUxe+AAAA[0m[Pipeline] }
+[8mha:////4DM98sdttckujKWFMKqIqcAR/P+Va5PbYTg0Je+fOQFCAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjCFEhKlorDS8wsTFOrLtgX3AqXsTX+AMRkajYameaeb1hlSIcKTrZWew9ptbLIYxufjJT7K+BsuzoIlvCRMHKxuaGjD0t2BBbWCYKKBWsLbaBkkfHsFGdfugqaHTVmePsDgoKb+7wBKHmMuvIX5gibG+jSYS/zt8ATMPAUNb1jkHsPwLROrO+AAAA[0m[Pipeline] // withEnv
+[8mha:////4MDCYTUF9sEhumzh2E+nepr7FJ6GsQLzY+anFur+ywIQAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjSOkQFa2VhheYxBgn1p2xLyQVL+Jr/AGLSFRstTPNvN6wSRGOFK0cDI4OU+dk8JPNT84Ux6unWQ50kR1hIm9ka+aWenNasSU2sE4UUCrYGuw8JYeWYacG/dCV12irM8fsDgoK19/hCULlMuvIX1gi7G9Tnwh/nb8BWEJgKOu6YRDNB4Q9HXa+AAAA[0m[Pipeline] }
+[8mha:////4E6AUIYpoSmABRCOfscxf6AyR1E4A4W+9rtPsnibfHPKAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjCFEhKlorDS8wsTFOrLtgX3AqXsTX+AMRkajYameaeb1hlSIcKTrZWew9ptbLIYxufjJT7K+BsuzoIlvCRMHKxuaGjD0t2BBbWCYKKBWsLbaBkkfHsFGdfugqaHTVmePsDgoKb+7wBKHmMuvIX5gibG+jSYS/zt8ATMPAUNb1nkHsPpeBGdW+AAAA[0m[Pipeline] // node
+[8mha:////4Lj7yXtYouHKyot8Vi5ez7Pj4tEiNbbjxFYKgkw5izntAAAApB+LCAAAAAAAAP9tjTEOwjAQBM+JKGgpeYSjUNAgKlorDS8wsTFOrLtgX3AqXsTX+AMRkajYameaeb1hlSIcKTrZWew9ptbLIYxufjJT7K+BsuzoIlvCRMHKxuaGjD0t2BBbWCYKKBWsLbaBkkfHsFGdfugqaHTVmePsDgoKb+7wBKHmMuvIX5gibG+jSYS/zt8ATMPAUNb1nkHsPtHLvuW+AAAA[0m[Pipeline] End of Pipeline
+Finished: SUCCESS

@@ -1,0 +1,94 @@
+- name: ci-agent
+  label: jenkins-ci
+  serviceAccount: jenkins-ci-agent
+  idleMinutes: 0
+  instanceCap: 2
+  yamlMergeStrategy: override
+  yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      labels:
+        app.kubernetes.io/name: jenkins-ci-agent
+        app.kubernetes.io/component: ci-agent
+    spec:
+      serviceAccountName: jenkins-ci-agent
+      automountServiceAccountToken: true
+      restartPolicy: Never
+
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+
+      containers:
+        - name: jnlp
+          image: jenkins/inbound-agent:3384.v60d89463d9e0-1-jdk21
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: tmp
+              mountPath: /tmp
+
+        - name: python
+          image: python:3.12.13-slim
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - cat
+          tty: true
+          workingDir: /home/jenkins/agent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: workspace
+              mountPath: /home/jenkins/agent
+            - name: python-cache
+              mountPath: /home/jenkins/.cache
+            - name: tmp
+              mountPath: /tmp
+
+      volumes:
+        - name: workspace
+          emptyDir: {}
+
+        - name: python-cache
+          emptyDir: {}
+
+        - name: tmp
+          emptyDir: {}

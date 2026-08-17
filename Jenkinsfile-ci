@@ -1,0 +1,525 @@
+pipeline {
+    agent none
+
+    options {
+        skipDefaultCheckout(true)
+        disableConcurrentBuilds()
+
+        buildDiscarder(
+            logRotator(
+                numToKeepStr: '20',
+                artifactNumToKeepStr: '10'
+            )
+        )
+    }
+
+    environment {
+        AWS_REGION = 'us-east-1'
+        AWS_DEFAULT_REGION = 'us-east-1'
+        AWS_EC2_METADATA_DISABLED = 'true'
+
+        FRONTEND_REPOSITORY = 'devops-frontend'
+        BACKEND_REPOSITORY = 'devops-backend'
+        WORKER_REPOSITORY = 'devops-worker'
+
+        DOCKER_CONFIG = '/docker-config'
+        METADATA_DIRECTORY = '/metadata'
+    }
+
+    stages {
+        stage('CI Validation and Tests') {
+            agent {
+                label 'jenkins-ci'
+            }
+
+            stages {
+                stage('Checkout') {
+                    steps {
+                        checkout scm
+
+                        script {
+                            env.GIT_COMMIT_SHA = sh(
+                                script: 'git rev-parse HEAD',
+                                returnStdout: true
+                            ).trim()
+
+                            env.GIT_SHORT_SHA = sh(
+                                script: 'git rev-parse --short=8 HEAD',
+                                returnStdout: true
+                            ).trim()
+
+                            env.GIT_BRANCH_NAME = 'task4'
+                            env.IMAGE_TAG = env.GIT_SHORT_SHA
+                        }
+
+                        echo """
+                        Branch: ${env.GIT_BRANCH_NAME}
+                        Commit SHA: ${env.GIT_COMMIT_SHA}
+                        Jenkins build: ${env.BUILD_NUMBER}
+                        Immutable image tag: ${env.IMAGE_TAG}
+                        """.stripIndent()
+                    }
+                }
+
+                stage('Validation') {
+                    steps {
+                        container('python') {
+                            sh '''
+                                set -eu
+
+                                required_files="
+                                Jenkinsfile-ci
+                                Jenkinsfile-cd
+                                docker/frontend/Dockerfile
+                                docker/frontend/index.html
+                                docker/frontend/nginx.conf
+                                docker/backend/Dockerfile
+                                docker/backend/app.py
+                                docker/backend/requirements.txt
+                                docker/worker/Dockerfile
+                                docker/worker/worker.py
+                                docker/worker/requirements.txt
+                                helm/frontend/Chart.yaml
+                                helm/backend/Chart.yaml
+                                helm/worker/Chart.yaml
+                                tests/backend/test_app.py
+                                tests/worker/test_worker.py
+                                tests/requirements.txt
+                                "
+
+                                for required_file in ${required_files}; do
+                                    if [ ! -f "${required_file}" ]; then
+                                        echo "ERROR: Missing required file: ${required_file}" >&2
+                                        exit 1
+                                    fi
+                                done
+
+                                if grep -RInE \
+                                    'image:[[:space:]].*:latest$|tag:[[:space:]]*latest$' \
+                                    docker helm jenkins; then
+                                    echo "ERROR: The latest tag is forbidden." >&2
+                                    exit 1
+                                fi
+
+                                if grep -RInE \
+                                    '/var/run/docker.sock|privileged:[[:space:]]*true|cluster-admin|allowPrivilegeEscalation:[[:space:]]*true' \
+                                    jenkins; then
+                                    echo "ERROR: Forbidden Jenkins configuration detected." >&2
+                                    exit 1
+                                fi
+
+                                echo "Repository validation passed."
+                            '''
+                        }
+                    }
+                }
+
+                stage('Install Test Dependencies') {
+                    steps {
+                        container('python') {
+                            sh '''
+                                set -eu
+
+                                python -m venv .ci-venv
+                                . .ci-venv/bin/activate
+
+                                python -m pip install \
+                                    --no-cache-dir \
+                                    --disable-pip-version-check \
+                                    -r docker/backend/requirements.txt \
+                                    -r docker/worker/requirements.txt \
+                                    -r tests/requirements.txt
+                            '''
+                        }
+                    }
+                }
+
+                stage('Lint') {
+                    steps {
+                        container('python') {
+                            sh '''
+                                set -eu
+                                . .ci-venv/bin/activate
+
+                                python -m flake8 \
+                                    docker/backend/app.py \
+                                    docker/worker/worker.py \
+                                    tests/backend/test_app.py \
+                                    tests/worker/test_worker.py \
+                                    --max-line-length=100
+                            '''
+                        }
+                    }
+                }
+
+                stage('Tests') {
+                    steps {
+                        container('python') {
+                            sh '''
+                                set -eu
+                                . .ci-venv/bin/activate
+
+                                mkdir -p test-results
+
+                                python -m pytest \
+                                    tests/backend \
+                                    tests/worker \
+                                    --junitxml=test-results/pytest-results.xml \
+                                    --cov=docker/backend \
+                                    --cov=docker/worker \
+                                    --cov-report=term-missing \
+                                    --cov-report=xml:test-results/coverage.xml
+                            '''
+                        }
+                    }
+
+                    post {
+                        always {
+                            junit(
+                                testResults: 'test-results/pytest-results.xml',
+                                allowEmptyResults: false
+                            )
+
+                            archiveArtifacts(
+                                artifacts: 'test-results/coverage.xml',
+                                allowEmptyArchive: false,
+                                fingerprint: true
+                            )
+                        }
+                    }
+                }
+
+                stage('Prepare Build Workspace') {
+                    steps {
+                        stash(
+                            name: 'docker-build-context',
+                            includes: 'docker/**',
+                            useDefaultExcludes: true
+                        )
+                    }
+                }
+            }
+
+            post {
+                always {
+                    cleanWs(
+                        deleteDirs: true,
+                        disableDeferredWipeout: true
+                    )
+                }
+            }
+        }
+
+        stage('Build, Scan and Publish') {
+            agent {
+                label 'jenkins-build'
+            }
+
+            stages {
+                stage('Restore Build Workspace') {
+                    steps {
+                        unstash 'docker-build-context'
+                    }
+                }
+
+                stage('Authenticate to Amazon ECR') {
+                    steps {
+                        container('aws-cli') {
+                            sh '''
+                                set -eu
+
+                                AWS_ACCOUNT_ID="$(
+                                    aws sts get-caller-identity \
+                                        --query Account \
+                                        --output text
+                                )"
+
+                                ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+
+                                ECR_PASSWORD="$(
+                                    aws ecr get-login-password \
+                                        --region "${AWS_REGION}"
+                                )"
+
+                                ECR_AUTH="$(
+                                    printf 'AWS:%s' "${ECR_PASSWORD}" |
+                                    base64 |
+                                    tr -d '\\n'
+                                )"
+
+                                mkdir -p "${DOCKER_CONFIG}" "${METADATA_DIRECTORY}"
+
+                                printf '%s\n' \
+                                    '{' \
+                                    '  "auths": {' \
+                                    "    \"${ECR_REGISTRY}\": {" \
+                                    "      \"auth\": \"${ECR_AUTH}\"" \
+                                    '    }' \
+                                    '  }' \
+                                    '}' \
+                                    > "${DOCKER_CONFIG}/config.json"
+
+                                chmod 600 "${DOCKER_CONFIG}/config.json"
+
+                                printf '%s' "${AWS_ACCOUNT_ID}" \
+                                    > "${METADATA_DIRECTORY}/aws-account-id"
+
+                                printf '%s' "${ECR_REGISTRY}" \
+                                    > "${METADATA_DIRECTORY}/ecr-registry"
+
+                                echo "Authenticated to Amazon ECR."
+                            '''
+                        }
+
+                        script {
+                            container('aws-cli') {
+                                env.AWS_ACCOUNT_ID = sh(
+                                    script: 'cat /metadata/aws-account-id',
+                                    returnStdout: true
+                                ).trim()
+
+                                env.ECR_REGISTRY = sh(
+                                    script: 'cat /metadata/ecr-registry',
+                                    returnStdout: true
+                                ).trim()
+                            }
+                        }
+
+                        echo "ECR registry: ${env.ECR_REGISTRY}"
+                    }
+                }
+
+                stage('Build and Push Images') {
+                    parallel {
+                        stage('Frontend') {
+                            steps {
+                                container('kaniko-frontend') {
+                                    sh '''
+                                        set -eu
+
+                                        /kaniko/executor \
+                                            --context="dir://${WORKSPACE}/docker/frontend" \
+                                            --dockerfile="${WORKSPACE}/docker/frontend/Dockerfile" \
+                                            --destination="${ECR_REGISTRY}/${FRONTEND_REPOSITORY}:${IMAGE_TAG}" \
+                                            --digest-file="${METADATA_DIRECTORY}/frontend-digest.txt" \
+                                            --push-retry=3 \
+                                            --verbosity=info
+                                    '''
+                                }
+                            }
+                        }
+
+                        stage('Backend') {
+                            steps {
+                                container('kaniko-backend') {
+                                    sh '''
+                                        set -eu
+
+                                        /kaniko/executor \
+                                            --context="dir://${WORKSPACE}/docker/backend" \
+                                            --dockerfile="${WORKSPACE}/docker/backend/Dockerfile" \
+                                            --destination="${ECR_REGISTRY}/${BACKEND_REPOSITORY}:${IMAGE_TAG}" \
+                                            --digest-file="${METADATA_DIRECTORY}/backend-digest.txt" \
+                                            --push-retry=3 \
+                                            --verbosity=info
+                                    '''
+                                }
+                            }
+                        }
+
+                        stage('Worker') {
+                            steps {
+                                container('kaniko-worker') {
+                                    sh '''
+                                        set -eu
+
+                                        /kaniko/executor \
+                                            --context="dir://${WORKSPACE}/docker/worker" \
+                                            --dockerfile="${WORKSPACE}/docker/worker/Dockerfile" \
+                                            --destination="${ECR_REGISTRY}/${WORKER_REPOSITORY}:${IMAGE_TAG}" \
+                                            --digest-file="${METADATA_DIRECTORY}/worker-digest.txt" \
+                                            --push-retry=3 \
+                                            --verbosity=info
+                                    '''
+                                }
+                            }
+                        }
+                    }
+                }
+
+                stage('Image Scan') {
+                    steps {
+                        container('trivy') {
+                            sh '''
+                                set -eu
+
+                                # Trivy uses the pod AWS identity directly for ECR.
+                                # Do not reuse Kaniko's Docker authentication file.
+                                unset DOCKER_CONFIG
+
+                                echo "Scanning frontend image with Trivy..."
+                                trivy image \
+                                    --scanners vuln \
+                                    --severity HIGH,CRITICAL \
+                                    --exit-code 1 \
+                                    --ignore-unfixed \
+                                    --no-progress \
+                                    "${ECR_REGISTRY}/${FRONTEND_REPOSITORY}:${IMAGE_TAG}"
+
+                                echo "Scanning backend image with Trivy..."
+                                trivy image \
+                                    --scanners vuln \
+                                    --severity HIGH,CRITICAL \
+                                    --exit-code 1 \
+                                    --ignore-unfixed \
+                                    --no-progress \
+                                    "${ECR_REGISTRY}/${BACKEND_REPOSITORY}:${IMAGE_TAG}"
+
+                                echo "Scanning worker image with Trivy..."
+                                trivy image \
+                                    --scanners vuln \
+                                    --severity HIGH,CRITICAL \
+                                    --exit-code 1 \
+                                    --ignore-unfixed \
+                                    --no-progress \
+                                    "${ECR_REGISTRY}/${WORKER_REPOSITORY}:${IMAGE_TAG}"
+
+                                echo "All Trivy image scans passed."
+                            '''
+                        }
+                    }
+                }
+
+                stage('Publish Metadata') {
+                    steps {
+                        container('python') {
+                            sh '''
+                                set -eu
+
+                                python -c 'import json, os; from pathlib import Path; m=Path("/metadata"); services={"frontend":os.environ["FRONTEND_REPOSITORY"],"backend":os.environ["BACKEND_REPOSITORY"],"worker":os.environ["WORKER_REPOSITORY"]}; digests={s:(m/f"{s}-digest.txt").read_text(encoding="utf-8").strip() for s in services}; bad=[f"{s}: {d!r}" for s,d in digests.items() if not d.startswith("sha256:")]; bad and (_ for _ in ()).throw(SystemExit("Invalid image digest(s): "+", ".join(bad))); release={"ci_build_number":os.environ["BUILD_NUMBER"],"git_commit_sha":os.environ["GIT_COMMIT_SHA"],"git_short_sha":os.environ["GIT_SHORT_SHA"],"git_branch":os.environ["GIT_BRANCH_NAME"],"image_tag":os.environ["IMAGE_TAG"],"aws_region":os.environ["AWS_REGION"],"ecr_registry":os.environ["ECR_REGISTRY"],"images":{s:{"repository":r,"reference":f"{os.environ[\"ECR_REGISTRY\"]}/{r}:{os.environ[\"IMAGE_TAG\"]}","digest":digests[s]} for s,r in services.items()}}; out=Path("release-metadata.json"); out.write_text(json.dumps(release,indent=2)+"\\n",encoding="utf-8"); print(out.read_text(encoding="utf-8"))'
+                            '''
+                        }
+
+                        script {
+                            container('python') {
+                                env.FRONTEND_DIGEST = sh(
+                                    script: 'cat /metadata/frontend-digest.txt',
+                                    returnStdout: true
+                                ).trim()
+
+                                env.BACKEND_DIGEST = sh(
+                                    script: 'cat /metadata/backend-digest.txt',
+                                    returnStdout: true
+                                ).trim()
+
+                                env.WORKER_DIGEST = sh(
+                                    script: 'cat /metadata/worker-digest.txt',
+                                    returnStdout: true
+                                ).trim()
+                            }
+                        }
+
+                        echo """
+                        Frontend digest: ${env.FRONTEND_DIGEST}
+                        Backend digest: ${env.BACKEND_DIGEST}
+                        Worker digest: ${env.WORKER_DIGEST}
+                        """.stripIndent()
+
+                        archiveArtifacts(
+                            artifacts: 'release-metadata.json',
+                            allowEmptyArchive: false,
+                            fingerprint: true
+                        )
+                    }
+                }
+
+                stage('Trigger CD') {
+                    steps {
+                        echo """
+                        Triggering application-cd with:
+                        CI build: ${env.BUILD_NUMBER}
+                        Commit: ${env.GIT_COMMIT_SHA}
+                        Image tag: ${env.IMAGE_TAG}
+                        """.stripIndent()
+
+                        build(
+                            job: 'application-cd',
+                            wait: false,
+                            propagate: false,
+                            parameters: [
+                                string(
+                                    name: 'IMAGE_TAG',
+                                    value: env.IMAGE_TAG
+                                ),
+                                string(
+                                    name: 'CI_BUILD_NUMBER',
+                                    value: env.BUILD_NUMBER
+                                ),
+                                string(
+                                    name: 'GIT_COMMIT_SHA',
+                                    value: env.GIT_COMMIT_SHA
+                                ),
+                                string(
+                                    name: 'FRONTEND_DIGEST',
+                                    value: env.FRONTEND_DIGEST
+                                ),
+                                string(
+                                    name: 'BACKEND_DIGEST',
+                                    value: env.BACKEND_DIGEST
+                                ),
+                                string(
+                                    name: 'WORKER_DIGEST',
+                                    value: env.WORKER_DIGEST
+                                ),
+                                string(
+                                    name: 'TARGET_NAMESPACE',
+                                    value: 'devops-app'
+                                ),
+                                string(
+                                    name: 'RELEASE_DESCRIPTION',
+                                    value: "Automatic deployment from CI build ${env.BUILD_NUMBER}"
+                                )
+                            ]
+                        )
+                    }
+                }
+            }
+
+            post {
+                always {
+                    container('aws-cli') {
+                        sh '''
+                            rm -f /docker-config/config.json || true
+                            rm -rf /metadata/* || true
+                        '''
+                    }
+
+                    cleanWs(
+                        deleteDirs: true,
+                        disableDeferredWipeout: true
+                    )
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo """
+            CI completed successfully.
+            Commit: ${env.GIT_COMMIT_SHA}
+            Image tag: ${env.IMAGE_TAG}
+            Registry: ${env.ECR_REGISTRY}
+            CD job was triggered.
+            """.stripIndent()
+        }
+
+        failure {
+            echo '''
+            CI failed.
+            No deployment was triggered.
+            Review the failed stage and its console output.
+            '''.stripIndent()
+        }
+    }
+}

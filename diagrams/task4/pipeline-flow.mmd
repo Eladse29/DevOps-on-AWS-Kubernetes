@@ -1,0 +1,23 @@
+flowchart LR
+    A[Git push] --> B[GitHub webhook]
+    B --> C[application-ci]
+    C --> D[Checkout]
+    D --> E[Validation]
+    E --> F[Lint]
+    F --> G[Tests]
+    G --> H[Kaniko build]
+    H --> I[ECR push]
+    I --> J[Trivy scan]
+    J --> K[Publish tag + digests]
+    K --> L[Trigger application-cd]
+    L --> M[Helm lint/template]
+    M --> N[Deploy]
+    N --> O[Rollout]
+    O --> P[Digest verification]
+    P --> Q[Smoke test]
+    Q --> R[Release success]
+
+    N -. failure .-> S[Diagnostics + rollback]
+    O -. failure .-> S
+    P -. failure .-> S
+    Q -. failure .-> S

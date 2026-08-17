@@ -1,0 +1,56 @@
+service/worker-service     ClusterIP      172.20.117.161   <none>                                                                   5001/TCP       58s   app=worker
+++ kubectl get deployment frontend --namespace devops-app --output 'jsonpath={.spec.template.spec.containers[0].image}'
++ frontend_image=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:bf8f3085
+++ kubectl get deployment backend --namespace devops-app --output 'jsonpath={.spec.template.spec.containers[0].image}'
++ backend_image=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:bf8f3085
+++ kubectl get deployment worker --namespace devops-app --output 'jsonpath={.spec.template.spec.containers[0].image}'
++ worker_image=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:bf8f3085
++ expected_frontend=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:bf8f3085
++ expected_backend=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:bf8f3085
++ expected_worker=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:bf8f3085
++ test 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:bf8f3085 = 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:bf8f3085
++ test 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:bf8f3085 = 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:bf8f3085
++ test 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:bf8f3085 = 904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:bf8f3085
+++ kubectl get pods --namespace devops-app -l app=frontend --output 'jsonpath={.items[0].status.containerStatuses[0].imageID}'
+++ sed 's|.*@||'
++ frontend_running_digest=sha256:da4b149256fdae796b5e33ea927f5f77292310655b263d01f4506cb55f3b2fb8
+++ kubectl get pods --namespace devops-app -l app=backend --output 'jsonpath={.items[0].status.containerStatuses[0].imageID}'
+++ sed 's|.*@||'
++ backend_running_digest=sha256:785bec7fec9228795038f0314f66f36a197f4734ff0c7176bde14a938c39439a
+++ kubectl get pods --namespace devops-app -l app=worker --output 'jsonpath={.items[0].status.containerStatuses[0].imageID}'
+++ sed 's|.*@||'
++ worker_running_digest=sha256:b64eb279af8a1691c5f76bd686c3a35a28e75c60d48cc3e169670620422f67bc
++ test sha256:da4b149256fdae796b5e33ea927f5f77292310655b263d01f4506cb55f3b2fb8 = sha256:da4b149256fdae796b5e33ea927f5f77292310655b263d01f4506cb55f3b2fb8
++ test sha256:785bec7fec9228795038f0314f66f36a197f4734ff0c7176bde14a938c39439a = sha256:785bec7fec9228795038f0314f66f36a197f4734ff0c7176bde14a938c39439a
++ test sha256:b64eb279af8a1691c5f76bd686c3a35a28e75c60d48cc3e169670620422f67bc = sha256:b64eb279af8a1691c5f76bd686c3a35a28e75c60d48cc3e169670620422f67bc
++ echo CI_BUILD_NUMBER=1
++ echo GIT_COMMIT_SHA=bf8f30850aeffa7cde71b2ef4acfd6192039872e
++ echo IMAGE_TAG=bf8f3085
++ echo FRONTEND_DIGEST=sha256:da4b149256fdae796b5e33ea927f5f77292310655b263d01f4506cb55f3b2fb8
++ echo BACKEND_DIGEST=sha256:785bec7fec9228795038f0314f66f36a197f4734ff0c7176bde14a938c39439a
++ echo WORKER_DIGEST=sha256:b64eb279af8a1691c5f76bd686c3a35a28e75c60d48cc3e169670620422f67bc
++ echo FRONTEND_RUNNING_DIGEST=sha256:da4b149256fdae796b5e33ea927f5f77292310655b263d01f4506cb55f3b2fb8
++ echo BACKEND_RUNNING_DIGEST=sha256:785bec7fec9228795038f0314f66f36a197f4734ff0c7176bde14a938c39439a
++ echo WORKER_RUNNING_DIGEST=sha256:b64eb279af8a1691c5f76bd686c3a35a28e75c60d48cc3e169670620422f67bc
++ echo TARGET_CLUSTER=infra-automation-dev-eks
++ echo TARGET_NAMESPACE=devops-app
++ echo FRONTEND_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:bf8f3085
++ echo BACKEND_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:bf8f3085
++ echo WORKER_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:bf8f3085
++ cat deployment-verification.txt
+CI_BUILD_NUMBER=1
+GIT_COMMIT_SHA=bf8f30850aeffa7cde71b2ef4acfd6192039872e
+IMAGE_TAG=bf8f3085
+FRONTEND_DIGEST=sha256:da4b149256fdae796b5e33ea927f5f77292310655b263d01f4506cb55f3b2fb8
+BACKEND_DIGEST=sha256:785bec7fec9228795038f0314f66f36a197f4734ff0c7176bde14a938c39439a
+WORKER_DIGEST=sha256:b64eb279af8a1691c5f76bd686c3a35a28e75c60d48cc3e169670620422f67bc
+FRONTEND_RUNNING_DIGEST=sha256:da4b149256fdae796b5e33ea927f5f77292310655b263d01f4506cb55f3b2fb8
+BACKEND_RUNNING_DIGEST=sha256:785bec7fec9228795038f0314f66f36a197f4734ff0c7176bde14a938c39439a
+WORKER_RUNNING_DIGEST=sha256:b64eb279af8a1691c5f76bd686c3a35a28e75c60d48cc3e169670620422f67bc
+TARGET_CLUSTER=infra-automation-dev-eks
+TARGET_NAMESPACE=devops-app
+FRONTEND_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:bf8f3085
+BACKEND_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:bf8f3085
+WORKER_IMAGE=904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:bf8f3085
+[8mha:////4C9TDOYopW/egrtxjgLdmtvjLRdYNnvknx7xONULOofBAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSIISEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDud5/avgEnfoSDvgAAAA==[0m[Pipeline] }
+[8mha:////4AQc3Oq23ODOOZnT9W2Lz4xy9jmK0qtqJaJnhlNNLEarAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSUICEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFDud5/avgEhOLzWvgAAAA==[0m[Pipeline] // container

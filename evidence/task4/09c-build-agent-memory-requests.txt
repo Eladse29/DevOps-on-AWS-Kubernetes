@@ -1,0 +1,7 @@
+jnlp	96Mi
+aws-cli	64Mi
+python	64Mi
+kaniko-frontend	128Mi
+kaniko-backend	192Mi
+kaniko-worker	192Mi
+trivy	192Mi

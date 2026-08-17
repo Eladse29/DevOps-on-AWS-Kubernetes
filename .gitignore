@@ -1,7 +1,15 @@
+# =============================================================================
+
 # Terraform
+
+# =============================================================================
+
 .terraform/
 *.tfstate
 *.tfstate.*
+*.tfplan
+tfplan
+
 crash.log
 override.tf
 override.tf.json
@@ -9,20 +17,61 @@ override.tf.json
 *_override.tf.json
 terraform.tfvars
 
+# =============================================================================
+
 # Sensitive files
+
+# =============================================================================
+
 secrets.yml
 *.pem
+
+ansible/secrets.yml
+ansible/inventory.ini
+
 k8s/02-secret.yaml
 helm/*/values.local.yaml
-ansible/secrets.yml
 
-# Editor temporary files
-*.swp
+# =============================================================================
 
-# Local Git history backups
-*.bundle
+# Local environment
 
-# Local environment files
+# =============================================================================
+
 .env
 .env.*
 !.env.example
+
+# =============================================================================
+
+# Python
+
+# =============================================================================
+
+.venv/
+**pycache**/
+*.py[cod]
+
+.pytest_cache/
+.coverage
+htmlcov/
+test-results/
+
+# =============================================================================
+
+# Editor temporary files
+
+# =============================================================================
+
+*.swp
+
+# =============================================================================
+
+# Local backups
+
+# =============================================================================
+
+*.bundle
+evidence/task4/jenkins/ngrok.log
+evidence/task4/jenkins/port-forward.log
+evidence/task4/jenkins/webhook-url.txt

@@ -1,0 +1,82 @@
++ echo 'All Trivy image scans passed.'
+All Trivy image scans passed.
+[8mha:////4FUXyJcKRn/Kqe3MPCFfPs17NwO7aaCyN/CesAbpEu28AAAApR+LCAAAAAAAAP9tjbEOgjAURR8QB1dHP6JEw2acWJsufkEttRaa9/C1CJNf5K/5DxJInLzDzT13Oe8PbCLDmdiJ1mLnMRov+jC4eYmRuLsFGkVLV2EIIwUrlB0VNbZeUVGysCbLoZCwtWgCRY8uwU62+qnLoNGVl8Tzd5KQ++YBL8jkbE6a0wITw/4+NJHw5/krgKnvExSHqlr6+AXP04HRwAAAAA==[0m[Pipeline] }
+[8mha:////4Pam+x+YJuPxjrjviQU56X/9m4w5Y/MOLci04VcHlwOWAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjSFAhqrRWGl5gYmPsWHfGdkgqXsTX+ANWIlGxxWpnm3l/YBMDnCloZhUOBmNvmHejzotNFIabo4lZurKeMJJTrFNTR1K1K3aUFKwpSqg4bBX2jqJBnWDHrXiK2gnU9SWF/J04lEY+4AUFz+YkQlpgDrC/jzIS/jx/BTB7n6BqDselmy/Bif/uwAAAAA==[0m[Pipeline] // container
+[8mha:////4ElkChoujhW8mkucswp+cxCr/nc3Kj9a9JPlPujRuoIyAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDEqJBqWitNLzA2MbYse6C7eBUvIiv8QeiRKJii9XONvP+wCoGaCgY5jR2FqO0rPeDmRbLFLqbp8wcXZkkjOQ1a3VuSenzgi0lDUuKEioOa43SU7RoEmy4E09Re4GmvqQwfScOpVUPeEHBJ3MSIc0wBtjeBxUJf56/Ahj7PkG1Pxzn3n0ByqMQqMAAAAA=[0m[Pipeline] }
+[8mha:////4OxMWQteGxBC3W4ck40fOSWvOu3OEV8mjGPsBtO9W8ILAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjBBJCiIrWcsMLjG2ME+su2A5JxYv4Gn/AEImKLVY728zzBbMY4EDBssZg6zAqxzrf27zYQKG9eBpYQ2emCCN5w4QZBGlznFBQMjClKKHiMDeoPEWHNsGCN/Iuay/R1qcU8rfnUDp9gwcUPJuTDOkLY4DltdeR8Of5K4Cx6xJUq8320+vdGx2G+jjAAAAA[0m[Pipeline] // stage
+[8mha:////4Dkqm/9nvEDkOnuuDJ8qw2gGUBsNHObhKir7E/TZENuzAAAAqh+LCAAAAAAAAP9tjUEOgjAQRQcIC7cuPUSJxkQT4sptw8YTVKi10MxgO1hWnsireQdRElf+1X8/+XnPF+TBw4G8Ea3GzmKorejdYKYmIvnu4iiKls6iJgzktKh0rKjRxxkrYg1zkhQyCQuNtaNg0TAsZavuqnAKTXFiP22lhNQ2N3hAIiczK89fGD2srkMTCH+evwIYe4Z0t2HI1tv955q/AfgVM5jDAAAA[0m[Pipeline] stage
+[8mha:////4OulyxvurmjwuZFeMo1QG7/g8vSnAB6u5ddX3/hshS/BAAAAqR+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BCpkBhAqBNr1IUThCSEpNH/JUlpJ07E1bgDpZWY8GDZlqz3ekMZA9QUDHMaW4tRWtb53kyJDRTaq6eBObowSRjJa9booSGlT0ttKGlYlOVQcFhplJ6iRZNgzZ14iMoLNNU5hWk7csitusMTMj6RkwhpLmOAza1XkfDH+QuAsUtQbHf72Q/fb/kBM9YpYMQAAAA=[0m[Pipeline] { (Publish Metadata)
+[8mha:////4CCtPhGvNYwOoAb8kbau7pMwemtH6D0f1eO9Isp51zHGAAAAqh+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BApSDAgxMQaZeEEIQ0hbfR/SVLSiRNxNe5ASyUmPFi2Jeu93lAGD0fyhjUaW4tBWda53oyJJfLt1VFiDV2YIgzkNBM6Car1aa6CooZZWQ4Fh4VG5ShYNBGWvJEPWTmJpjpHP24HDrmt7/CEjI/kKH38lsHD6tbXgfDH+QuAoYtQbLb7yXfr6Vt+ACDA9HrEAAAA[0m[Pipeline] container
+[8mha:////4Nca9FbGMJUBf4MfBdEGZ6Ca5tukMYIhYj1gxfuqXn7KAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkSRwck4sTYsPkEttRaa/8e2WCafyFfzHayQOHnD5e6Sy/d6Q+kdnMhp1iscDHpp2GgnnRKL5Iarpch6ujBJ6Mkq1qrYUqeatbYUFKzKcig4bBRKS96gDrDlvXiIygrU1Tm4tB055Ka7wxMynshBuLCU2cHuNnWe8Mf5C4B5DFDUh/3i9fdbfgCR8JfxxAAAAA==[0m[Pipeline] {
+[8mha:////4Og/HjaOZPmQD1/a5dMLgwkQpic4j8NTarP1SjauUuUnAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjIFEhqrRWGl5gYmPsWHfGdkgqXsTX+ANWIlGxxWpnm3l/YBMDnCloZhUOBmNvmHejzotNFIabo4lZurKeMJJTrFNTR1K1K3aUFKwpSqg4bBX2jqJBnWDHrXiK2gnU9SWF/J04lEY+4AUFz+YkQlpgDrC/jzIS/jx/BTD7BFVzbJY++C8MNyfWwAAAAA==[0m[Pipeline] sh
++ set -eu
++ python -c import json, os; from pathlib import Path; m=Path("/metadata"); services={"frontend":os.environ["FRONTEND_REPOSITORY"],"backend":os.environ["BACKEND_REPOSITORY"],"worker":os.environ["WORKER_REPOSITORY"]}; digests={s:(m/f"{s}-digest.txt").read_text(encoding="utf-8").strip() for s in services}; bad=[f"{s}: {d!r}" for s,d in digests.items() if not d.startswith("sha256:")]; bad and (_ for _ in ()).throw(SystemExit("Invalid image digest(s): "+", ".join(bad))); release={"ci_build_number":os.environ["BUILD_NUMBER"],"git_commit_sha":os.environ["GIT_COMMIT_SHA"],"git_short_sha":os.environ["GIT_SHORT_SHA"],"git_branch":os.environ["GIT_BRANCH_NAME"],"image_tag":os.environ["IMAGE_TAG"],"aws_region":os.environ["AWS_REGION"],"ecr_registry":os.environ["ECR_REGISTRY"],"images":{s:{"repository":r,"reference":f"{os.environ["ECR_REGISTRY"]}/{r}:{os.environ["IMAGE_TAG"]}","digest":digests[s]} for s,r in services.items()}}; out=Path("release-metadata.json"); out.write_text(json.dumps(release,indent=2)+"\n",encoding="utf-8"); print(out.read_text(encoding="utf-8"))
+{
+  "ci_build_number": "1",
+  "git_commit_sha": "bf8f30850aeffa7cde71b2ef4acfd6192039872e",
+  "git_short_sha": "bf8f3085",
+  "git_branch": "task4",
+  "image_tag": "bf8f3085",
+  "aws_region": "us-east-1",
+  "ecr_registry": "904053120094.dkr.ecr.us-east-1.amazonaws.com",
+  "images": {
+    "frontend": {
+      "repository": "devops-frontend",
+      "reference": "904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-frontend:bf8f3085",
+      "digest": "sha256:da4b149256fdae796b5e33ea927f5f77292310655b263d01f4506cb55f3b2fb8"
+    },
+    "backend": {
+      "repository": "devops-backend",
+      "reference": "904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-backend:bf8f3085",
+      "digest": "sha256:785bec7fec9228795038f0314f66f36a197f4734ff0c7176bde14a938c39439a"
+    },
+    "worker": {
+      "repository": "devops-worker",
+      "reference": "904053120094.dkr.ecr.us-east-1.amazonaws.com/devops-worker:bf8f3085",
+      "digest": "sha256:b64eb279af8a1691c5f76bd686c3a35a28e75c60d48cc3e169670620422f67bc"
+    }
+  }
+}
+
+[8mha:////4PT6mjtKfTtcxk46grtZRME2UJ61Iqmk6TAg5Eju9cP/AAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjCFEhqrRWGl5gYmPsWHfGdkgqXsTX+ANWIlGxxWpnm3l/YBMDnCloZhUOBmNvmHejzotNFIabo4lZurKeMJJTrFNTR1K1K3aUFKwpSqg4bBX2jqJBnWDHrXiK2gnU9SWF/J04lEY+4AUFz+YkQlpgDrC/jzIS/jx/BTB7n6Bqjoelmy8kjZ5YwAAAAA==[0m[Pipeline] }
+[8mha:////4PAxos+qAM1cLWRtXqZod/Wl31KzH0S2qPfLFqB5e4ZHAAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDElQoFa2VhhcY2xg71l2wHZyKF/E1/kCUSFRssdrZZt4fWMUADQXDnMbOYpSW9X4w02KZQnfzlJmjK5OEkbxmrc4tKX1esKWkYUlRQsVhrVF6ihZNgg134ilqL9DUlxSm78ShtOoBLyj4ZE4ipBnGANv7oCLhz/NXAGPfJ6j2x8Pcuy88gz7qwAAAAA==[0m[Pipeline] // container
+[8mha:////4Lef2flPPt8vw2CVz3hQYQe7bpXQAtSQAvRiK1K+8pv3AAAAqh+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BCpkOiAEBNr1IUThCaEpNH/JUlpJ07E1bgDKZWY8GDZlqz3ekMZPBzJa2YVdgZDa1jvBp0SG8l3V0cjs3RhLWEgp1ijxoakOi21oahgUZZDwWGlsHUUDOoIa27FQ1ROoK7O0aftwCE38g5PyHgiR+Hjt0weNrdBBsIf5y8Apj5Csd3tZ6/r+Vt+AJNROSrEAAAA[0m[Pipeline] script
+[8mha:////4P9OiFniei5u1a/6xWOQwIKcqiTdiBPs4r4RA93OBjTzAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkSJAy7GibVh8QlqqbXQ/D+2xTL5RL6a72CFxMkbLneXXL7XG0rv4EROs17hYNBLw0Y76ZRYJDdcLUXW04VJQk9WsVbFljrVrLWloGBVlkPBYaNQWvIGdYAt78VDVFagrs7Bpe3IITfdHZ6Q8UQOwoWlzA52t6nzhD/OXwDMY4BiX9eLH77f8gM5tzF0xAAAAA==[0m[Pipeline] {
+[8mha:////4OsDMohrYvS9C6G0HrsyQvbROwymN9PS38Vja79sEfmlAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BCpGIABdWKNunCCkISQNPq/JCntxIm4GnegtBITHizbkvVebyhjgJqCYU5jazFKyzrfmymxgUJ79TQwRxcmCSN5zRo9NKT0aakNJQ2LshwKDiuN0lO0aBKsuRMPUXmBpjqnMG1HDrlVd3hCxidyEiHNZQywufUqEv44fwEwdgmK7W4/++H7LT9stvPIxAAAAA==[0m[Pipeline] container
+[8mha:////4J1eanzEk/gEhdHxhGlp67nw5c8pR62F7Ox5IDistQkHAAAAqR+LCAAAAAAAAP9tjTEOwjAUQ39bdWBl5BCpGBBIqBNr1IUThCSEpNH/JUlpJ07E1bgDpZWY8GDZlqz3ekMZA9QUDHMaW4tRWtb53kyJDRTaq6eBObowSRjJa9booSGlT0ttKGlYlOVQcFhplJ6iRZNgzZ14iMoLNNU5hWk7csitusMTMj6RkwhpLmOAza1XkfDH+QuAsUtQbHf72Q/fb/kB1kgAosQAAAA=[0m[Pipeline] {
+[8mha:////4Nzb0nXEpDjl0Krwg9FZMq1ZT+jxNTCwDT1G9EAyiMA/AAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjCiQQSkVrpeEFxjbGjnUXbAen4kV8jT8QJRIVW6x2tpn3B1YxQEPBMKexsxilZb0fzLRYptDdPGXm6MokYSSvWatzS0qfF2wpaVhSlFBxWGuUnqJFk2DDnXiK2gs09SWF6TtxKK16wAsKPpmTCGmGMcD2PqhI+PP8FcDYJ6h2+8Pcx/4L7PWcKsAAAAA=[0m[Pipeline] sh
++ cat /metadata/frontend-digest.txt
+[8mha:////4HR7422sdaka/cyep0YBoa6KMIDutniIhGn7XP9Pw49YAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDBQgJUdFabniBsY1xYt0F2yGpeBFf4w8YIlGxxWpnm3m+YBYDHChY1hhsHUblWOd7mxcbKLQXTwNr6MwUYSRvmDCDIG2OEwpKBqYUJVQc5gaVp+jQJljwRt5l7SXa+pRC/vYcSqdv8ICCZ3OSIX1hDLC89joS/jx/BTB2Car1Zvfp7ap7A/zwGPnAAAAA[0m[Pipeline] sh
++ cat /metadata/backend-digest.txt
+[8mha:////4L5/qZnnDff4Xvu2PBeUk0SsY1Aqxhv8HqwRscTbY9qpAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjFCAkREVrueEFxjbGiXUXbAen4kV8jT8QiETFFqudbeb5gkUMcKBgWWuwcxiVY70f7LRYptBdPGXW0pkpwkjeMGGyIG2OMwpKBuYUJVQclgaVp+jQJljxVt5l7SXa+pTC9O05lE7f4AEFn8xJhvSFMcD6OuhI+PP8FcDYJ6iaze7T26Z/A73BA+DAAAAA[0m[Pipeline] sh
++ cat /metadata/worker-digest.txt
+[8mha:////4KXuZ8dqEseI2c8+sv0oEWS2IMuq14P9GZ0A+vUTFqOLAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjkEBIiIrWcsMLjG2ME+su2A5JxYv4Gn/AEImKLVY728zzBbMY4EDBssZg6zAqxzrf27zYQKG9eBpYQ2emCCN5w4QZBGlznFBQMjClKKHiMDeoPEWHNsGCN/Iuay/R1qcU8rfnUDp9gwcUPJuTDOkLY4DltdeR8Of5K4Cx6xJUq+3605vdG9c5ugnAAAAA[0m[Pipeline] }
+[8mha:////4ChlDW2MXmsFUmBGFJvOFDlXPvcHeiDLskOsvtBQ/OnXAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjhIACUdFabniBsY1xYt0F2yGpeBFf4w8YIlGxxWpnm3m+YBYDHChY1hhsHUblWOd7mxcbKLQXTwNr6MwUYSRvmDCDIG2OEwpKBqYUJVQc5gaVp+jQJljwRt5l7SXa+pRC/vYcSqdv8ICCZ3OSIX1hDLC89joS/jx/BTB2XYJqtV1/erN7A/Ivcj/AAAAA[0m[Pipeline] // container
+[8mha:////4JQ2hiO9Y58vnxDeQ1ckdFu+slh1vg4cHCWwWesAGa9GAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjJEiDqGitNLzAJMbYse6MfSGpeBFf4w8EIlGxxWpnm3m+YJEiHCga4TR2FlNjRfC9mZYYKHYXT4NwdBYNYSKvRa2Hmlp9nLEm1jAny6GQsNTYeEoWDcNKOnVXpVdoyhPH6dtLyG17gwdkcjKzivyFMcL62reJ8Of5K4AxBIZiU20/vave6iHSjcAAAAA=[0m[Pipeline] }
+[8mha:////4LdSH+bilD8yQjFiz7u+C6NebGKuCoxAYkKFJjy0p6sVAAAAph+LCAAAAAAAAP9tjTESwiAURH+SsbC19BBkLLBxrNIyaTwBAiIJ838EYlJ5Iq/mHUQzY+UWO/u2ec8XrGKAIwXLOoO9w6gcG/xo82IThf7iaWIdnZkijOQNa83UkjbNgi0lA0uKEioBa4PKU3RoE2xEJ++y9hJtfUohfwcBpdM3eEAhsjnJkL4wB9heRx0Jf56/ApiHIUG12/NPc/4G5HusssAAAAA=[0m[Pipeline] // script
+[8mha:////4JID3R4zs7hQyaYoHTaCtv3OLAl4tjjhxRlw7sYlkjr6AAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjJBQJISpaKw0vMIkxdqw7Y19IKl7E1/gDgUhUbLHa2WaeL1ikCAeKRjiNncXUWBF8b6YlBordxdMgHJ1FQ5jIa1HroaZWH2esiTXMyXIoJCw1Np6SRcOwkk7dVekVmvLEcfr2EnLb3uABmZzMrCJ/YYywvvZtIvx5/gpgDAzFZrv7dFWFN6dDk3TAAAAA[0m[Pipeline] echo
+
+Frontend digest: sha256:da4b149256fdae796b5e33ea927f5f77292310655b263d01f4506cb55f3b2fb8
+Backend digest: sha256:785bec7fec9228795038f0314f66f36a197f4734ff0c7176bde14a938c39439a
+Worker digest: sha256:b64eb279af8a1691c5f76bd686c3a35a28e75c60d48cc3e169670620422f67bc
+
+[8mha:////4D2rVeH3JMsLyRc6va8nG2EJTJDl06cyHpjuNToI3j7/AAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjJARCiIrWcsMLjG2ME+su2A5JxYv4Gn/AEImKLVY728zzBbMY4EDBssZg6zAqxzrf27zYQKG9eBpYQ2emCCN5w4QZBGlznFBQMjClKKHiMDeoPEWHNsGCN/Iuay/R1qcU8rfnUDp9gwcUPJuTDOkLY4DltdeR8Of5K4CxS1Ct1rtPb7bdG+ZyiG3AAAAA[0m[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[8mha:////4MdX9eauBuirC16NONkwA0v9PSDtxXf2uiqEtmGfb35VAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjJIRAiIrWcsMLjG2ME+su2A5JxYv4Gn/AEImKLVY728zzBbMY4EDBssZg6zAqxzrf27zYQKG9eBpYQ2emCCN5w4QZBGlznFBQMjClKKHiMDeoPEWHNsGCN/Iuay/R1qcU8rfnUDp9gwcUPJuTDOkLY4DltdeR8Of5K4Cx6xJUq8320+vdG05n1sPAAAAA[0m[Pipeline] }
+[8mha:////4P5kfL6+GQCwTOg7eGJUVs8Pd3uhZWisD3/eaV4r/dXLAAAApx+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQjJIRAiIrWcsMLjG2ME+su2A5JxYv4Gn/AEImKLVY728zzBbMY4EDBssZg6zAqxzrf27zYQKG9eBpYQ2emCCN5w4QZBGlznFBQMjClKKHiMDeoPEWHNsGCN/Iuay/R1qcU8rfnUDp9gwcUPJuTDOkLY4DltdeR8Of5K4Cx6xJUq83u0+vtG2xcphLAAAAA[0m[Pipeline] // stage
+[8mha:////4IqLNvndpSEaHGTCLjyEruib6Z3SYAaXDX1NAzCwuHnBAAAAqB+LCAAAAAAAAP9tjTESgjAQRRcYCltLDxHUhsKhss3QeIIYYgxkdjFZhMoTeTXvIMqMlb/678/8ec8X5DFARcGK1mDnMGonej/YuYmRQnfxNIqWzkITRvJG1GasqTHHBWtiA0uSFDIJK4PaU3RoGdayVXdVeIW2OHGYt4OE1DU3eEAiZzOrwF+YAmyuQxMJf56/Aph6hrTcM2S7cvu55m8IjYhFwwAAAA==[0m[Pipeline] stage
+[8mha:////4F/7FKtl+GZQ+J4FxI1DbAmlpa4wgpwwQP+pj10BJHarAAAAqB+LCAAAAAAAAP9tjbEOgjAYhH8gDK6OPkSRycE4sTYsPkEttRaa/8e2WCafyFfzHayQOHnD5e6Sy/d6Q+kdnMhp1iscDHpp2GgnnRKL5Iarpch6ujBJ6Mkq1qrYUqeatbYUFKzKcig4bBRKS96gDrDlvXiIygrU1Tm4tB055Ka7wxMynshBuLCU2cHuNnWe8Mf5C4B5DFDUh/3i9fdbfgDzVFQGxAAAAA==[0m[Pipeline] { (Trigger CD)
+[8mha:////4NVW6vNxU0QLRmoF6Phx6fPwqEMl6SB+BT+XCSXqT9q+AAAApR+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSj0FAgqrRWGl5gYmPsWHfGdkgqXsTX+ANWIlGxxWpnm3l/YBMDnCloZhUOBmNvmHejzotNFIabo4lZurKeMJJTrFNTR1K1K3aUFKwpSqg4bBX2jqJBnWDHrXiK2gnU9SWF/J04lEY+4AUFz+YkQlpgDrC/jzIS/jx/BTD7BFVzbJY++C/ky1X7wAAAAA==[0m[Pipeline] echo
+
+Triggering application-cd with:
+CI build: 1
+Commit: bf8f30850aeffa7cde71b2ef4acfd6192039872e
+Image tag: bf8f3085
+
+[8mha:////4Hk12JTfeue3OeJZa8FooJogAP1uZXikwUVQHBgAIzqsAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjiIICUaW10vACExtjx7oztkNS8SK+xh+wEomKLVY728z7A5sY4ExBM6twMBh7w7wbdV5sojDcHE3M0pX1hJGcYp2aOpKqXbGjpGBNUULFYauwdxQN6gQ7bsVT1E6gri8p5O/EoTTyAS8oeDYnEdICc4D9fZSR8Of5K4DZJ6iaY7P0wX8BpfpO4sAAAAA=[0m[Pipeline] build
+Scheduling project: [8mha:////4J7+uUcJk2GwWyNfctSSxEskpRGLphRF7txw8hgs6vISAAAAoB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgYR/az8JP3EgoKczOTEksz8PN3kFH0AjxNpcskAAAA=[0mapplication-cd
+[8mha:////4PympRMb0sU4KzyvQJi0ow56OdlPyLyJxx1nfE/ICRopAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYSjSEgUiCqtlYYXmNgYO9adsR2SihfxNf6AlUhUbLHa2WbeH9jEAGcKmlmFg8HYG+bdqPNiE4Xh5mhilq6sJ4zkFOvU1JFU7YodJQVrihIqDluFvaNoUCfYcSueonYCdX1JIX8nDqWRD3hBwbM5iZAWmAPs76OMhD/PXwHM3ieomuNh6eYLVdYq7cAAAAA=[0m[Pipeline] }
+[8mha:////4J4Zpy9LGNGpTypfBNu0vKVDM9DDa0xGmsjE6Gxm/K4CAAAAph+LCAAAAAAAAP9tjTEOwjAQBC+JKGgpeYQDBaJAqWitNLzA2MbYse6C7eBUvIiv8QeiRKJii9XONvP+wCoGaCgY5jR2FqO0rPeDmRbLFLqbp8wcXZkkjOQ1a3VuSenzgi0lDUuKEioOa43SU7RoEmy4E09Re4GmvqQwfScOpVUPeEHBJ3MSIc0wBtjeBxUJf56/Ahj7PkG1Px7m3n0Bd+1aPMAAAAA=[0m[Pipeline] // stage
+Post stage
+[8mha:////4OhUn1bF6IofDmc5xYU0nj/TwBD61QJ3yYRqyrwWNr5ZAAAAqR+LCAAAAAAAAP9tjbEOgjAURR8QBldHP6JEBxkMk2vD4hfUUmuheQ/bhzD5Rf6a/yBK4uSd7rnJzXm+II8BKgpWtAY7h1E70fvBzk2MFLqLp1G0dBaaMJI3ojZjTY05LlgTG1iSpJBJWBnUnqJDy7CWrbqrwiu0xYnDvB0kpK65wQMSOZtZBf7CFGBzHZpI+PP8FcDUM6TljiHblvvPNX8DFW7Rk8MAAAA=[0m[Pipeline] container
