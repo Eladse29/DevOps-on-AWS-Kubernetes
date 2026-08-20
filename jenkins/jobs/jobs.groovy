@@ -1,5 +1,5 @@
 def repositoryUrl = 'https://github.com/Eladse29/DevOps-on-AWS-Kubernetes.git'
-def repositoryBranch = '*/task4'
+def repositoryBranch = '*/task5'
 
 pipelineJob('application-ci') {
     description('''
