@@ -75,18 +75,22 @@ def record_request_metrics(response):
 def metrics():
     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
+
 @app.route("/")
 def home():
     return "Worker service is running"
+
 
 @app.route("/health")
 def health():
     return {"status": "healthy", "service": "worker"}
 
+
 @app.route("/process")
 def process():
     PROCESS_OPERATIONS.inc()
     return {"status": "processed"}
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)

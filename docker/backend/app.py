@@ -63,6 +63,7 @@ APP_INFO.labels(
 s3 = boto3.client("s3", region_name=AWS_REGION)
 sns = boto3.client("sns", region_name=AWS_REGION)
 
+
 def get_connection():
     return psycopg2.connect(
         host=DB_HOST,
@@ -71,6 +72,7 @@ def get_connection():
         password=DB_PASSWORD,
         port=DB_PORT
     )
+
 
 def init_db():
     conn = get_connection()
@@ -124,13 +126,16 @@ def record_request_metrics(response):
 def metrics():
     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
+
 @app.route("/")
 def home():
     return "Backend API is running with RDS, S3 and SNS"
 
+
 @app.route("/health")
 def health():
     return {"status": "healthy", "service": "backend"}
+
 
 @app.route("/worker")
 def worker():
@@ -144,6 +149,7 @@ def worker():
             dependency="worker"
         ).inc()
         raise
+
 
 @app.route("/provision", methods=["POST"])
 def provision():
@@ -185,6 +191,7 @@ def provision():
 
     return {"status": "added"}
 
+
 @app.route("/machines")
 def machines():
     conn = None
@@ -224,6 +231,7 @@ def machines():
         })
 
     return {"items": items}
+
 
 @app.route("/upload", methods=["POST"])
 def upload():
