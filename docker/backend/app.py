@@ -1,10 +1,16 @@
-from flask import Flask, request
+from flask import Flask, request, Response
 import os
 import psycopg2
 import boto3
 import requests
+import time
+from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
 
 app = Flask(__name__)
+
+APP_VERSION = os.getenv("APP_VERSION", "unknown")
+GIT_SHA = os.getenv("GIT_SHA", "unknown")
+RELEASE = os.getenv("RELEASE", "unknown")
 
 DB_HOST = os.getenv("DB_HOST")
 DB_NAME = os.getenv("DB_NAME")
@@ -16,6 +22,43 @@ S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
 SNS_TOPIC_ARN = os.getenv("SNS_TOPIC_ARN")
 AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
 WORKER_URL = os.getenv("WORKER_URL", "http://worker-service:5001")
+
+HTTP_REQUESTS = Counter(
+    "app_http_requests_total",
+    "Total HTTP requests",
+    ["service", "method", "route", "status", "release"]
+)
+
+HTTP_REQUEST_DURATION = Histogram(
+    "app_http_request_duration_seconds",
+    "HTTP request duration in seconds",
+    ["service", "method", "route", "release"]
+)
+
+DEPENDENCY_FAILURES = Counter(
+    "app_dependency_failures_total",
+    "Total dependency failures",
+    ["service", "dependency"]
+)
+
+MACHINES_CREATED = Counter(
+    "app_machines_created_total",
+    "Total machines created successfully"
+)
+
+APP_INFO = Gauge(
+    "app_info",
+    "Application release information",
+    ["service", "version", "git_sha", "release"]
+)
+
+APP_INFO.labels(
+    service="backend",
+    version=APP_VERSION,
+    git_sha=GIT_SHA,
+    release=RELEASE
+).set(1)
+
 
 s3 = boto3.client("s3", region_name=AWS_REGION)
 sns = boto3.client("sns", region_name=AWS_REGION)
@@ -45,6 +88,42 @@ def init_db():
     cur.close()
     conn.close()
 
+
+@app.before_request
+def start_request_timer():
+    request._prometheus_start_time = time.perf_counter()
+
+
+@app.after_request
+def record_request_metrics(response):
+    if request.path == "/metrics":
+        return response
+
+    route = request.url_rule.rule if request.url_rule else "unmatched"
+    duration = time.perf_counter() - request._prometheus_start_time
+
+    HTTP_REQUESTS.labels(
+        service="backend",
+        method=request.method,
+        route=route,
+        status=str(response.status_code),
+        release=RELEASE
+    ).inc()
+
+    HTTP_REQUEST_DURATION.labels(
+        service="backend",
+        method=request.method,
+        route=route,
+        release=RELEASE
+    ).observe(duration)
+
+    return response
+
+
+@app.route("/metrics")
+def metrics():
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+
 @app.route("/")
 def home():
     return "Backend API is running with RDS, S3 and SNS"
@@ -55,8 +134,16 @@ def health():
 
 @app.route("/worker")
 def worker():
-    response = requests.get(f"{WORKER_URL}/health", timeout=5)
-    return response.json()
+    try:
+        response = requests.get(f"{WORKER_URL}/health", timeout=5)
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException:
+        DEPENDENCY_FAILURES.labels(
+            service="backend",
+            dependency="worker"
+        ).inc()
+        raise
 
 @app.route("/provision", methods=["POST"])
 def provision():
@@ -67,32 +154,66 @@ def provision():
     cpu = int(data.get("cpu", 2))
     ram_gb = int(data.get("ram_gb", 4))
 
-    conn = get_connection()
-    cur = conn.cursor()
+    conn = None
+    cur = None
 
-    cur.execute(
-        "INSERT INTO items (name, os, cpu, ram_gb) VALUES (%s, %s, %s, %s)",
-        (name, os_name, cpu, ram_gb)
-    )
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
 
-    conn.commit()
-    cur.close()
-    conn.close()
+        cur.execute(
+            "INSERT INTO items (name, os, cpu, ram_gb) VALUES (%s, %s, %s, %s)",
+            (name, os_name, cpu, ram_gb)
+        )
+
+        conn.commit()
+
+    except Exception:
+        DEPENDENCY_FAILURES.labels(
+            service="backend",
+            dependency="rds"
+        ).inc()
+        raise
+
+    finally:
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
+
+    MACHINES_CREATED.inc()
 
     return {"status": "added"}
 
 @app.route("/machines")
 def machines():
-    conn = get_connection()
-    cur = conn.cursor()
+    conn = None
+    cur = None
 
-    cur.execute("SELECT id, name, os, cpu, ram_gb FROM items ORDER BY id")
-    rows = cur.fetchall()
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
 
-    cur.close()
-    conn.close()
+        cur.execute(
+            "SELECT id, name, os, cpu, ram_gb FROM items ORDER BY id"
+        )
+        rows = cur.fetchall()
+
+    except Exception:
+        DEPENDENCY_FAILURES.labels(
+            service="backend",
+            dependency="rds"
+        ).inc()
+        raise
+
+    finally:
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
 
     items = []
+
     for row in rows:
         items.append({
             "id": row[0],
@@ -106,20 +227,34 @@ def machines():
 
 @app.route("/upload", methods=["POST"])
 def upload():
-    conn = get_connection()
-    cur = conn.cursor()
+    conn = None
+    cur = None
 
-    cur.execute("""
-        SELECT id, name, os, cpu, ram_gb
-        FROM items
-        ORDER BY id DESC
-        LIMIT 1
-    """)
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
 
-    row = cur.fetchone()
+        cur.execute("""
+            SELECT id, name, os, cpu, ram_gb
+            FROM items
+            ORDER BY id DESC
+            LIMIT 1
+        """)
 
-    cur.close()
-    conn.close()
+        row = cur.fetchone()
+
+    except Exception:
+        DEPENDENCY_FAILURES.labels(
+            service="backend",
+            dependency="rds"
+        ).inc()
+        raise
+
+    finally:
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
 
     if not row:
         return {"status": "error", "message": "No machines found"}, 400
@@ -138,17 +273,31 @@ CPU: {cpu}
 RAM: {ram_gb}GB
 """
 
-    s3.put_object(
-        Bucket=S3_BUCKET_NAME,
-        Key=filename,
-        Body=content
-    )
+    try:
+        s3.put_object(
+            Bucket=S3_BUCKET_NAME,
+            Key=filename,
+            Body=content
+        )
+    except Exception:
+        DEPENDENCY_FAILURES.labels(
+            service="backend",
+            dependency="s3"
+        ).inc()
+        raise
 
-    sns.publish(
-        TopicArn=SNS_TOPIC_ARN,
-        Subject="VM Report Uploaded",
-        Message=f"VM report {filename} was uploaded to S3."
-    )
+    try:
+        sns.publish(
+            TopicArn=SNS_TOPIC_ARN,
+            Subject="VM Report Uploaded",
+            Message=f"VM report {filename} was uploaded to S3."
+        )
+    except Exception:
+        DEPENDENCY_FAILURES.labels(
+            service="backend",
+            dependency="sns"
+        ).inc()
+        raise
 
     return {
         "status": "uploaded",
@@ -156,6 +305,7 @@ RAM: {ram_gb}GB
         "file": filename,
         "sns": "notification sent"
     }
+
 
 if __name__ == "__main__":
     init_db()

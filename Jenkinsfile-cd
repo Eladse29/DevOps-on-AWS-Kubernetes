@@ -160,11 +160,17 @@ pipeline {
                             helm lint helm/backend \
                                 --values "${BACKEND_VALUES_FILE}" \
                                 --set image.repository="${ECR_REGISTRY}/${BACKEND_REPOSITORY}" \
-                                --set image.tag="${IMAGE_TAG}"
+                                --set image.tag="${IMAGE_TAG}" \
+                                --set releaseMetadata.appVersion="${IMAGE_TAG}" \
+                                --set releaseMetadata.gitSha="${GIT_COMMIT_SHA}" \
+                                --set releaseMetadata.release="${IMAGE_TAG}"
 
                             helm lint helm/worker \
                                 --set image.repository="${ECR_REGISTRY}/${WORKER_REPOSITORY}" \
-                                --set image.tag="${IMAGE_TAG}"
+                                --set image.tag="${IMAGE_TAG}" \
+                                --set releaseMetadata.appVersion="${IMAGE_TAG}" \
+                                --set releaseMetadata.gitSha="${GIT_COMMIT_SHA}" \
+                                --set releaseMetadata.release="${IMAGE_TAG}"
 
                             mkdir -p rendered-manifests
 
@@ -179,12 +185,18 @@ pipeline {
                                 --values "${BACKEND_VALUES_FILE}" \
                                 --set image.repository="${ECR_REGISTRY}/${BACKEND_REPOSITORY}" \
                                 --set image.tag="${IMAGE_TAG}" \
+                                --set releaseMetadata.appVersion="${IMAGE_TAG}" \
+                                --set releaseMetadata.gitSha="${GIT_COMMIT_SHA}" \
+                                --set releaseMetadata.release="${IMAGE_TAG}" \
                                 > rendered-manifests/backend.yaml
 
                             helm template "${WORKER_RELEASE}" helm/worker \
                                 --namespace "${TARGET_NAMESPACE}" \
                                 --set image.repository="${ECR_REGISTRY}/${WORKER_REPOSITORY}" \
                                 --set image.tag="${IMAGE_TAG}" \
+                                --set releaseMetadata.appVersion="${IMAGE_TAG}" \
+                                --set releaseMetadata.gitSha="${GIT_COMMIT_SHA}" \
+                                --set releaseMetadata.release="${IMAGE_TAG}" \
                                 > rendered-manifests/worker.yaml
 
                             grep -R "${IMAGE_TAG}" rendered-manifests >/dev/null
@@ -282,6 +294,9 @@ pipeline {
                                 --namespace "${TARGET_NAMESPACE}" \
                                 --set image.repository="${ECR_REGISTRY}/${WORKER_REPOSITORY}" \
                                 --set image.tag="${IMAGE_TAG}" \
+                                --set releaseMetadata.appVersion="${IMAGE_TAG}" \
+                                --set releaseMetadata.gitSha="${GIT_COMMIT_SHA}" \
+                                --set releaseMetadata.release="${IMAGE_TAG}" \
                                 --wait \
                                 --timeout 5m \
                                 --history-max 10
@@ -291,6 +306,9 @@ pipeline {
                                 --values "${BACKEND_VALUES_FILE}" \
                                 --set image.repository="${ECR_REGISTRY}/${BACKEND_REPOSITORY}" \
                                 --set image.tag="${IMAGE_TAG}" \
+                                --set releaseMetadata.appVersion="${IMAGE_TAG}" \
+                                --set releaseMetadata.gitSha="${GIT_COMMIT_SHA}" \
+                                --set releaseMetadata.release="${IMAGE_TAG}" \
                                 --wait \
                                 --timeout 5m \
                                 --history-max 10
@@ -520,6 +538,25 @@ pipeline {
 
                 archiveArtifacts(
                     artifacts: 'smoke-*',
+                    allowEmptyArchive: false,
+                    fingerprint: true
+                )
+            }
+        }
+
+
+        stage('Post-Deploy Monitoring Gate') {
+            steps {
+                container('curl') {
+                    sh '''
+                        set -eu
+
+                        scripts/observability/post-deploy-monitoring-gate.sh
+                    '''
+                }
+
+                archiveArtifacts(
+                    artifacts: 'monitoring-gate.txt',
                     allowEmptyArchive: false,
                     fingerprint: true
                 )

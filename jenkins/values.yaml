@@ -74,6 +74,7 @@ controller:
     - ws-cleanup:0.49
     - credentials-binding:728.v902a_273b_8947
     - plain-credentials:199.v9f8e1f741799
+    - prometheus:856.vc9e3d6e4b_b_9e
 
   installLatestPlugins: true
   installLatestSpecifiedPlugins: false

@@ -1,0 +1,106 @@
+prometheus:
+  prometheusSpec:
+    retention: 7d
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: jenkins-ebs
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+  service:
+    type: ClusterIP
+    port: 9090
+grafana:
+  enabled: true
+  defaultDashboardsEnabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  persistence:
+    enabled: true
+    storageClassName: jenkins-ebs
+    accessModes:
+    - ReadWriteOnce
+    size: 5Gi
+  service:
+    type: ClusterIP
+  additionalDataSources: []
+  sidecar:
+    dashboards:
+      enabled: true
+      searchNamespace: ALL
+      label: grafana_dashboard
+      labelValue: '1'
+      folderAnnotation: grafana_folder
+      provider:
+        allowUiUpdates: false
+    datasources:
+      enabled: true
+      searchNamespace: ALL
+alertmanager:
+  enabled: true
+  config:
+    global:
+      resolve_timeout: 5m
+    route:
+      receiver: 'null'
+      group_by:
+      - alertname
+      - namespace
+      group_wait: 10s
+      group_interval: 30s
+      repeat_interval: 1h
+    receivers:
+    - name: 'null'
+  alertmanagerSpec:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 300m
+        memory: 256Mi
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: jenkins-ebs
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 2Gi
+kube-state-metrics:
+  enabled: true
+prometheus-node-exporter:
+  enabled: true
+kubelet:
+  enabled: true
+  serviceMonitor:
+    cAdvisor: true
+    probes: true
+    resource: true
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi

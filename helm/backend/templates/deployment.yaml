@@ -32,6 +32,13 @@ spec:
             - name: http
               containerPort: {{ .Values.containerPort }}
               protocol: TCP
+          env:
+            - name: APP_VERSION
+              value: {{ .Values.releaseMetadata.appVersion | quote }}
+            - name: GIT_SHA
+              value: {{ .Values.releaseMetadata.gitSha | quote }}
+            - name: RELEASE
+              value: {{ .Values.releaseMetadata.release | quote }}
           envFrom:
             - configMapRef:
                 name: devops-config

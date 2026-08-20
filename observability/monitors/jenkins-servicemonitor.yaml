@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: jenkins
+  namespace: observability
+  labels:
+    monitoring: jenkins
+spec:
+  namespaceSelector:
+    matchNames:
+      - jenkins
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: jenkins-controller
+      app.kubernetes.io/instance: jenkins
+  endpoints:
+    - port: http
+      path: /prometheus
+      interval: 30s
+      scrapeTimeout: 10s

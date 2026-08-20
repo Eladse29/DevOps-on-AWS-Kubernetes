@@ -41,3 +41,9 @@ topologySpreadConstraints:
   maxSkew: 1
   topologyKey: kubernetes.io/hostname
   whenUnsatisfiable: DoNotSchedule
+
+releaseMetadata:
+  appVersion: "unknown"
+  gitSha: "unknown"
+  release: "unknown"
+

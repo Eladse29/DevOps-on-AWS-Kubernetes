@@ -48,3 +48,21 @@ spec:
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
           securityContext:
             allowPrivilegeEscalation: false
+
+        - name: nginx-exporter
+          image: "{{ .Values.metrics.exporter.image }}"
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--nginx.scrape-uri=http://127.0.0.1/nginx_status"
+          ports:
+            - name: metrics
+              containerPort: {{ .Values.metrics.port }}
+              protocol: TCP
+          resources:
+{{ toYaml .Values.metrics.resources | indent 12 }}
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL

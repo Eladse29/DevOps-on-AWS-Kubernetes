@@ -108,6 +108,8 @@ pipeline {
                                     exit 1
                                 fi
 
+                                python scripts/observability/validate-observability.py
+
                                 echo "Repository validation passed."
                             '''
                         }

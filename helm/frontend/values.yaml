@@ -41,3 +41,17 @@ topologySpreadConstraints:
   maxSkew: 1
   topologyKey: kubernetes.io/hostname
   whenUnsatisfiable: DoNotSchedule
+
+metrics:
+  exporter:
+    image: nginx/nginx-prometheus-exporter:1.4.1
+  port: 9113
+  servicePort: 9113
+  resources:
+    requests:
+      cpu: 20m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 64Mi
+
