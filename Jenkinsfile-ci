@@ -48,7 +48,8 @@ pipeline {
                                 returnStdout: true
                             ).trim()
 
-                            env.GIT_BRANCH_NAME = 'task4'
+                            env.GIT_BRANCH_NAME = (env.GIT_BRANCH ?: 'unknown')
+                                .replaceFirst(/^origin\//, '')
                             env.IMAGE_TAG = env.GIT_SHORT_SHA
                         }
 
