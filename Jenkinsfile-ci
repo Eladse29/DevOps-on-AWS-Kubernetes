@@ -108,8 +108,6 @@ pipeline {
                                     exit 1
                                 fi
 
-                                python scripts/observability/validate-observability.py
-
                                 echo "Repository validation passed."
                             '''
                         }
@@ -131,6 +129,8 @@ pipeline {
                                     -r docker/backend/requirements.txt \
                                     -r docker/worker/requirements.txt \
                                     -r tests/requirements.txt
+
+                                python scripts/observability/validate-observability.py
                             '''
                         }
                     }
