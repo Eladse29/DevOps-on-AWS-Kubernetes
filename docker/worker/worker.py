@@ -1,9 +1,18 @@
 from flask import Flask, request, Response
 import os
 import time
-from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import (
+    CONTENT_TYPE_LATEST,
+    CollectorRegistry,
+    Counter,
+    Gauge,
+    Histogram,
+    generate_latest,
+)
 
 app = Flask(__name__)
+
+REGISTRY = CollectorRegistry()
 
 APP_VERSION = os.getenv("APP_VERSION", "unknown")
 GIT_SHA = os.getenv("GIT_SHA", "unknown")
@@ -12,24 +21,28 @@ RELEASE = os.getenv("RELEASE", "unknown")
 HTTP_REQUESTS = Counter(
     "app_http_requests_total",
     "Total HTTP requests",
-    ["service", "method", "route", "status", "release"]
+    ["service", "method", "route", "status", "release"],
+    registry=REGISTRY
 )
 
 HTTP_REQUEST_DURATION = Histogram(
     "app_http_request_duration_seconds",
     "HTTP request duration in seconds",
-    ["service", "method", "route", "release"]
+    ["service", "method", "route", "release"],
+    registry=REGISTRY
 )
 
 PROCESS_OPERATIONS = Counter(
     "app_worker_process_total",
-    "Total worker process operations"
+    "Total worker process operations",
+    registry=REGISTRY
 )
 
 APP_INFO = Gauge(
     "app_info",
     "Application release information",
-    ["service", "version", "git_sha", "release"]
+    ["service", "version", "git_sha", "release"],
+    registry=REGISTRY
 )
 
 APP_INFO.labels(
@@ -73,7 +86,7 @@ def record_request_metrics(response):
 
 @app.route("/metrics")
 def metrics():
-    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+    return Response(generate_latest(REGISTRY), mimetype=CONTENT_TYPE_LATEST)
 
 
 @app.route("/")
