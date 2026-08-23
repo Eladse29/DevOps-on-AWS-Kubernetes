@@ -1,16 +1,15 @@
-from flask import Flask, request, Response
+from flask import Flask, request
 import os
 import psycopg2
 import boto3
 import requests
 import time
 from prometheus_client import (
-    CONTENT_TYPE_LATEST,
     CollectorRegistry,
     Counter,
     Gauge,
     Histogram,
-    generate_latest,
+    start_http_server,
 )
 
 app = Flask(__name__)
@@ -20,6 +19,7 @@ REGISTRY = CollectorRegistry()
 APP_VERSION = os.getenv("APP_VERSION", "unknown")
 GIT_SHA = os.getenv("GIT_SHA", "unknown")
 RELEASE = os.getenv("RELEASE", "unknown")
+METRICS_PORT = int(os.getenv("METRICS_PORT", "9101"))
 
 DB_HOST = os.getenv("DB_HOST")
 DB_NAME = os.getenv("DB_NAME")
@@ -134,11 +134,6 @@ def record_request_metrics(response):
     ).observe(duration)
 
     return response
-
-
-@app.route("/metrics")
-def metrics():
-    return Response(generate_latest(REGISTRY), mimetype=CONTENT_TYPE_LATEST)
 
 
 @app.route("/")
@@ -331,4 +326,5 @@ RAM: {ram_gb}GB
 
 if __name__ == "__main__":
     init_db()
+    start_http_server(METRICS_PORT, registry=REGISTRY)
     app.run(host="0.0.0.0", port=5000)

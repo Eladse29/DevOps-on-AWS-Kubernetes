@@ -17,6 +17,10 @@ service:
 
 containerPort: 5000
 
+metrics:
+  port: 9101
+  servicePort: 9101
+
 config:
   awsRegion: us-east-1
   dbPort: "5432"

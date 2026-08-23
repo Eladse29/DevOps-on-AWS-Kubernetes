@@ -146,7 +146,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "100 * (1 - (sum(rate(app_http_requests_total{service=~\"$service\",release=~\"$release\",status=~\"5..\"}[5m])) / clamp_min(sum(rate(app_http_requests_total{service=~\"$service\",release=~\"$release\"}[5m])), 0.000001)))",
+          "expr": "100 * (1 - ((sum(rate(app_http_requests_total{service=~\"$service\",release=~\"$release\",status=~\"5..\"}[5m])) or vector(0)) / clamp_min(sum(rate(app_http_requests_total{service=~\"$service\",release=~\"$release\"}[5m])), 0.000001)))",
           "legendFormat": ""
         }
       ],

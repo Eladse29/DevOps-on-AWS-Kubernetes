@@ -1,13 +1,12 @@
-from flask import Flask, request, Response
+from flask import Flask, request
 import os
 import time
 from prometheus_client import (
-    CONTENT_TYPE_LATEST,
     CollectorRegistry,
     Counter,
     Gauge,
     Histogram,
-    generate_latest,
+    start_http_server,
 )
 
 app = Flask(__name__)
@@ -17,6 +16,7 @@ REGISTRY = CollectorRegistry()
 APP_VERSION = os.getenv("APP_VERSION", "unknown")
 GIT_SHA = os.getenv("GIT_SHA", "unknown")
 RELEASE = os.getenv("RELEASE", "unknown")
+METRICS_PORT = int(os.getenv("METRICS_PORT", "9102"))
 
 HTTP_REQUESTS = Counter(
     "app_http_requests_total",
@@ -84,11 +84,6 @@ def record_request_metrics(response):
     return response
 
 
-@app.route("/metrics")
-def metrics():
-    return Response(generate_latest(REGISTRY), mimetype=CONTENT_TYPE_LATEST)
-
-
 @app.route("/")
 def home():
     return "Worker service is running"
@@ -106,4 +101,5 @@ def process():
 
 
 if __name__ == "__main__":
+    start_http_server(METRICS_PORT, registry=REGISTRY)
     app.run(host="0.0.0.0", port=5001)

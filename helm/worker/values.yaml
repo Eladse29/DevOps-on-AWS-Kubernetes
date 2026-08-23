@@ -16,6 +16,10 @@ service:
 
 containerPort: 5001
 
+metrics:
+  port: 9102
+  servicePort: 9102
+
 resources:
   requests:
     cpu: 100m

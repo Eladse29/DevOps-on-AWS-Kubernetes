@@ -10,7 +10,7 @@ The percentage of application requests that do not return HTTP 5xx responses.
 100 * (
   1 -
   (
-    sum(rate(app_http_requests_total{status=~"5.."}[5m]))
+    (sum(rate(app_http_requests_total{status=~"5.."}[5m])) or vector(0))
     /
     clamp_min(sum(rate(app_http_requests_total[5m])), 0.000001)
   )

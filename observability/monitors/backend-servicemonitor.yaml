@@ -13,7 +13,7 @@ spec:
     matchLabels:
       app: backend
   endpoints:
-    - port: http
+    - port: metrics
       path: /metrics
       interval: 30s
       scrapeTimeout: 10s
