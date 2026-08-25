@@ -1,4 +1,4 @@
-# DevOps on AWS — Jenkins CI/CD on Amazon EKS
+# DevOps on AWS — Final Project: Jenkins CI/CD and Observability on Amazon EKS
 
 A rolling DevOps project that evolves a three-service AWS application from EC2 and Ansible into a containerized Kubernetes platform with a reproducible Jenkins CI/CD system running inside Amazon EKS.
 
@@ -20,7 +20,7 @@ The delivery platform adds:
 - **Helm** for controlled application deployment
 - **Kubernetes RBAC and AWS IRSA** for least-privilege access
 
-The same Amazon EKS cluster hosts Jenkins and the application, but they are separated into dedicated namespaces and use separate identities and permissions.
+The same Amazon EKS cluster hosts Jenkins, the application, and the observability stack in dedicated namespaces with separate identities and permissions.
 
 ---
 
@@ -67,7 +67,7 @@ The immutable image created and scanned by CI is the exact image deployed by CD.
 ---
 
 ## Final architecture
-![Task 4 architecture](architecture-part4.png)
+
 The infrastructure runs in `us-east-1` inside a dedicated VPC.
 
 Jenkins and the application run in the same EKS cluster for this course environment. Namespace, ServiceAccount, IAM, and RBAC boundaries separate the CI, CD, and application responsibilities.
@@ -160,7 +160,7 @@ flowchart LR
     Q -. failure .-> S
 ```
 
-The diagram intentionally does **not** claim NetworkPolicies, per-Pod AWS security groups, TLS, WAF, or authentication because those controls are not implemented in the current course environment.
+Task 5 adds NetworkPolicies for the implemented monitoring and application traffic paths. The architecture still does not claim per-Pod AWS security groups, public TLS/WAF, or application authentication.
 
 ---
 
@@ -318,7 +318,7 @@ Terraform provisions and manages the AWS infrastructure required by the project,
 - NAT Gateway
 - Security Groups
 - Amazon EKS cluster
-- EKS managed node group with four worker nodes
+- EKS managed node group
 - EKS OIDC provider
 - Amazon ECR repositories
 - Amazon RDS PostgreSQL
@@ -432,8 +432,6 @@ kubernetes.io/hostname
 ```
 
 with `maxSkew: 1` to distribute replicas across available worker nodes.
-
-The three replicas are distributed across the available worker nodes rather than being tied to a fixed one-replica-per-node model.
 
 ---
 
@@ -677,8 +675,6 @@ Git commit
 # Jenkins agents
 
 All pipeline work is performed on ephemeral Kubernetes agent Pods.
-
-Jenkins agent Pod templates define explicit CPU and memory requests/limits. Build-agent requests were sized to fit reliably on the course EKS worker nodes while retaining higher memory limits for Kaniko and Trivy during image build and scan stages.
 
 ## CI validation agent
 
@@ -1540,6 +1536,557 @@ A production system should use encrypted remote state with locking and controlle
 
 ---
 
+
+---
+
+## Overview
+
+Task 5 extends the existing Task 4 Jenkins CI/CD platform with a reproducible observability layer running inside the same Amazon EKS cluster.
+
+The final environment monitors:
+
+- the three-service application
+- the Kubernetes cluster
+- Jenkins and the CI/CD delivery chain
+
+All monitoring configuration is stored in Git: Helm values, ServiceMonitors, Prometheus rules, Grafana dashboards, provisioning, NetworkPolicies, SLI/SLO definitions and runbooks.
+
+Expected traceability:
+
+```text
+Git commit
+  -> Jenkins CI build
+  -> immutable image tag and ECR digest
+  -> Jenkins CD build
+  -> Kubernetes Pod and runtime imageID
+  -> Prometheus metrics
+  -> Grafana dashboard
+  -> Prometheus alert
+  -> runbook
+  -> recovery or rollback
+```
+
+## Architecture
+
+```text
+Amazon EKS
+|
++-- namespace: devops-app
+|   +-- Frontend
+|   |   +-- application: 80
+|   |   +-- nginx metrics: 9113
+|   +-- Backend
+|   |   +-- application: 5000
+|   |   +-- metrics: 9101
+|   +-- Worker
+|       +-- application: 5001
+|       +-- metrics: 9102
+|
++-- namespace: jenkins
+|   +-- Jenkins Controller
+|   +-- ephemeral CI agents
+|   +-- ephemeral build/scan agents
+|   +-- ephemeral CD agents
+|   +-- Jenkins Prometheus metrics
+|
++-- namespace: observability
+    +-- Prometheus Operator
+    +-- Prometheus
+    +-- Grafana
+    +-- Alertmanager
+    +-- kube-state-metrics
+    +-- node-exporter
+```
+
+Monitoring flow:
+
+```text
+Application metrics ----\
+Kubernetes metrics ------> Prometheus ----> Grafana
+Jenkins metrics --------/      |
+                               +-----------> Alertmanager
+```
+
+The CD pipeline also queries Prometheus after deployment, so a workload reaching `Running` state is not sufficient by itself to declare a release healthy.
+
+## Repository Structure
+
+```text
+observability/
+├── dashboards/
+│   ├── application-overview.json
+│   ├── jenkins-delivery.json
+│   └── kubernetes-cluster.json
+├── monitors/
+│   ├── backend-servicemonitor.yaml
+│   ├── frontend-servicemonitor.yaml
+│   ├── jenkins-servicemonitor.yaml
+│   └── worker-servicemonitor.yaml
+├── network-policies/
+│   ├── allow-alertmanager-prometheus.yaml
+│   ├── allow-application-traffic.yaml
+│   ├── allow-grafana-prometheus.yaml
+│   ├── allow-prometheus-app-metrics.yaml
+│   ├── allow-prometheus-scrape.yaml
+│   └── observability-default-deny.yaml
+├── provisioning/
+├── rules/
+│   └── task5-alerts.yaml
+├── runbooks/
+├── slo/
+│   └── sli-slo.md
+└── values/
+    └── kube-prometheus-stack-values.yaml
+```
+
+Supporting scripts:
+
+```text
+scripts/observability/
+├── post-deploy-monitoring-gate.sh
+└── validate-observability.py
+
+scripts/demo/
+├── start-demo.sh
+└── stop-demo.sh
+```
+
+## Prometheus
+
+Prometheus is deployed inside the `observability` namespace through `kube-prometheus-stack`.
+
+The repository-managed values configure:
+
+- 7-day retention
+- persistent storage
+- explicit CPU and memory requests/limits
+- ServiceMonitor discovery
+- PodMonitor discovery
+- PrometheusRule discovery
+
+Prometheus is used for application, Kubernetes and Jenkins metrics, SLI/SLO queries, alert evaluation and post-deployment CD health checks.
+
+## Grafana
+
+Grafana is deployed inside the `observability` namespace. The Prometheus datasource is provisioned automatically and dashboards are loaded from files stored in Git.
+
+The required dashboards are:
+
+1. `Application Overview`
+2. `Kubernetes / Cluster`
+3. `Jenkins & Delivery`
+
+## Alertmanager
+
+Alertmanager is deployed as part of the monitoring stack. Real receiver credentials, when required, are kept outside the repository.
+
+## Kubernetes Metrics
+
+The stack includes:
+
+- kube-state-metrics
+- node-exporter
+- kubelet metrics
+- cAdvisor metrics
+
+These provide visibility into nodes, Pods, deployments, resources, restarts, storage and rollout state.
+
+## Application Instrumentation
+
+Backend and Worker use the Prometheus Python client.
+
+| Service | Application port | Metrics port |
+|---|---:|---:|
+| Frontend | 80 | 9113 |
+| Backend | 5000 | 9101 |
+| Worker | 5001 | 9102 |
+
+Frontend metrics are exposed through the nginx Prometheus exporter.
+
+Application metrics include:
+
+- request count
+- HTTP status and 5xx errors
+- request-duration histogram
+- dependency failures
+- release metadata
+- business-operation counters
+
+Release metadata:
+
+```text
+app_info{service,version,git_sha,release}
+```
+
+Business metrics:
+
+```text
+app_machines_created_total
+app_worker_process_total
+```
+
+Metrics labels do not contain user IDs, request IDs or raw unbounded URLs.
+
+## ServiceMonitors
+
+Prometheus discovers project targets through ServiceMonitor resources for:
+
+- Backend
+- Worker
+- Frontend nginx exporter
+- Jenkins
+
+Application ServiceMonitors live in `observability` and discover Services in `devops-app`.
+
+Backend and Worker are scraped through dedicated metrics ports instead of the application ports.
+
+## Dashboards
+
+### Application Overview
+
+Answers: did the new release affect users?
+
+Includes:
+
+- request rate
+- 5xx rate
+- p50/p95/p99 latency
+- availability
+- release/version metadata
+- CPU and memory
+- dependency failures
+- business metrics
+
+### Kubernetes / Cluster
+
+Answers: is the problem in the application or the platform?
+
+Includes:
+
+- node readiness
+- capacity
+- Pod health
+- restarts
+- deployments
+- desired/available replicas
+- resource usage
+- storage
+
+### Jenkins & Delivery
+
+Answers: is the delivery chain healthy and is anything blocking it?
+
+Includes:
+
+- controller/JVM state
+- queue behaviour
+- executors
+- dynamic agents
+- build status
+- build duration
+- CI/CD failures
+- delivery trends
+
+## SLI and SLO
+
+Definitions are stored in:
+
+```text
+observability/slo/sli-slo.md
+```
+
+Availability SLO:
+
+```text
+Availability >= 99%
+```
+
+Latency SLO:
+
+```text
+p95 latency < 1 second
+```
+
+Latency is calculated with `histogram_quantile`.
+
+The availability query treats the healthy case where no 5xx series exists as zero errors rather than `No data`.
+
+## Alerts
+
+Six alerts are defined.
+
+Application:
+
+- `HighErrorRate`
+- `HighLatencyP95`
+
+Kubernetes:
+
+- `ReplicasMismatch`
+- `NodeNotReady`
+
+Jenkins:
+
+- `JenkinsQueueStuck`
+
+Monitoring:
+
+- `PrometheusTargetDown`
+
+Every alert includes severity, summary, description and a runbook reference.
+
+Rules:
+
+```text
+observability/rules/task5-alerts.yaml
+```
+
+Runbooks:
+
+```text
+observability/runbooks/
+```
+
+## Network Security
+
+Task 5 adds Kubernetes NetworkPolicies.
+
+The `observability` namespace uses default-deny behaviour, with explicit rules for required traffic including:
+
+- Grafana -> Prometheus
+- Prometheus -> Alertmanager
+- Prometheus -> DNS
+- Prometheus -> approved scrape targets
+- Prometheus -> Backend metrics port 9101
+- Prometheus -> Worker metrics port 9102
+- Prometheus -> Frontend metrics port 9113
+
+Normal application traffic remains explicitly allowed on ports 80, 5000 and 5001.
+
+This is a course security model and not a complete production zero-trust design.
+
+## CI Integration
+
+CI validates observability configuration but does not deploy it.
+
+Validator:
+
+```text
+scripts/observability/validate-observability.py
+```
+
+It checks ServiceMonitors, PrometheusRule resources, Grafana dashboard JSON and required Task 5 structure.
+
+CI/CD separation remains:
+
+```text
+CI = validate, test, build, scan, publish
+CD = deploy and verify
+```
+
+## CD Monitoring Gate
+
+After deployment, CD performs:
+
+1. Helm deployment
+2. rollout verification
+3. runtime image digest verification
+4. smoke tests
+5. Prometheus post-deployment monitoring gate
+
+Gate script:
+
+```text
+scripts/observability/post-deploy-monitoring-gate.sh
+```
+
+A failed gate marks the release unhealthy and enters the existing CD failure/rollback path.
+
+## Controlled Failure Scenarios
+
+### Application 5xx
+
+```text
+controlled 5xx
+  -> error metric rises
+  -> Application Overview changes
+  -> HighErrorRate fires
+  -> runbook
+  -> recovery
+  -> alert resolves
+```
+
+### Pod / Readiness Failure
+
+Demonstrate Kubernetes workload metrics, desired versus available replicas, recovery and service availability.
+
+### Jenkins Agent Delay
+
+Demonstrate queue/agent metrics, Kubernetes scheduling state, `JenkinsQueueStuck`, diagnosis and recovery.
+
+### Failed Release
+
+Demonstrate CD failure, monitoring-assisted diagnosis, rollback and restored health.
+
+## Demo Automation
+
+Start local demo access:
+
+```bash
+bash scripts/demo/start-demo.sh
+```
+
+The script manages background access to Jenkins, Prometheus, Grafana and the ngrok webhook tunnel, and updates the GitHub webhook to the current ngrok URL.
+
+Expected local addresses:
+
+```text
+Jenkins:    http://127.0.0.1:8080
+Prometheus: http://127.0.0.1:9090
+Grafana:    http://127.0.0.1:3000
+```
+
+Stop:
+
+```bash
+bash scripts/demo/stop-demo.sh
+```
+
+## Installation and Validation
+
+After Terraform, EKS, Jenkins and the application are available, install the monitoring stack using the repository-managed Helm values and manifests.
+
+Validate with:
+
+```bash
+kubectl get pods -n observability
+kubectl get svc -n observability
+kubectl get pvc -n observability
+kubectl get servicemonitors -n observability
+kubectl get prometheusrules -n observability
+helm list -n observability
+```
+
+Application runtime:
+
+```bash
+kubectl get deployments -n devops-app
+kubectl get pods -n devops-app -o wide
+helm list -n devops-app
+```
+
+Prometheus targets should show the application and Jenkins targets as UP.
+
+## Evidence
+
+Recommended structure:
+
+```text
+evidence/task5/
+├── targets/
+├── dashboards/
+├── alerts/
+├── failures/
+└── screenshots/
+```
+
+Evidence should include, where applicable:
+
+- Prometheus targets UP
+- all three dashboards
+- alert FIRING and RESOLVED states
+- controlled failure
+- recovery or rollback
+- monitoring-gate behaviour
+- commit/digest/Pod/release traceability
+
+## Recovery
+
+Monitoring configuration is stored in Git and can be recreated from code.
+
+Prometheus and Alertmanager use persistent storage so a normal Pod restart does not remove persisted state.
+
+Grafana dashboards and datasources are provisioned from repository files.
+
+If monitoring PVCs are intentionally removed during full teardown, the stack can be recreated during the next installation.
+
+## Cleanup
+
+Recommended order:
+
+```bash
+helm uninstall frontend -n devops-app
+helm uninstall backend -n devops-app
+helm uninstall worker -n devops-app
+
+helm uninstall monitoring -n observability
+
+helm uninstall jenkins -n jenkins
+```
+
+Inspect remaining storage:
+
+```bash
+kubectl get pvc -A
+kubectl get pv
+```
+
+Then:
+
+```bash
+terraform plan -destroy
+terraform destroy
+```
+
+After Terraform completes, verify that no billable project resources remain, including EKS, EC2 nodes, Load Balancers, NAT Gateway, Elastic IPs, RDS, orphaned EBS volumes, ECR, S3 and SNS.
+
+## Known Limitations
+
+This is a course implementation rather than a production-hardened platform.
+
+Known limitations include:
+
+- HTTP-only public application endpoint
+- no application authentication/authorization
+- no WAF/rate limiting
+- no security groups for Pods
+- no External Secrets / Secrets Manager delivery
+- no production WSGI server for Backend
+- local Terraform state
+- no centralized logging
+- no long-term or multi-cluster Prometheus storage
+- no GitOps promotion model
+- broad Jenkins authorization compared with a production RBAC model
+- webhook protection does not yet use GitHub HMAC secret validation
+
+## Summary
+
+The final project demonstrates a complete delivery and observability chain on Amazon EKS.
+
+Terraform provisions the AWS infrastructure. Jenkins runs inside EKS with a persistent controller and ephemeral Kubernetes agents.
+
+CI validates the repository, runs lint and tests, builds immutable images with Kaniko, scans them with Trivy and publishes them to Amazon ECR.
+
+CD deploys the exact release with Helm, waits for rollout, verifies runtime image digests, runs smoke tests and executes a Prometheus-based monitoring gate.
+
+Prometheus monitors the application, Kubernetes and Jenkins. Grafana provides version-controlled dashboards, Alertmanager provides alert routing, and runbooks document operational recovery.
+
+Final traceability:
+
+```text
+commit
+  -> CI build
+  -> immutable image digest
+  -> CD deployment
+  -> Kubernetes Pod
+  -> release metric
+  -> Grafana dashboard
+  -> alert
+  -> diagnosis
+  -> recovery / rollback
+```
+
+
 # Known limitations
 
 The current repository demonstrates a course CI/CD platform and should not be described as a production-hardened reference architecture.
@@ -1549,14 +2096,12 @@ Not currently implemented:
 - TLS for the public application endpoint
 - application authentication / authorization
 - WAF / rate limiting
-- Kubernetes NetworkPolicies
 - security groups for Pods
 - External Secrets / Secrets Manager delivery
 - HPA
 - PodDisruptionBudget
 - production WSGI server for Backend
 - remote Terraform state
-- centralized metrics
 - centralized logging
 - GitOps promotion
 
@@ -1582,7 +2127,6 @@ Recommended improvements include:
 - HPA and PodDisruptionBudget
 - encrypted remote Terraform state with locking
 - structured application logs
-- Prometheus / Grafana or equivalent monitoring
 - centralized logging with CloudWatch or Loki
 - SBOM generation and image signing
 - staged dev → staging → production promotion
