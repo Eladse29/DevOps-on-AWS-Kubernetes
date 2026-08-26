@@ -6,8 +6,8 @@ TRIVY_VERSION="${TRIVY_VERSION:-0.70.0}"
 TRIVY_IMAGE="${TRIVY_IMAGE:-aquasec/trivy:${TRIVY_VERSION}}"
 FAIL_ON_CRITICAL="${FAIL_ON_CRITICAL:-false}"
 
-OUTPUT_DIRECTORY="${OUTPUT_DIRECTORY:-evidence/task4/security/platform-images}"
-CACHE_DIRECTORY="${CACHE_DIRECTORY:-/tmp/trivy-cache-task4}"
+OUTPUT_DIRECTORY="${OUTPUT_DIRECTORY:-evidence/task5/security/platform-images}"
+CACHE_DIRECTORY="${CACHE_DIRECTORY:-/tmp/trivy-cache-task5}"
 
 images=(
   "jenkins/jenkins:2.568.1-jdk21"

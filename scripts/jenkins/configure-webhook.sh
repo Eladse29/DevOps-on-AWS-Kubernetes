@@ -11,7 +11,7 @@ LOCAL_JENKINS_PORT="${LOCAL_JENKINS_PORT:-18080}"
 NGROK_API_URL="${NGROK_API_URL:-http://127.0.0.1:4040/api/tunnels}"
 NGROK_POLICY_FILE="${NGROK_POLICY_FILE:-jenkins/ngrok-webhook-policy.yaml}"
 
-EVIDENCE_DIRECTORY="${EVIDENCE_DIRECTORY:-evidence/task4/jenkins}"
+EVIDENCE_DIRECTORY="${EVIDENCE_DIRECTORY:-evidence/task5/jenkins}"
 
 PORT_FORWARD_PID=""
 NGROK_PID=""
@@ -227,7 +227,7 @@ echo "Security:"
 echo "Only POST /github-webhook/ is exposed through ngrok."
 echo "The Jenkins UI is not exposed through this public endpoint."
 echo
-echo "Push a commit to the task4 branch to trigger application-ci."
+echo "Push a commit to the task5 branch to trigger application-ci."
 echo
 echo "Keep this terminal open during the webhook demonstration."
 echo "Press Ctrl+C after the CI/CD demonstration is complete."

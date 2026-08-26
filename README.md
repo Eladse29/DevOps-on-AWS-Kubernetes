@@ -26,7 +26,7 @@ The same Amazon EKS cluster hosts Jenkins, the application, and the observabilit
 
 ## Project status
 
-The Task 4 delivery path is implemented end to end:
+The final-project delivery path is implemented end to end:
 
 ```text
 GitHub push
@@ -598,7 +598,7 @@ The plugin configuration is stored in code rather than installed manually as an 
 It identifies the installation as:
 
 ```text
-DevOps on AWS - Task 4
+DevOps on AWS - Final Project / Task 5
 Jenkins is configured and managed as code.
 CI and CD run on dynamic Kubernetes agent Pods.
 ```
@@ -622,7 +622,7 @@ to create the pipeline jobs.
 ```text
 application-ci
   → Jenkinsfile-ci
-  → Git branch task4
+  → Git branch task5
   → GitHub push trigger
 ```
 
@@ -1229,7 +1229,7 @@ bash scripts/jenkins/configure-webhook.sh
 
 The script creates or updates the GitHub webhook and configures the temporary tunnel used for the demonstration.
 
-A push to the configured Task 4 branch triggers `application-ci`.
+A push to the configured Task 5 branch triggers `application-ci`.
 
 ---
 
@@ -1347,9 +1347,9 @@ The SNS email subscription must be confirmed before email delivery can be demons
 
 # Evidence
 
-Task 4 evidence should be generated from **one current deployment and one repository revision**.
+Final-project evidence should be generated from **one current deployment and one repository revision**.
 
-Older evidence from previous project stages must not be presented as if it represents the final Task 4 environment.
+Older evidence from previous project stages must not be presented as if it represents the final-project environment.
 
 A recommended structure is:
 
@@ -2279,7 +2279,7 @@ The intentionally manual operations are:
 
 After the Git push, application build, scan, registry publication, and Kubernetes deployment are automated by Jenkins.
 
-Manual `docker build`, manual ECR push, and manual Helm application deployment are **not** the normal Task 4 delivery path.
+Manual `docker build`, manual ECR push, and manual Helm application deployment are **not** the normal final-project delivery path.
 
 ---
 

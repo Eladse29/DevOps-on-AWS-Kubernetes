@@ -2,10 +2,10 @@
 
 set -euo pipefail
 
-EXPECTED_BRANCH="${EXPECTED_BRANCH:-task4}"
+EXPECTED_BRANCH="${EXPECTED_BRANCH:-task5}"
 AWS_REGION="${AWS_REGION:-us-east-1}"
 JENKINS_CHART_VERSION="${JENKINS_CHART_VERSION:-5.9.49}"
-PYTHON_VENV="${PYTHON_VENV:-${HOME}/.venvs/devops-task4}"
+PYTHON_VENV="${PYTHON_VENV:-${HOME}/.venvs/devops-task5}"
 
 BACKEND_VALUES_FILE="${BACKEND_VALUES_FILE:-helm/backend/values.local.yaml}"
 JENKINS_RENDERED_FILE="${JENKINS_RENDERED_FILE:-/tmp/jenkins-rendered.yaml}"
@@ -46,7 +46,7 @@ required_files=(
   tests/requirements.txt
 )
 
-echo "Task 4 preflight"
+echo "Task 5 preflight"
 echo "================"
 
 current_branch="$(git branch --show-current)"
@@ -75,10 +75,10 @@ done
 echo "Required commands and files: OK"
 
 if ! grep -q \
-  "def repositoryBranch = '\\*/task4'" \
+  "def repositoryBranch = '\\*/task5'" \
   jenkins/jobs/jobs.groovy
 then
-  echo "ERROR: Jenkins jobs do not point to the task4 branch." >&2
+  echo "ERROR: Jenkins jobs do not point to the task5 branch." >&2
   exit 1
 fi
 
@@ -245,7 +245,7 @@ else
 fi
 
 echo
-echo "Task 4 preflight completed successfully."
+echo "Task 5 preflight completed successfully."
 
 echo
 echo "Preflight completed successfully."

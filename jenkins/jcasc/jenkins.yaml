@@ -1,6 +1,6 @@
 jenkins:
   systemMessage: |
-    DevOps on AWS - Task 4
+    DevOps on AWS - Final Project / Task 5
     Jenkins is configured and managed as code.
     CI and CD run on dynamic Kubernetes agent Pods.
 
