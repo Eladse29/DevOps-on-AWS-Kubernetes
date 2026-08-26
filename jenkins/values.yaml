@@ -70,7 +70,7 @@ controller:
     - configuration-as-code:2111.v475308a_6c93b_
     - job-dsl:3654.vdf58f53e2d15
     - github:1.47.0
-    - junit:1416.vd753e036de5e
+    - junit:1421.v99cb_b_2577709
     - ws-cleanup:0.49
     - credentials-binding:728.v902a_273b_8947
     - plain-credentials:199.v9f8e1f741799

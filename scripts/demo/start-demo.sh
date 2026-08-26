@@ -46,9 +46,9 @@ echo
 echo "===== REQUIRED SERVICES ====="
 
 kubectl get svc jenkins -n "${JENKINS_NAMESPACE}" >/dev/null
-kubectl get svc monitoring-kube-prometheus-prometheus \
+kubectl get svc kube-prometheus-stack-prometheus \
     -n "${OBSERVABILITY_NAMESPACE}" >/dev/null
-kubectl get svc monitoring-grafana \
+kubectl get svc kube-prometheus-stack-grafana \
     -n "${OBSERVABILITY_NAMESPACE}" >/dev/null
 
 echo "Required services found."
@@ -129,13 +129,13 @@ start_port_forward \
 start_port_forward \
     prometheus \
     "${OBSERVABILITY_NAMESPACE}" \
-    monitoring-kube-prometheus-prometheus \
+    kube-prometheus-stack-prometheus \
     "${PROMETHEUS_PORT}:9090"
 
 start_port_forward \
     grafana \
     "${OBSERVABILITY_NAMESPACE}" \
-    monitoring-grafana \
+    kube-prometheus-stack-grafana \
     "${GRAFANA_PORT}:80"
 
 echo

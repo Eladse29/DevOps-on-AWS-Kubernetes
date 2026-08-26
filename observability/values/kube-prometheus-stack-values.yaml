@@ -25,6 +25,8 @@ prometheus:
     port: 9090
 grafana:
   enabled: true
+  deploymentStrategy:
+    type: Recreate
   defaultDashboardsEnabled: true
   resources:
     requests:
@@ -95,7 +97,7 @@ kubelet:
   serviceMonitor:
     cAdvisor: true
     probes: true
-    resource: true
+    resource: false
 prometheusOperator:
   resources:
     requests:
