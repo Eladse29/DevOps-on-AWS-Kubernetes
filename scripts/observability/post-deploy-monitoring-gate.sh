@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-PROM_URL="${PROM_URL:-http://monitoring-kube-prometheus-prometheus.observability.svc.cluster.local:9090}"
+PROM_URL="${PROM_URL:-http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090}"
 
 echo "Checking Prometheus application targets..."
 
