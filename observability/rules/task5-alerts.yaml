@@ -79,7 +79,7 @@ spec:
       rules:
         - alert: JenkinsQueueStuck
           expr: |
-            default_jenkins_queue_size_value > 0
+            jenkins_queue_size_value > 0
           for: 5m
           labels:
             severity: warning
