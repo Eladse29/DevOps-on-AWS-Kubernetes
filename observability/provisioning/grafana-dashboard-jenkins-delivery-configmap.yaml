@@ -93,7 +93,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "default_jenkins_queue_size_value",
+              "expr": "jenkins_queue_size_value",
               "legendFormat": ""
             }
           ],
@@ -120,7 +120,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "default_jenkins_executors_in_use_value",
+              "expr": "jenkins_executor_in_use_value",
               "legendFormat": ""
             }
           ],
@@ -147,7 +147,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "default_jenkins_executors_count_value",
+              "expr": "jenkins_executor_count_value",
               "legendFormat": ""
             }
           ],
@@ -315,7 +315,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "default_jenkins_nodes_online_value",
+              "expr": "jenkins_node_online_value",
               "legendFormat": ""
             }
           ],
@@ -342,7 +342,7 @@ data:
           "targets": [
             {
               "refId": "A",
-              "expr": "default_jenkins_nodes_offline_value",
+              "expr": "jenkins_node_offline_value",
               "legendFormat": ""
             }
           ],
