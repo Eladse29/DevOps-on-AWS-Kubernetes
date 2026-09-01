@@ -1,31 +1,14 @@
-===== POST-DEPLOY MONITORING GATE VALIDATION =====
+===== POST-DEPLOY MONITORING GATE =====
 
-HEALTHY TEST:
-- backend-service targets: UP
-- worker-service targets: UP
-- frontend-service targets: UP
-- app_http_requests_total: available
-- latency histogram: available
-- error rate: 0
-- p95 latency: approximately 0.00475 seconds
-- MONITORING_GATE=PASSED
-- EXIT_CODE=0
+Healthy-path validation:
+All application targets UP
+app_http_requests_total: available (6 series)
+ERROR_RATE=0
+P95_LATENCY_SECONDS=0.00475
+MONITORING_GATE=PASSED
+EXIT_CODE=0
 
-FAILURE TEST:
-- backend Prometheus target intentionally made DOWN
-- monitoring gate detected:
-  ERROR: At least one Prometheus target is DOWN for backend-service
-- EXIT_CODE=1
-
-RECOVERY TEST:
-- backend min(up) returned to 1
-- all application targets UP
-- error rate: 0
-- p95 latency: approximately 0.00475 seconds
-- MONITORING_GATE=PASSED
-- EXIT_CODE=0
-
-CONCLUSION:
-The CD monitoring gate fails when an application target is unhealthy and
-passes again after recovery. The gate also validates request metrics,
-error rate, latency histogram, and p95 latency.
+Failure-path validation:
+backend-service target DOWN
+ERROR: At least one Prometheus target is DOWN for backend-service
+EXIT_CODE=1
