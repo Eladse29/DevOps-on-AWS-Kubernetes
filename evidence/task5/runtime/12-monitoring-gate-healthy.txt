@@ -1,0 +1,17 @@
+Checking Prometheus application targets...
+backend-service: all targets UP
+worker-service: all targets UP
+frontend-service: all targets UP
+Checking application request metrics...
+app_http_requests_total: available (6 series)
+Checking application error rate...
+Application error rate: 0
+Checking application latency metrics...
+Latency histogram: available (90 series)
+Checking application p95 latency...
+Application p95 latency: 0.00475 seconds
+PROMETHEUS_URL=http://127.0.0.1:9090
+ERROR_RATE=0
+P95_LATENCY_SECONDS=0.00475
+MONITORING_GATE=PASSED
+Post-deploy monitoring gate passed.

@@ -1,0 +1,40 @@
+===== POST-RECOVERY PROMETHEUS TARGETS =====
+Tue Sep  1 19:43:59 IDT 2026
+
+### backend-service
+backend-db88b7cc-l8g2v => 1
+backend-db88b7cc-g7pt7 => 1
+backend-db88b7cc-qd2j4 => 1
+backend-7d9d56d848-wndv7 => 1
+
+### frontend-service
+frontend-59f9d57744-srdk8 => 1
+frontend-59f9d57744-tqp98 => 1
+frontend-59f9d57744-s5cmp => 1
+
+### worker-service
+worker-5979948857-phlb6 => 1
+worker-5979948857-k4rpm => 1
+worker-6b98f8d6b8-5mfzj => 1
+worker-6b98f8d6b8-bhv7t => 1
+worker-6b98f8d6b8-z5ll8 => 1
+
+===== POST-RECOVERY MONITORING GATE =====
+Checking Prometheus application targets...
+backend-service: all targets UP
+worker-service: all targets UP
+frontend-service: all targets UP
+Checking application request metrics...
+app_http_requests_total: available (7 series)
+Checking application error rate...
+Application error rate: 0
+Checking application latency metrics...
+Latency histogram: available (105 series)
+Checking application p95 latency...
+Application p95 latency: 0.00475 seconds
+PROMETHEUS_URL=http://127.0.0.1:9090
+ERROR_RATE=0
+P95_LATENCY_SECONDS=0.00475
+MONITORING_GATE=PASSED
+Post-deploy monitoring gate passed.
+EXIT_CODE=0
