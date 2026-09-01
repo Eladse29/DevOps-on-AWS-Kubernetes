@@ -1,0 +1,279 @@
+===== MONITORING GATE IMPLEMENTATION =====
+     1	#!/bin/sh
+     2	set -eu
+     3	
+     4	PROM_URL="${PROM_URL:-http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090}"
+     5	
+     6	query_prometheus() {
+     7	  curl --fail --silent --show-error \
+     8	    --get \
+     9	    --data-urlencode "query=$1" \
+    10	    "${PROM_URL}/api/v1/query"
+    11	}
+    12	
+    13	extract_scalar() {
+    14	  tr -d '\n' |
+    15	    sed -n 's/.*"value":[[:space:]]*\[[^,]*,[[:space:]]*"\([^"]*\)".*/\1/p'
+    16	}
+    17	
+    18	echo "Checking Prometheus application targets..."
+    19	
+    20	for service in backend-service worker-service frontend-service
+    21	do
+    22	  result="$(query_prometheus "min(up{service=\"${service}\"})")"
+    23	  value="$(printf '%s' "${result}" | extract_scalar)"
+    24	
+    25	  if [ -z "${value}" ]; then
+    26	    echo "ERROR: No Prometheus target data for ${service}" >&2
+    27	    exit 1
+    28	  fi
+    29	
+    30	  if [ "${value}" != "1" ]; then
+    31	    echo "ERROR: At least one Prometheus target is DOWN for ${service}" >&2
+    32	    exit 1
+    33	  fi
+    34	
+    35	  echo "${service}: all targets UP"
+    36	done
+    37	
+    38	echo "Checking application request metrics..."
+    39	
+    40	metric_result="$(query_prometheus 'count(app_http_requests_total)')"
+    41	metric_count="$(printf '%s' "${metric_result}" | extract_scalar)"
+    42	
+    43	if [ -z "${metric_count}" ] || [ "${metric_count}" = "0" ]; then
+    44	  echo "ERROR: app_http_requests_total is not available in Prometheus" >&2
+    45	  exit 1
+    46	fi
+    47	
+    48	echo "app_http_requests_total: available (${metric_count} series)"
+    49	
+    50	echo "Checking application error rate..."
+    51	
+    52	error_result="$(
+    53	  query_prometheus '
+    54	(
+    55	  sum(rate(app_http_requests_total{status=~"5.."}[10m]))
+    56	  or vector(0)
+    57	)
+    58	/
+    59	clamp_min(
+    60	  (sum(rate(app_http_requests_total[10m])) or vector(0)),
+    61	  0.000001
+    62	)'
+    63	)"
+    64	
+    65	error_value="$(printf '%s' "${error_result}" | extract_scalar)"
+    66	
+    67	if [ -z "${error_value}" ]; then
+    68	  echo "ERROR: Could not evaluate application error rate" >&2
+    69	  exit 1
+    70	fi
+    71	
+    72	awk -v v="${error_value}" 'BEGIN { if (v >= 0.05) exit 1 }' || {
+    73	  echo "ERROR: Application error rate is above 5%: ${error_value}" >&2
+    74	  exit 1
+    75	}
+    76	
+    77	echo "Application error rate: ${error_value}"
+    78	
+    79	echo "Checking application latency metrics..."
+    80	
+    81	latency_metric_result="$(
+    82	  query_prometheus 'count(app_http_request_duration_seconds_bucket)'
+    83	)"
+    84	latency_metric_count="$(
+    85	  printf '%s' "${latency_metric_result}" | extract_scalar
+    86	)"
+    87	
+    88	if [ -z "${latency_metric_count}" ] || [ "${latency_metric_count}" = "0" ]; then
+    89	  echo "ERROR: Application latency histogram is not available" >&2
+    90	  exit 1
+    91	fi
+    92	
+    93	echo "Latency histogram: available (${latency_metric_count} series)"
+    94	
+    95	echo "Checking application p95 latency..."
+    96	
+    97	latency_result="$(
+    98	  query_prometheus '
+    99	histogram_quantile(
+   100	  0.95,
+   101	  sum by (le) (
+   102	    rate(app_http_request_duration_seconds_bucket[10m])
+   103	  )
+   104	)'
+   105	)"
+   106	
+   107	latency_value="$(printf '%s' "${latency_result}" | extract_scalar)"
+   108	
+   109	# A histogram can legitimately return NaN immediately after deployment
+   110	# when there have not yet been enough observations.
+   111	if [ -z "${latency_value}" ]; then
+   112	  echo "ERROR: Could not evaluate application p95 latency" >&2
+   113	  exit 1
+   114	fi
+   115	
+   116	if [ "${latency_value}" = "NaN" ]; then
+   117	  echo "Application p95 latency: no observations in evaluation window"
+   118	else
+   119	  awk -v v="${latency_value}" 'BEGIN { if (v >= 1) exit 1 }' || {
+   120	    echo "ERROR: Application p95 latency is above 1 second: ${latency_value}" >&2
+   121	    exit 1
+   122	  }
+   123	
+   124	  echo "Application p95 latency: ${latency_value} seconds"
+   125	fi
+   126	
+   127	{
+   128	  echo "PROMETHEUS_URL=${PROM_URL}"
+   129	  echo "ERROR_RATE=${error_value}"
+   130	  echo "P95_LATENCY_SECONDS=${latency_value}"
+   131	  echo "MONITORING_GATE=PASSED"
+   132	} | tee monitoring-gate.txt
+   133	
+   134	echo "Post-deploy monitoring gate passed."
+
+===== CD PIPELINE INTEGRATION =====
+        stage('Smoke Test') {
+            steps {
+                container('curl') {
+                    sh '''
+                        set -eu
+
+                        frontend_url="http://frontend-service.${TARGET_NAMESPACE}.svc.cluster.local"
+                        backend_url="http://backend-service.${TARGET_NAMESPACE}.svc.cluster.local:5000"
+                        worker_url="http://worker-service.${TARGET_NAMESPACE}.svc.cluster.local:5001"
+
+                        curl \
+                            --fail \
+                            --silent \
+                            --show-error \
+                            --retry 12 \
+                            --retry-delay 5 \
+                            "${frontend_url}/" \
+                            > smoke-frontend.txt
+
+                        curl \
+                            --fail \
+                            --silent \
+                            --show-error \
+                            --retry 12 \
+                            --retry-delay 5 \
+                            "${backend_url}/health" \
+                            > smoke-backend.json
+
+                        curl \
+                            --fail \
+                            --silent \
+                            --show-error \
+                            --retry 12 \
+                            --retry-delay 5 \
+                            "${worker_url}/health" \
+                            > smoke-worker.json
+
+                        grep -q '"status":"healthy"' smoke-backend.json
+                        grep -q '"service":"backend"' smoke-backend.json
+
+                        grep -q '"status":"healthy"' smoke-worker.json
+                        grep -q '"service":"worker"' smoke-worker.json
+
+                        echo "Smoke tests passed."
+                    '''
+                }
+
+                archiveArtifacts(
+                    artifacts: 'smoke-*',
+                    allowEmptyArchive: false,
+                    fingerprint: true
+                )
+            }
+        }
+
+
+        stage('Post-Deploy Monitoring Gate') {
+            steps {
+                container('curl') {
+                    sh '''
+                        set -eu
+
+                        scripts/observability/post-deploy-monitoring-gate.sh
+                    '''
+                }
+
+                archiveArtifacts(
+                    artifacts: 'monitoring-gate.txt',
+                    allowEmptyArchive: false,
+                    fingerprint: true
+                )
+            }
+        }
+
+    }
+    post {
+        success {
+            echo """
+            CD completed successfully.
+
+===== CD FAILURE / ROLLBACK =====
+
+                    kubectl logs deployment/backend \
+                        --namespace "${TARGET_NAMESPACE}" \
+                        --tail=100 || true
+
+                    kubectl logs deployment/worker \
+                        --namespace "${TARGET_NAMESPACE}" \
+                        --tail=100 || true
+                '''
+            }
+
+            script {
+                echo 'Attempting automatic rollback to previous Helm revisions.'
+
+                container('helm') {
+                    sh '''
+                        set +e
+
+                        for release in \
+                            "${WORKER_RELEASE}" \
+                            "${BACKEND_RELEASE}" \
+                            "${FRONTEND_RELEASE}"
+                        do
+                            revision_file="deployment-state/${release}-previous-revision"
+
+                            if [ ! -f "${revision_file}" ]; then
+                                echo "No previous revision information for ${release}."
+                                continue
+                            fi
+
+                            previous_revision="$(cat "${revision_file}")"
+
+                            if [ "${previous_revision}" -gt 0 ]; then
+                                echo "Rolling back ${release} to revision ${previous_revision}."
+
+                                helm rollback "${release}" "${previous_revision}" \
+                                    --namespace "${TARGET_NAMESPACE}" \
+                                    --wait \
+                                    --timeout 5m
+                            else
+                                echo "${release} had no previous revision; rollback skipped."
+                            fi
+                        done
+                    '''
+                }
+            }
+
+            echo '''
+            Automatic rollback was attempted.
+            Review the console log, Kubernetes events and Helm history.
+            '''.stripIndent()
+        }
+
+        always {
+            cleanWs(
+                deleteDirs: true,
+                disableDeferredWipeout: true
+            )
+        }
+    }
+}

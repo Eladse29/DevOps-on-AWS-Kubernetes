@@ -1,0 +1,15 @@
+===== POST-DEPLOY MONITORING GATE - NEGATIVE TEST =====
+
+Failure injected: backend Prometheus target made unavailable.
+
+Observed result:
+
+Checking Prometheus application targets...
+ERROR: At least one Prometheus target is DOWN for backend-service
+EXIT_CODE=1
+
+Expected behavior confirmed:
+- Prometheus detected an unhealthy backend target.
+- post-deploy monitoring gate returned non-zero.
+- Jenkins CD would therefore enter the failure path.
+- CD failure path attempts automatic Helm rollback.
