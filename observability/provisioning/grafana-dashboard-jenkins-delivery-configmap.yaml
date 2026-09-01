@@ -380,6 +380,122 @@ data:
             "overrides": []
           },
           "options": {}
+        },
+        {
+          "id": 13,
+          "title": "Last Build Queue Wait",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {
+            "x": 0,
+            "y": 28,
+            "w": 8,
+            "h": 7
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "default_jenkins_builds_last_build_waiting_milliseconds{jenkins_job=~\"$job\"}",
+              "legendFormat": "{{jenkins_job}}"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "options": {}
+        },
+        {
+          "id": 14,
+          "title": "Kubernetes Agents Provisioned",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {
+            "x": 8,
+            "y": 28,
+            "w": 8,
+            "h": 7
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "kubernetes_cloud_provision_nodes",
+              "legendFormat": ""
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "decimals": 0
+            },
+            "overrides": []
+          },
+          "options": {}
+        },
+        {
+          "id": 15,
+          "title": "Build Success Rate",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {
+            "x": 16,
+            "y": 28,
+            "w": 8,
+            "h": 7
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "100 * sum(increase(default_jenkins_builds_success_build_count_total{jenkins_job=~\"$job\"}[1h])) / clamp_min(sum(increase(default_jenkins_builds_total_build_count_total{jenkins_job=~\"$job\"}[1h])), 1)",
+              "legendFormat": ""
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100
+            },
+            "overrides": []
+          },
+          "options": {}
+        },
+        {
+          "id": 16,
+          "title": "Build Failures (1h)",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {
+            "x": 0,
+            "y": 35,
+            "w": 8,
+            "h": 7
+          },
+          "targets": [
+            {
+              "refId": "A",
+              "expr": "clamp_min(sum(increase(default_jenkins_builds_total_build_count_total{jenkins_job=~\"$job\"}[1h])) - sum(increase(default_jenkins_builds_success_build_count_total{jenkins_job=~\"$job\"}[1h])), 0)",
+              "legendFormat": ""
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "options": {}
         }
       ]
     }
