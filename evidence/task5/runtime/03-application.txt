@@ -1,0 +1,20 @@
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend    3/3     3            3           134m
+deployment.apps/frontend   3/3     3            3           134m
+deployment.apps/worker     3/3     3            3           135m
+
+NAME                            READY   STATUS    RESTARTS   AGE
+pod/backend-64cddff65f-7pvh4    1/1     Running   0          15m
+pod/backend-64cddff65f-l5cfx    1/1     Running   0          14m
+pod/backend-64cddff65f-nw5zz    1/1     Running   0          14m
+pod/frontend-684d67bcd5-mt9jk   2/2     Running   0          14m
+pod/frontend-684d67bcd5-p8jkw   2/2     Running   0          13m
+pod/frontend-684d67bcd5-vrxqq   2/2     Running   0          14m
+pod/worker-6dd5d69c5f-m7d5v     1/1     Running   0          15m
+pod/worker-6dd5d69c5f-ncllt     1/1     Running   0          15m
+pod/worker-6dd5d69c5f-q8s8z     1/1     Running   0          15m
+
+NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP                                                               PORT(S)                       AGE
+service/backend-service    ClusterIP      172.20.244.37    <none>                                                                    5000/TCP,9101/TCP             134m
+service/frontend-service   LoadBalancer   172.20.116.215   a71fd425056504d56aa7c30459caf33d-1020675884.us-east-1.elb.amazonaws.com   80:32598/TCP,9113:32003/TCP   134m
+service/worker-service     ClusterIP      172.20.18.246    <none>                                                                    5001/TCP,9102/TCP             135m

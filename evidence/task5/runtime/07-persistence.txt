@@ -1,0 +1,4 @@
+NAME                                                                                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+alertmanager-kube-prometheus-stack-alertmanager-db-alertmanager-kube-prometheus-stack-alertmanager-0   Bound    pvc-f6ac275a-c63e-418c-8ef5-fc4ec6972cb8   2Gi        RWO            jenkins-ebs    <unset>                 176m
+kube-prometheus-stack-grafana                                                                          Bound    pvc-e80be031-85e9-451e-ada0-8e99801c4a66   5Gi        RWO            jenkins-ebs    <unset>                 176m
+prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0           Bound    pvc-8bcb5d97-c324-4c67-9e6a-2889847b0d0f   10Gi       RWO            jenkins-ebs    <unset>                 176m

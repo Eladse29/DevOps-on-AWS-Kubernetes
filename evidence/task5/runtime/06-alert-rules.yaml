@@ -1,0 +1,113 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"monitoring.coreos.com/v1","kind":"PrometheusRule","metadata":{"annotations":{},"labels":{"monitoring":"task5"},"name":"task5-alerts","namespace":"observability"},"spec":{"groups":[{"name":"application.rules","rules":[{"alert":"HighErrorRate","annotations":{"description":"More than 5% of application requests are returning 5xx responses for at least 5 minutes.","runbook_url":"runbooks/high-error-rate.md","summary":"Application 5xx error rate is high"},"expr":"(\n  sum(rate(app_http_requests_total{status=~\"5..\"}[5m]))\n  /\n  clamp_min(sum(rate(app_http_requests_total[5m])), 0.000001)\n) \u003e 0.05\n","for":"5m","labels":{"domain":"application","severity":"critical"}},{"alert":"HighLatencyP95","annotations":{"description":"Application p95 request latency has exceeded 1 second for at least 5 minutes.","runbook_url":"runbooks/high-latency-p95.md","summary":"Application p95 latency is above SLO threshold"},"expr":"histogram_quantile(\n  0.95,\n  sum by (le) (\n    rate(app_http_request_duration_seconds_bucket[5m])\n  )\n) \u003e 1\n","for":"5m","labels":{"domain":"application","severity":"warning"}}]},{"name":"kubernetes.rules","rules":[{"alert":"ReplicasMismatch","annotations":{"description":"At least one devops-app Deployment has fewer available replicas than desired for at least 5 minutes.","runbook_url":"runbooks/replicas-mismatch.md","summary":"Deployment replicas do not match desired state"},"expr":"(\n  kube_deployment_spec_replicas{namespace=\"devops-app\"}\n  -\n  kube_deployment_status_replicas_available{namespace=\"devops-app\"}\n) \u003e 0\n","for":"5m","labels":{"domain":"kubernetes","severity":"warning"}},{"alert":"NodeNotReady","annotations":{"description":"A Kubernetes worker node has remained NotReady for at least 5 minutes.","runbook_url":"runbooks/node-not-ready.md","summary":"Kubernetes node is not Ready"},"expr":"kube_node_status_condition{\n  condition=\"Ready\",\n  status=\"true\"\n} == 0\n","for":"5m","labels":{"domain":"kubernetes","severity":"critical"}}]},{"name":"jenkins.rules","rules":[{"alert":"JenkinsQueueStuck","annotations":{"description":"One or more Jenkins builds have remained queued for at least 5 minutes.","runbook_url":"runbooks/jenkins-queue-stuck.md","summary":"Jenkins build queue is not clearing"},"expr":"jenkins_queue_size_value \u003e 0\n","for":"5m","labels":{"domain":"jenkins","severity":"warning"}}]},{"name":"monitoring.rules","rules":[{"alert":"PrometheusTargetDown","annotations":{"description":"A monitored Prometheus target has been unreachable for at least 5 minutes.","runbook_url":"runbooks/prometheus-target-down.md","summary":"Prometheus scrape target is down"},"expr":"up == 0\n","for":"5m","labels":{"domain":"monitoring","severity":"critical"}}]}]}}
+    prometheus-operator-validated: "true"
+  creationTimestamp: "2026-08-31T11:02:22Z"
+  generation: 2
+  labels:
+    monitoring: task5
+  name: task5-alerts
+  namespace: observability
+  resourceVersion: "59932"
+  uid: 0e8cf29d-2709-47c4-a31b-0f190dec3016
+spec:
+  groups:
+  - name: application.rules
+    rules:
+    - alert: HighErrorRate
+      annotations:
+        description: More than 5% of application requests are returning 5xx responses
+          for at least 5 minutes.
+        runbook_url: runbooks/high-error-rate.md
+        summary: Application 5xx error rate is high
+      expr: |
+        (
+          sum(rate(app_http_requests_total{status=~"5.."}[5m]))
+          /
+          clamp_min(sum(rate(app_http_requests_total[5m])), 0.000001)
+        ) > 0.05
+      for: 5m
+      labels:
+        domain: application
+        severity: critical
+    - alert: HighLatencyP95
+      annotations:
+        description: Application p95 request latency has exceeded 1 second for at
+          least 5 minutes.
+        runbook_url: runbooks/high-latency-p95.md
+        summary: Application p95 latency is above SLO threshold
+      expr: |
+        histogram_quantile(
+          0.95,
+          sum by (le) (
+            rate(app_http_request_duration_seconds_bucket[5m])
+          )
+        ) > 1
+      for: 5m
+      labels:
+        domain: application
+        severity: warning
+  - name: kubernetes.rules
+    rules:
+    - alert: ReplicasMismatch
+      annotations:
+        description: At least one devops-app Deployment has fewer available replicas
+          than desired for at least 5 minutes.
+        runbook_url: runbooks/replicas-mismatch.md
+        summary: Deployment replicas do not match desired state
+      expr: |
+        (
+          kube_deployment_spec_replicas{namespace="devops-app"}
+          -
+          kube_deployment_status_replicas_available{namespace="devops-app"}
+        ) > 0
+      for: 5m
+      labels:
+        domain: kubernetes
+        severity: warning
+    - alert: NodeNotReady
+      annotations:
+        description: A Kubernetes worker node has remained NotReady for at least 5
+          minutes.
+        runbook_url: runbooks/node-not-ready.md
+        summary: Kubernetes node is not Ready
+      expr: |
+        kube_node_status_condition{
+          condition="Ready",
+          status="true"
+        } == 0
+      for: 5m
+      labels:
+        domain: kubernetes
+        severity: critical
+  - name: jenkins.rules
+    rules:
+    - alert: JenkinsQueueStuck
+      annotations:
+        description: One or more Jenkins builds have remained queued for at least
+          5 minutes.
+        runbook_url: runbooks/jenkins-queue-stuck.md
+        summary: Jenkins build queue is not clearing
+      expr: |
+        jenkins_queue_size_value > 0
+      for: 5m
+      labels:
+        domain: jenkins
+        severity: warning
+  - name: monitoring.rules
+    rules:
+    - alert: PrometheusTargetDown
+      annotations:
+        description: A monitored Prometheus target has been unreachable for at least
+          5 minutes.
+        runbook_url: runbooks/prometheus-target-down.md
+        summary: Prometheus scrape target is down
+      expr: |
+        up == 0
+      for: 5m
+      labels:
+        domain: monitoring
+        severity: critical

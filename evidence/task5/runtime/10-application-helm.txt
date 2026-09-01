@@ -1,0 +1,4 @@
+NAME    	NAMESPACE 	REVISION	UPDATED                                	STATUS  	CHART         	APP VERSION
+backend 	devops-app	3       	2026-08-31 13:42:04.083958444 +0000 UTC	deployed	backend-0.1.0 	v3         
+frontend	devops-app	3       	2026-08-31 13:42:51.543899075 +0000 UTC	deployed	frontend-0.1.0	v1         
+worker  	devops-app	3       	2026-08-31 13:41:21.590543739 +0000 UTC	deployed	worker-0.1.0  	v1         

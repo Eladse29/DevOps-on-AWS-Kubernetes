@@ -1,0 +1,26 @@
+NAME                                                            READY   STATUS    RESTARTS   AGE
+pod/alertmanager-kube-prometheus-stack-alertmanager-0           2/2     Running   0          83m
+pod/kube-prometheus-stack-grafana-b86b4494f-p7n4p               3/3     Running   0          83m
+pod/kube-prometheus-stack-kube-state-metrics-6c94bb485d-qpsr4   1/1     Running   0          83m
+pod/kube-prometheus-stack-operator-7b77fd7ff9-wvd8j             1/1     Running   0          83m
+pod/kube-prometheus-stack-prometheus-node-exporter-5z47g        1/1     Running   0          75m
+pod/kube-prometheus-stack-prometheus-node-exporter-6kh6k        1/1     Running   0          75m
+pod/kube-prometheus-stack-prometheus-node-exporter-qgwlp        1/1     Running   0          75m
+pod/kube-prometheus-stack-prometheus-node-exporter-rjd9c        1/1     Running   0          75m
+pod/kube-prometheus-stack-prometheus-node-exporter-xns9k        1/1     Running   0          75m
+pod/prometheus-kube-prometheus-stack-prometheus-0               2/2     Running   0          83m
+
+NAME                                                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+service/alertmanager-operated                            ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP   176m
+service/kube-prometheus-stack-alertmanager               ClusterIP   172.20.132.28    <none>        9093/TCP,8080/TCP            176m
+service/kube-prometheus-stack-grafana                    ClusterIP   172.20.7.142     <none>        80/TCP                       176m
+service/kube-prometheus-stack-kube-state-metrics         ClusterIP   172.20.148.85    <none>        8080/TCP                     176m
+service/kube-prometheus-stack-operator                   ClusterIP   172.20.149.166   <none>        443/TCP                      176m
+service/kube-prometheus-stack-prometheus                 ClusterIP   172.20.94.130    <none>        9090/TCP,8080/TCP            176m
+service/kube-prometheus-stack-prometheus-node-exporter   ClusterIP   172.20.243.69    <none>        9100/TCP                     176m
+service/prometheus-operated                              ClusterIP   None             <none>        9090/TCP                     176m
+
+NAME                                                                                                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/alertmanager-kube-prometheus-stack-alertmanager-db-alertmanager-kube-prometheus-stack-alertmanager-0   Bound    pvc-f6ac275a-c63e-418c-8ef5-fc4ec6972cb8   2Gi        RWO            jenkins-ebs    <unset>                 176m
+persistentvolumeclaim/kube-prometheus-stack-grafana                                                                          Bound    pvc-e80be031-85e9-451e-ada0-8e99801c4a66   5Gi        RWO            jenkins-ebs    <unset>                 176m
+persistentvolumeclaim/prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0           Bound    pvc-8bcb5d97-c324-4c67-9e6a-2889847b0d0f   10Gi       RWO            jenkins-ebs    <unset>                 176m

@@ -1,0 +1,2 @@
+NAME                 	NAMESPACE    	REVISION	UPDATED                                	STATUS  	CHART                       	APP VERSION
+kube-prometheus-stack	observability	1       	2026-08-31 13:59:00.270428036 +0300 IDT	deployed	kube-prometheus-stack-88.6.2	v0.93.1    
