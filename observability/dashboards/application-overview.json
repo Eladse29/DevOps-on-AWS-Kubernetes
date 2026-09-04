@@ -374,7 +374,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum by (dependency) (rate(app_dependency_failures_total{service=\"backend\"}[5m]))",
+          "expr": "sum by (dependency) (rate(app_dependency_failures_total{exported_service=\"backend\"}[5m]))",
           "legendFormat": "{{dependency}}"
         }
       ],
