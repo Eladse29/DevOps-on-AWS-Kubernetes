@@ -2304,3 +2304,4 @@ The design prioritizes:
 - honest documentation of security limitations
 
 The project is a course implementation rather than a production-hardened platform, but it provides a complete and reproducible CI/CD chain from Git commit to verified Kubernetes deployment.
+
